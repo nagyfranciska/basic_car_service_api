@@ -3,6 +3,7 @@ package service;
 import dao.ServiceDAO;
 import model.Service;
 
+import java.util.List;
 import java.util.Map;
 
 public class ServiceService {
@@ -13,23 +14,26 @@ public class ServiceService {
         serviceDAO = new ServiceDAO();
     }
 
-    public Map<Integer, Service> getServices() {
-        return serviceDAO.read();
+    public List getServices() {
+        return serviceDAO.findAll();
     }
 
     public Service getServiceById(Integer id) {
-        return serviceDAO.read(id);
+        return serviceDAO.findById(id);
     }
 
     public Service saveService(Service service) {
-        return serviceDAO.create(service);
+        serviceDAO.save(service);
+        return serviceDAO.findById(service.getId());
     }
 
     public Service updateService(Service service) {
-        return serviceDAO.update(service);
+        serviceDAO.update(service);
+        return serviceDAO.findById(service.getId());
     }
 
     public Service deleteService(Service service) {
-        return serviceDAO.delete(service);
+        serviceDAO.delete(service);
+        return service;
     }
 }

@@ -3,33 +3,37 @@ package service;
 import dao.CustomerDAO;
 import model.Customer;
 
+import java.util.List;
 import java.util.Map;
 
 public class CustomerService {
 
-    public CustomerDAO customerDAO;
+    CustomerDAO customerDAO;
 
     public CustomerService() {
         customerDAO = new CustomerDAO();
     }
 
-    public Map<Integer, Customer> getCustomers() {
-        return customerDAO.read();
+    public List getCustomers() {
+        return customerDAO.findAll();
     }
 
     public Customer getCustomerById(Integer id) {
-        return customerDAO.read(id);
+        return customerDAO.findById(id);
     }
 
     public Customer saveCustomer(Customer customer) {
-        return customerDAO.create(customer);
+        customerDAO.save(customer);
+        return customerDAO.findById(customer.getId());
     }
 
     public Customer updateCustomer(Customer customer) {
-        return customerDAO.update(customer);
+        customerDAO.update(customer);
+        return customerDAO.findById(customer.getId());
     }
 
     public Customer deleteCustomer(Customer customer) {
-        return customerDAO.delete(customer);
+        customerDAO.delete(customer);
+        return customer;
     }
 }

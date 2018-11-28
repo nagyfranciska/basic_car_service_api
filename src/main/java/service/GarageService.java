@@ -3,33 +3,37 @@ package service;
 import dao.GarageDAO;
 import model.Garage;
 
+import java.util.List;
 import java.util.Map;
 
 public class GarageService {
 
-    public GarageDAO garageDAO;
+    GarageDAO garageDAO;
 
     public GarageService() {
         garageDAO = new GarageDAO();
     }
 
-    public Map<Integer, Garage> getGarages() {
-        return garageDAO.mapOfGarages;
+    public List getGarages() {
+        return garageDAO.findAll();
     }
 
     public Garage getGarageById(Integer id) {
-        return garageDAO.read(id);
+        return garageDAO.findById(id);
     }
 
     public Garage saveGarage(Garage newGarage) {
-        return garageDAO.create(newGarage);
+        garageDAO.save(newGarage);
+        return garageDAO.findById(newGarage.getId());
     }
 
     public Garage updateGarage(Garage garage) {
-        return garageDAO.update(garage);
+        garageDAO.update(garage);
+        return garageDAO.findById(garage.getId());
     }
 
     public Garage deleteGarage(Garage garage) {
-        return garageDAO.delete(garage);
+        garageDAO.delete(garage);
+        return garage;
     }
 }

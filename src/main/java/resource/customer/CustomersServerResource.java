@@ -6,6 +6,7 @@ import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import service.CustomerService;
 
+import java.util.List;
 import java.util.Map;
 
 public class CustomersServerResource extends ServerResource {
@@ -13,7 +14,7 @@ public class CustomersServerResource extends ServerResource {
     public static CustomerService customerService = new CustomerService();
 
     @Get
-    public Map<Integer, Customer> getCustomers() {
+    public List getCustomers() {
         return customerService.getCustomers();
     }
 

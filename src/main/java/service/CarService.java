@@ -4,52 +4,43 @@ import dao.CarDAO;
 import model.Car;
 
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarService {
 
 
 
-    public CarDAO carDAO;
-    private Integer idCount = 0;
+    CarDAO carDAO;
 
     public CarService() {
         carDAO = new CarDAO();
     }
 
-    public Map<Integer, Car> getCars() {
-        return carDAO.read();
+    public List getCars() {
+        return carDAO.findAll();
     }
 
     public Car getCarById(Integer id) {
-        if (carDAO.mapOfCars.containsKey(id)) {
-            return carDAO.read(id);
-        }
-        return null;
+        return carDAO.findById(id);
     }
 
     public Car saveCar(Car newCar) {
         if (isValid(newCar)) {
-            idCount++;
-            carDAO.create(newCar);
-            return carDAO.read(newCar.getId());
+            carDAO.save(newCar);
+            return carDAO.findById(newCar.getId());
         }
         return null;
     }
 
     public Car updateCar(Car car) {
-        if (carDAO.mapOfCars.containsKey(car.getId())) {
-            carDAO.update(car);
-            return carDAO.read(car.getId());
-        }
-        return null;
+       carDAO.update(car);
+       return carDAO.findById(car.getId());
     }
 
     public Car deleteCar(Car car) {
-        if (carDAO.mapOfCars.containsKey(car.getId())) {
-            return carDAO.delete(car);
-        }
-        return null;
+        carDAO.delete(car);
+        return car;
     }
 
     private boolean isValid(Car car) {
@@ -65,7 +56,13 @@ public class CarService {
     }
 
     private boolean hasSamePlate(Car car) {
-        return carDAO.mapOfCars.values().stream()
-                .anyMatch(c -> c.getPlate().equals(car.getPlate()));
+        List<Car> carList = new ArrayList<>();
+        try {
+            carList = carDAO.findAll();
+
+        } catch (Exception e) {
+            System.out.println("plate validation failed");
+        }
+        return carList.stream().anyMatch(c -> c.getPlate().equals(car.getPlate()));
     }
 }
