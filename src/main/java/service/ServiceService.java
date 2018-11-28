@@ -8,7 +8,6 @@ import java.util.Map;
 public class ServiceService {
 
     public ServiceDAO serviceDAO;
-    private Integer idCount = 0;
 
     public ServiceService() {
         serviceDAO = new ServiceDAO();
@@ -23,8 +22,6 @@ public class ServiceService {
     }
 
     public Service saveService(Service service) {
-        service.setId(idCount);
-        idCount++;
         return serviceDAO.create(service);
     }
 

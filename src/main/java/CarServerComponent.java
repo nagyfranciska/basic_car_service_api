@@ -10,7 +10,7 @@ public class CarServerComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(CarServerComponent.class);
 
-    private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("jpa");
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa");
 
     public static void main(String[] args) throws Exception {
 

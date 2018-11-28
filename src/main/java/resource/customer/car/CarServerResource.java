@@ -24,7 +24,7 @@ public class CarServerResource extends ServerResource {
     public Car getCar() {
         Integer carId = Integer.parseInt(getAttribute("carId"));
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return customerService.getCustomerById(customerId).getCarList().get(carId);
+        return null;
     }
 
 //    @Put
@@ -36,9 +36,8 @@ public class CarServerResource extends ServerResource {
     public Car updateCar(Car car) {
         Integer carId = car.getId();
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        customerService.getCustomerById(customerId).getCarList().set(carId, car);
         carService.updateCar(car);
-        return customerService.getCustomerById(customerId).getCarList().get(carId);
+        return null;
     }
 
 //    @Delete
@@ -50,7 +49,6 @@ public class CarServerResource extends ServerResource {
     public Car deleteCar(Car car) {
         Integer carId = car.getId();
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        customerService.getCustomerById(customerId).getCarList().remove(carId);
         carService.deleteCar(car);
         return car;
     }

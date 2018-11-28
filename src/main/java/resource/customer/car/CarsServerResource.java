@@ -24,7 +24,7 @@ public class CarsServerResource extends ServerResource {
     @Get
     public List<Car> getCars() {
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return customerService.getCustomerById(customerId).getCarList();
+        return null;
     }
 
 //    @Post
@@ -35,7 +35,6 @@ public class CarsServerResource extends ServerResource {
     @Post
     public Car saveCar(Car car) {
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        customerService.getCustomerById(customerId).getCarList().add(car);
         carService.saveCar(car);
         return car;
     }

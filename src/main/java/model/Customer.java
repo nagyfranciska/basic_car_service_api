@@ -36,4 +36,8 @@ public class Customer {
         carList = new CopyOnWriteArrayList<>();
         serviceList = new CopyOnWriteArrayList<>();
     }
+
+    public Integer getId() {
+        return id;
+    }
 }

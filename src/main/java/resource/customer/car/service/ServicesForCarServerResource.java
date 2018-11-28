@@ -24,7 +24,7 @@ public class ServicesForCarServerResource extends ServerResource {
     public List<Service> getServices() {
         Integer carId = Integer.parseInt(getAttribute("carId"));
         Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return customerService.getCustomerById(customerId).getCarList().get(carId).getServiceList();
+        return null;
     }
 
 }
