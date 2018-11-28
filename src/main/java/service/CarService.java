@@ -30,7 +30,6 @@ public class CarService {
 
     public Car saveCar(Car newCar) {
         if (isValid(newCar)) {
-            newCar.setId(idCount);
             idCount++;
             carDAO.create(newCar);
             return carDAO.read(newCar.getId());
