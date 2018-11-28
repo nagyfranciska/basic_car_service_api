@@ -3,9 +3,14 @@ import org.restlet.data.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 public class CarServerComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(CarServerComponent.class);
+
+    private static final EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("jpa");
 
     public static void main(String[] args) throws Exception {
 
