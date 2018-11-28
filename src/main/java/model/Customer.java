@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -13,17 +14,31 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
-    private String name;
-    private String address;
-    private String invoiceAddress;
-    private String type;
+
     @JsonManagedReference
-    @OneToMany
+    @JsonIgnoreProperties
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @Column(name = "CAR_LIST")
     private List<Car> carList;
+
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @Column(name = "SERVICE_LIST")
     private List<Service> serviceList;
+
+    @Column(name = "NAME", nullable = false)
+    private String name;
+
+    @Column(name = "ADDRESS", nullable = false)
+    private String address;
+
+    @Column(name = "INVOICE_ADD", nullable = false)
+    private String invoiceAddress;
+
+    @Column(name = "TYPE", nullable = false)
+    private String type;
 
     public Customer() {
     }
