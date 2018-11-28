@@ -1,37 +1,52 @@
 package dao;
 
 import model.Garage;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class GarageDAO {
 
-    public static Map<Integer, Garage> mapOfGarages;
+    static EntityManager mananger = JPAUtility.getEntityManager();
 
     public GarageDAO() {
-        mapOfGarages = new HashMap<>();
     }
 
-    public Map<Integer, Garage> read() {
-        return mapOfGarages;
+    public void save(Garage garage) {
+        mananger.getTransaction().begin();
+        mananger.persist(garage);
+        mananger.getTransaction().commit();
+        mananger.close();
+        JPAUtility.close();
+        System.out.println("new garage is saved");
     }
 
-    public Garage read(Integer id) {
-        return mapOfGarages.get(id);
+    public void update(Garage garage) {
+        Garage garageToUpdate = mananger.find(Garage.class, garage.getId());
+        mananger.getTransaction().begin();
+
+        garageToUpdate.setAddress(garage.getAddress());
+        garageToUpdate.setCapacity(garage.getCapacity());
+        garageToUpdate.setName(garage.getName());
+        garageToUpdate.setServiceList(garage.getServiceList());
+
+        mananger.getTransaction().commit();
+        mananger.close();
+        System.out.println("garage is updated");
     }
 
-    public Garage create(Garage garage) {
-        return mapOfGarages.put(garage.getId(), garage);
+    public void delete(Garage garage) {
+        mananger.remove(garage);
     }
 
-    public Garage delete(Garage garage) {
-        return mapOfGarages.remove(garage.getId());
+    public Garage findById(Integer id) {
+        return mananger.find(Garage.class, id);
     }
 
-    public Garage update(Garage garage) {
-        return mapOfGarages.put(garage.getId(), garage);
+    public List findAll() {
+        Query q = mananger.createQuery("SELECT * FROM Garage");
+        return q.getResultList();
     }
-
 
 }

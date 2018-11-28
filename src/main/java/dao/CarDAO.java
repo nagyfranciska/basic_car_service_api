@@ -2,35 +2,50 @@ package dao;
 
 import model.Car;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 public class CarDAO {
 
-    public static Map<Integer, Car> mapOfCars;
+    static EntityManager mananger = JPAUtility.getEntityManager();
 
     public CarDAO() {
     }
 
-
-
-    public Map<Integer, Car> read() {
-        return mapOfCars;
+    public void save(Car car) {
+        mananger.getTransaction().begin();
+        mananger.persist(car);
+        mananger.getTransaction().commit();
+        mananger.close();
+        JPAUtility.close();
+        System.out.println("new car is saved");
     }
 
-    public Car read(Integer id) {
-        return mapOfCars.get(id);
+    public void update(Car car) {
+        Car carToUpdate = mananger.find(Car.class, car.getId());
+        mananger.getTransaction().begin();
+        carToUpdate.setRegistrationDate(car.getRegistrationDate());
+        carToUpdate.setColor(car.getColor());
+        carToUpdate.setPlate(car.getPlate());
+        carToUpdate.setDoorCount(car.getDoorCount());
+        carToUpdate.setServiceList(car.getServiceList());
+        carToUpdate.setCarType(car.getCarType());
+        carToUpdate.setSize(car.getSize());
+        mananger.getTransaction().commit();
+        mananger.close();
+        System.out.println("car is updated");
     }
 
-    public Car create(Car car) {
-        return mapOfCars.put(car.getId(), car);
+    public void delete(Car car) {
+        mananger.remove(car);
     }
 
-    public Car delete(Car car) {
-        return mapOfCars.remove(car.getId());
+    public Car findById(Integer id) {
+        return mananger.find(Car.class, id);
     }
 
-    public Car update(Car car) {
-        return mapOfCars.put(car.getId(), car);
+    public List findAll() {
+        Query q = mananger.createQuery("SELECT * FROM Car");
+        return q.getResultList();
     }
 }

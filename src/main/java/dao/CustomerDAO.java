@@ -1,36 +1,56 @@
 package dao;
 
 import model.Customer;
+import model.Garage;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
 
 public class CustomerDAO {
 
-    public static Map<Integer, Customer> mapOfCustomers;
+    static EntityManager mananger = JPAUtility.getEntityManager();
 
     public CustomerDAO() {
-        mapOfCustomers = new HashMap<>();
     }
 
-    public Map<Integer, Customer> read() {
-        return mapOfCustomers;
+    public void save(Customer customer) {
+        mananger.getTransaction().begin();
+        mananger.persist(customer);
+        mananger.getTransaction().commit();
+        mananger.close();
+        JPAUtility.close();
+        System.out.println("new customer is saved");
     }
 
-    public Customer read(Integer id) {
-        return mapOfCustomers.get(id);
+    public void update(Customer customer) {
+        Customer customerToUpdate = mananger.find(Customer.class, customer.getId());
+        mananger.getTransaction().begin();
+
+        customerToUpdate.setName(customer.getName());
+        customerToUpdate.setType(customer.getType());
+        customerToUpdate.setAddress(customer.getAddress());
+        customerToUpdate.setInvoiceAddress(customer.getInvoiceAddress());
+        customerToUpdate.setCarList(customer.getCarList());
+        customerToUpdate.setServiceList(customer.getServiceList());
+
+        mananger.getTransaction().commit();
+        mananger.close();
+        System.out.println("customer is updated");
     }
 
-    public Customer create(Customer customer) {
-        return mapOfCustomers.put(customer.getId(), customer);
+    public void delete(Customer customer) {
+        mananger.remove(customer);
     }
 
-    public Customer delete(Customer customer) {
-        return mapOfCustomers.remove(customer.getId());
+    public Customer findById(Integer id) {
+        return mananger.find(Customer.class, id);
     }
 
-    public Customer update(Customer customer) {
-        return mapOfCustomers.put(customer.getId(), customer);
+    public List findAll() {
+        Query q = mananger.createQuery("SELECT * FROM Customer");
+        return q.getResultList();
     }
+
 
 }
