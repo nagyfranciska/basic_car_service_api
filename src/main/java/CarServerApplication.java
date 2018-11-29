@@ -20,7 +20,7 @@ public class CarServerApplication extends Application {
     public Restlet createInboundRoot() {
 
         Garage garage = new Garage("garageName", "GarageAddress", 5);
-        GaragesServerResource.garageService.saveGarage(garage);
+//        GaragesServerResource.garageService.saveGarage(garage);
 
         Router router = new Router(getContext());
 

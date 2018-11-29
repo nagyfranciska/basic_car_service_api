@@ -9,7 +9,7 @@ import service.GarageService;
 
 public class GarageServerResource extends ServerResource {
 
-    GarageService garageService = GaragesServerResource.garageService;
+    private GarageService garageService = GaragesServerResource.garageService;
 
     @Get
     public Garage getGarage() {

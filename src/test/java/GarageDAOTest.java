@@ -51,14 +51,14 @@ public class GarageDAOTest {
         Assert.assertEquals(garage02, dao.findById(1));
     }
 
-    ////////
-    @Test
-    public void testUpdateGarage() {
-        Garage garageToUpdate = dao.findById(garage01.getId());
-        dao.update(garageToUpdate);
-        Assert.assertEquals(garageToUpdate, dao.findById(garageToUpdate.getId()));
-
-    }
+//    ////////
+//    @Test
+//    public void testUpdateGarage() {
+//        Garage garageToUpdate = dao.findById(garage01.getId());
+//        dao.update(garageToUpdate);
+//        Assert.assertEquals(garageToUpdate, dao.findById(garageToUpdate.getId()));
+//
+//    }
 
     @Test
     public void testDeleteGarage() {

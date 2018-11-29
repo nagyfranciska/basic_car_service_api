@@ -1,55 +1,55 @@
 package dao;
 
 import model.Garage;
+import service.JPAUtility;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-
 public class GarageDAO {
 
-    static EntityManager mananger = JPAUtility.getEntityManager();
+    private EntityManager manager = JPAUtility.getEntityManager();
 
     public GarageDAO() {
     }
 
+    public List findAll() {
+        Query q = manager.createQuery("SELECT g FROM Garage g");
+        return q.getResultList();
+    }
+
     public Garage save(Garage garage) {
-        mananger.getTransaction().begin();
-        mananger.persist(garage);
-        mananger.getTransaction().commit();
-        mananger.close();
-        JPAUtility.close();
+        manager.getTransaction().begin();
+        manager.persist(garage);
+        manager.getTransaction().commit();
+        manager.close();
         System.out.println("new garage is saved");
         return garage;
     }
 
-    public Garage update(Garage garage) {
-        Garage garageToUpdate = mananger.find(Garage.class, garage.getId());
-        mananger.getTransaction().begin();
 
+    public Garage findById(Integer id) {
+        return manager.find(Garage.class, id);
+    }
+
+
+    public Garage update(Garage garage) {
+        Garage garageToUpdate = manager.find(Garage.class, garage.getId());
+        manager.getTransaction().begin();
         garageToUpdate.setAddress(garage.getAddress());
         garageToUpdate.setCapacity(garage.getCapacity());
         garageToUpdate.setName(garage.getName());
         garageToUpdate.setServiceList(garage.getServiceList());
-
-        mananger.getTransaction().commit();
-        mananger.close();
+        manager.getTransaction().commit();
+        manager.close();
         System.out.println("garage is updated");
         return garageToUpdate;
     }
 
     public Garage delete(Garage garage) {
-        mananger.remove(garage);
+        manager.remove(garage);
         return garage;
-    }
-
-    public Garage findById(Integer id) {
-        return mananger.find(Garage.class, id);
-    }
-
-    public List findAll() {
-        Query q = mananger.createQuery("SELECT * FROM Garage");
-        return q.getResultList();
     }
 
 }

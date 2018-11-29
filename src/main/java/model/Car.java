@@ -1,30 +1,48 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
+
+    @Column(name = "CAR_TYPE", nullable = false)
     private CarType carType;
+
+    @Column(name = "PLATE", nullable = false)
     private String plate;
+
+    @Column(name = "REG_DATE", nullable = false)
     private String registrationDate;
+
+    @Column(name = "SIZE", nullable = false)
     private Integer size;
+
+    @Column(name = "DOOR_COUNT", nullable = false)
     private Integer doorCount;
+
+    @Column(name = "COLOR", nullable = false)
     private String color;
+
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "car", orphanRemoval = true)
+    @Column(name = "SERVICE_LIST")
     private List<Service> serviceList;
+
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
+    @JoinColumn(name = "CUST_ID")
     private Customer customer;
 
     public Car() {
@@ -37,7 +55,7 @@ public class Car {
         this.size = size;
         this.doorCount = door;
         this.color = color;
-        serviceList = new ArrayList<>();
+        serviceList = new CopyOnWriteArrayList<>();
     }
 
     public CarType getCarType() {
