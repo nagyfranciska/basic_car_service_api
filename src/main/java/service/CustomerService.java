@@ -4,17 +4,17 @@ import dao.CustomerDAO;
 import model.Customer;
 
 import java.util.List;
-import java.util.Map;
 
 public class CustomerService {
 
-    CustomerDAO customerDAO;
+    private CustomerDAO customerDAO;
 
+    //TODO: Solve logic without instantiation
     public CustomerService() {
         customerDAO = new CustomerDAO();
     }
 
-    public List getCustomers() {
+    public List<Customer> getCustomers() {
         return customerDAO.findAll();
     }
 

@@ -4,12 +4,12 @@ import dao.GarageDAO;
 import model.Garage;
 
 import java.util.List;
-import java.util.Map;
 
 public class GarageService {
 
-    GarageDAO garageDAO;
+    private GarageDAO garageDAO;
 
+    //TODO: Solve logic without instantiation
     public GarageService() {
         garageDAO = new GarageDAO();
     }

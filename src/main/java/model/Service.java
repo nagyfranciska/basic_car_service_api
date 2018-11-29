@@ -2,6 +2,7 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,16 +26,19 @@ public class Service {
     private Integer price;
 
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "GARAGE_ID")
     private Garage garage;
 
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CAR_ID")
     private Car car;
 
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CUST_ID")
     private Customer customer;

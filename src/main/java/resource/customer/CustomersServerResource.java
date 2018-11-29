@@ -7,10 +7,10 @@ import org.restlet.resource.ServerResource;
 import service.CustomerService;
 
 import java.util.List;
-import java.util.Map;
 
 public class CustomersServerResource extends ServerResource {
 
+    //TODO: Solve logic without instantiation
     public static CustomerService customerService = new CustomerService();
 
     @Get

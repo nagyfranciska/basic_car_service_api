@@ -12,13 +12,21 @@ public class CarDAO {
     public CarDAO() {
     }
 
+    public List findAll() {
+        Query q = manager.createQuery("SELECT * FROM Car");
+        return q.getResultList();
+    }
+
     public void save(Car car) {
         manager.getTransaction().begin();
         manager.persist(car);
         manager.getTransaction().commit();
         manager.close();
-        JPAUtility.close();
         System.out.println("new car is saved");
+    }
+
+    public Car findById(Integer id) {
+        return manager.find(Car.class, id);
     }
 
     public void update(Car car) {
@@ -40,12 +48,4 @@ public class CarDAO {
         manager.remove(car);
     }
 
-    public Car findById(Integer id) {
-        return manager.find(Car.class, id);
-    }
-
-    public List findAll() {
-        Query q = manager.createQuery("SELECT * FROM Car");
-        return q.getResultList();
-    }
 }

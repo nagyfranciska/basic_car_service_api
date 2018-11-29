@@ -7,7 +7,6 @@ import org.restlet.resource.ServerResource;
 import service.GarageService;
 
 import java.util.List;
-import java.util.Map;
 
 public class GaragesServerResource extends ServerResource {
 

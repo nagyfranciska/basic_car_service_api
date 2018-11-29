@@ -1,9 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -43,6 +40,7 @@ public class Car {
     private List<Service> serviceList;
 
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CUST_ID")
     private Customer customer;
