@@ -20,10 +20,11 @@ public class CustomerDAO {
     }
 
     public Customer save(Customer customer) {
-        manager.getTransaction().begin();
-        manager.persist(customer);
-        manager.getTransaction().commit();
-        manager.close();
+        EntityManager manager2 = JPAUtility.getEntityManager();
+        manager2.getTransaction().begin();
+        manager2.persist(customer);
+        manager2.getTransaction().commit();
+        manager2.close();
         System.out.println("new customer is saved");
         return customer;
     }

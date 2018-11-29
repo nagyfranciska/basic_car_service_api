@@ -22,7 +22,6 @@ public class CarServerComponent extends Component {
 
     public CarServerComponent() throws Exception {
 
-        JPAUtility.initJPA();
         CarServerApplication app = new CarServerApplication();
         getServers().add(Protocol.HTTP, 8080);
         getDefaultHost().attachDefault(app);
