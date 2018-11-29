@@ -13,16 +13,17 @@ public class GarageDAO {
     public GarageDAO() {
     }
 
-    public void save(Garage garage) {
+    public Garage save(Garage garage) {
         mananger.getTransaction().begin();
         mananger.persist(garage);
         mananger.getTransaction().commit();
         mananger.close();
         JPAUtility.close();
         System.out.println("new garage is saved");
+        return garage;
     }
 
-    public void update(Garage garage) {
+    public Garage update(Garage garage) {
         Garage garageToUpdate = mananger.find(Garage.class, garage.getId());
         mananger.getTransaction().begin();
 
@@ -34,10 +35,12 @@ public class GarageDAO {
         mananger.getTransaction().commit();
         mananger.close();
         System.out.println("garage is updated");
+        return garageToUpdate;
     }
 
-    public void delete(Garage garage) {
+    public Garage delete(Garage garage) {
         mananger.remove(garage);
+        return garage;
     }
 
     public Garage findById(Integer id) {
