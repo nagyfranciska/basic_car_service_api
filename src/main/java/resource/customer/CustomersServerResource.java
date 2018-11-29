@@ -14,7 +14,7 @@ public class CustomersServerResource extends ServerResource {
     public static CustomerService customerService = new CustomerService();
 
     @Get
-    public List getCustomers() {
+    public List<Customer> getCustomers() {
         return customerService.getCustomers();
     }
 
