@@ -1,7 +1,6 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -13,11 +12,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Garage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "GARAGE", unique = true, nullable = false)
+    @Column(name = "NAME", unique = true, nullable = false)
     private String name;
 
     @Column(name = "ADDRESS", nullable = false)
@@ -47,5 +46,33 @@ public class Garage {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setServiceList(List<Service> serviceList) {
+        this.serviceList = serviceList;
     }
 }
