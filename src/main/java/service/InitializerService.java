@@ -33,8 +33,14 @@ public class InitializerService {
         Service serviceB = new Service("2018-08-15", "2018-09-18", 65000);
         Service serviceC = new Service("2018-10-08", "2018-11-06", 110000);
 
+        //Saving Garage first to avoid detached state persistence
         garageDAO.save(garageA);
         garageDAO.save(garageB);
+
+        //Creating connections between objects
+        garageA.getServiceList().add(serviceA);
+        garageB.getServiceList().add(serviceB);
+        garageB.getServiceList().add(serviceC);
 
         serviceA.setCustomer(customerA);
         serviceA.setCar(carA);
@@ -42,31 +48,25 @@ public class InitializerService {
         serviceB.setCar(carA);
         serviceC.setCustomer(customerB);
         serviceC.setCar(carB);
-
         serviceA.setGarage(garageA);
         serviceB.setGarage(garageB);
         serviceC.setGarage(garageB);
-        garageA.getServiceList().add(serviceA);
-        garageB.getServiceList().add(serviceB);
-        garageB.getServiceList().add(serviceC);
 
         carA.getServiceList().add(serviceA);
         carA.getServiceList().add(serviceB);
         carA.setCustomer(customerA);
-
         carB.getServiceList().add(serviceC);
         carB.setCustomer(customerB);
-
         carC.setCustomer(customerB);
 
         customerA.getCarList().add(carA);
         customerA.getServiceList().add(serviceA);
         customerA.getServiceList().add(serviceB);
-
         customerB.getCarList().add(carB);
         customerB.getCarList().add(carC);
         customerB.getServiceList().add(serviceC);
 
+        //Persisting Costumer, this cascades down to Car and Service
         customerDAO.save(customerA);
         customerDAO.save(customerB);
 
