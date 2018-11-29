@@ -15,8 +15,28 @@ public class ServiceDAO {
     }
 
     public List findAll() {
-        Query q = manager.createQuery("SELECT * FROM Service");
+        Query q = manager.createQuery("SELECT s FROM Service s");
         return q.getResultList();
+    }
+
+    public List findAllByCarIdAndCustomerId(Integer customerId, Integer carId) {
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE CUST_ID = ?1 AND CAR_ID = ?2");
+        q.setParameter(1, customerId);
+        q.setParameter(2, carId);
+        return q.getResultList();
+    }
+
+    public List findAllByGarage(Integer garageId) {
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1");
+        q.setParameter(1, garageId);
+        return q.getResultList();
+    }
+
+    public Object findByIdAndGarageId(Integer garageId, Integer serviceId) {
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1 AND ID = ?2");
+        q.setParameter(1, garageId);
+        q.setParameter(2, serviceId);
+        return q.getSingleResult();
     }
 
     public Service save(Service service) {
