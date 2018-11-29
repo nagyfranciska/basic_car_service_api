@@ -9,31 +9,34 @@ import java.util.List;
 
 public class CustomerDAO {
 
-    private EntityManager manager = JPAUtility.getEntityManager();
-
     public CustomerDAO() {
     }
 
-    public List<Customer> findAll() {
-        Query q = manager.createQuery("SELECT * FROM Customer");
-        return q.getResultList();
+    public List findAll() {
+        EntityManager manager = JPAUtility.getEntityManager();
+        Query q = manager.createQuery("SELECT c FROM Customer c");
+        List result = q.getResultList();
+        manager.close();
+        return result;
     }
 
-    public Customer save(Customer customer) {
-        EntityManager manager2 = JPAUtility.getEntityManager();
-        manager2.getTransaction().begin();
-        manager2.persist(customer);
-        manager2.getTransaction().commit();
-        manager2.close();
-        System.out.println("new customer is saved");
-        return customer;
+    public void save(Customer customer) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        manager.persist(customer);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     public Customer findById(Integer id) {
-        return manager.find(Customer.class, id);
+        EntityManager manager = JPAUtility.getEntityManager();
+        Customer result = manager.find(Customer.class, id);
+        manager.close();
+        return result;
     }
 
-    public Customer update(Customer customer) {
+    public void update(Customer customer) {
+        EntityManager manager = JPAUtility.getEntityManager();
         Customer customerToUpdate = manager.find(Customer.class, customer.getId());
         manager.getTransaction().begin();
         customerToUpdate.setName(customer.getName());
@@ -44,13 +47,11 @@ public class CustomerDAO {
         customerToUpdate.setServiceList(customer.getServiceList());
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("customer is updated");
-        return customer;
     }
 
-    public Customer delete(Customer customer) {
+    public void delete(Customer customer) {
+        EntityManager manager = JPAUtility.getEntityManager();
         manager.remove(customer);
-        return customer;
+        manager.close();
     }
-
 }

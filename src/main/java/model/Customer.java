@@ -24,6 +24,7 @@ public class Customer {
     private List<Car> carList;
 
     @JsonManagedReference
+    @JsonIgnoreProperties
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
     private List<Service> serviceList;
