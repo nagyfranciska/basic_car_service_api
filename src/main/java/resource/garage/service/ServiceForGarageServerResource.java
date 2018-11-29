@@ -11,14 +11,9 @@ import service.ServiceService;
 
 public class ServiceForGarageServerResource extends ServerResource {
 
-    ServiceService serviceService = ServicesForGarageServerResource.serviceService;
-    GarageService garageService = GaragesServerResource.garageService;
+    private ServiceService serviceService = ServicesForGarageServerResource.serviceService;
+    private GarageService garageService = GaragesServerResource.garageService;
 
-//    @Get
-//    public Service getService() {
-//        Integer id = Integer.parseInt(getAttribute("serviceId"));
-//        return serviceService.getServiceById(id);
-//    }
 
     @Get
     public Service getService() {
@@ -27,10 +22,6 @@ public class ServiceForGarageServerResource extends ServerResource {
         return garageService.getGarageById(garageId).getServiceList().get(serviceId);
     }
 
-//    @Put
-//    public Service updateService(Service service) {
-//        return serviceService.updateService(service);
-//    }
 
     @Put
     public Service updateService(Service service) {
@@ -40,11 +31,6 @@ public class ServiceForGarageServerResource extends ServerResource {
         garageService.getGarageById(garageId).getServiceList().set(serviceId, service);
         return service;
     }
-
-//    @Delete
-//    public Service deleteService(Service service) {
-//        return serviceService.deleteService(service);
-//    }
 
     @Delete
     public Service deleteService(Service service) {

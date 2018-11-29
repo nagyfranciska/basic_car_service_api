@@ -7,7 +7,6 @@ import org.restlet.resource.ServerResource;
 import service.GarageService;
 
 import java.util.List;
-import java.util.Map;
 
 public class GaragesServerResource extends ServerResource {
 
@@ -20,6 +19,7 @@ public class GaragesServerResource extends ServerResource {
 
     @Post
     public Garage saveGarage(Garage garage) {
+        System.out.println("GARAGE: " + garage.toString());
         return garageService.saveGarage(garage);
     }
 }

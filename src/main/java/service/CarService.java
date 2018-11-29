@@ -9,10 +9,9 @@ import java.util.List;
 
 public class CarService {
 
+    private CarDAO carDAO;
 
-
-    CarDAO carDAO;
-
+    //TODO: Solve logic without instantiation
     public CarService() {
         carDAO = new CarDAO();
     }

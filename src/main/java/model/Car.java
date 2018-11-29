@@ -1,21 +1,18 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
@@ -31,7 +28,7 @@ public class Car {
     @Column(name = "SIZE", nullable = false)
     private Integer size;
 
-    @Column(name = "DOOR COUNT", nullable = false)
+    @Column(name = "DOOR_COUNT", nullable = false)
     private Integer doorCount;
 
     @Column(name = "COLOR", nullable = false)
@@ -43,8 +40,9 @@ public class Car {
     private List<Service> serviceList;
 
     @JsonBackReference
+    @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "")
+    @JoinColumn(name = "CUST_ID")
     private Customer customer;
 
     public Car() {
@@ -57,7 +55,7 @@ public class Car {
         this.size = size;
         this.doorCount = door;
         this.color = color;
-        serviceList = new ArrayList<>();
+        serviceList = new CopyOnWriteArrayList<>();
     }
 
     public CarType getCarType() {
@@ -118,5 +116,13 @@ public class Car {
 
     public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

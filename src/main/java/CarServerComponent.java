@@ -2,9 +2,7 @@ import org.restlet.Component;
 import org.restlet.data.Protocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import service.JPAUtility;
 
 public class CarServerComponent extends Component {
 
@@ -27,6 +25,7 @@ public class CarServerComponent extends Component {
         CarServerApplication app = new CarServerApplication();
         getServers().add(Protocol.HTTP, 8080);
         getDefaultHost().attachDefault(app);
+        JPAUtility.initJPA();
 
     }
 }

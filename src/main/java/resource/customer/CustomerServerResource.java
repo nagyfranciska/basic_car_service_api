@@ -9,7 +9,7 @@ import service.CustomerService;
 
 public class CustomerServerResource extends ServerResource {
 
-    CustomerService customerService = CustomersServerResource.customerService;
+    private CustomerService customerService = CustomersServerResource.customerService;
 
     @Get
     public Customer getCustomer() {

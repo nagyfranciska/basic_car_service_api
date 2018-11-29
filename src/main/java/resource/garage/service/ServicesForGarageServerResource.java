@@ -14,24 +14,14 @@ import java.util.Map;
 
 public class ServicesForGarageServerResource extends ServerResource {
 
-    public static ServiceService serviceService = ServicesForCarServerResource.serviceService;
-    GarageService garageService = GaragesServerResource.garageService;
-
-//    @Get
-//    public Map<Integer, Service> getServices() {
-//        return serviceService.getServices();
-//    }
+    static ServiceService serviceService = ServicesForCarServerResource.serviceService;
+    private GarageService garageService = GaragesServerResource.garageService;
 
     @Get
     public List<Service> getServices() {
         Integer garageId = Integer.parseInt(getAttribute("garageId"));
         return garageService.getGarageById(garageId).getServiceList();
     }
-
-//    @Post
-//    public Service saveService(Service service) {
-//        return serviceService.saveService(service);
-//    }
 
     @Post
     public Service saveService(Service service) {

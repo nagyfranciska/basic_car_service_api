@@ -1,3 +1,4 @@
+import model.Garage;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
@@ -17,6 +18,9 @@ public class CarServerApplication extends Application {
     }
 
     public Restlet createInboundRoot() {
+
+        Garage garage = new Garage("garageName", "GarageAddress", 5);
+//        GaragesServerResource.garageService.saveGarage(garage);
 
         Router router = new Router(getContext());
 

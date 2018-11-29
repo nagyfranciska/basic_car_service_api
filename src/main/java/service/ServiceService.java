@@ -4,12 +4,12 @@ import dao.ServiceDAO;
 import model.Service;
 
 import java.util.List;
-import java.util.Map;
 
 public class ServiceService {
 
-    public ServiceDAO serviceDAO;
+    private ServiceDAO serviceDAO;
 
+    //TODO: Solve logic without instantiation
     public ServiceService() {
         serviceDAO = new ServiceDAO();
     }

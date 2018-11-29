@@ -1,29 +1,40 @@
 package dao;
 
 import model.Car;
+import service.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 public class CarDAO {
 
-    static EntityManager mananger = JPAUtility.getEntityManager();
+
+    private EntityManager manager = JPAUtility.getEntityManager();
 
     public CarDAO() {
     }
 
-    public void save(Car car) {
-        mananger.getTransaction().begin();
-        mananger.persist(car);
-        mananger.getTransaction().commit();
-        mananger.close();
-        JPAUtility.close();
-        System.out.println("new car is saved");
+    public List findAll() {
+        Query q = manager.createQuery("SELECT * FROM Car");
+        return q.getResultList();
     }
 
-    public void update(Car car) {
-        Car carToUpdate = mananger.find(Car.class, car.getId());
-        mananger.getTransaction().begin();
+    public Car save(Car car) {
+        manager.getTransaction().begin();
+        manager.persist(car);
+        manager.getTransaction().commit();
+        manager.close();
+        System.out.println("new car is saved");
+        return car;
+    }
+
+    public Car findById(Integer id) {
+        return manager.find(Car.class, id);
+    }
+
+    public Car update(Car car) {
+        Car carToUpdate = manager.find(Car.class, car.getId());
+        manager.getTransaction().begin();
         carToUpdate.setRegistrationDate(car.getRegistrationDate());
         carToUpdate.setColor(car.getColor());
         carToUpdate.setPlate(car.getPlate());
@@ -31,21 +42,16 @@ public class CarDAO {
         carToUpdate.setServiceList(car.getServiceList());
         carToUpdate.setCarType(car.getCarType());
         carToUpdate.setSize(car.getSize());
-        mananger.getTransaction().commit();
-        mananger.close();
+        manager.getTransaction().commit();
+        manager.close();
         System.out.println("car is updated");
+        return carToUpdate;
     }
 
-    public void delete(Car car) {
-        mananger.remove(car);
+    public Car delete(Car car) {
+        manager.remove(car);
+        return car;
     }
 
-    public Car findById(Integer id) {
-        return mananger.find(Car.class, id);
-    }
 
-    public List findAll() {
-        Query q = mananger.createQuery("SELECT * FROM Car");
-        return q.getResultList();
-    }
 }
