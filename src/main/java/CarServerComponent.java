@@ -4,9 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.JPAUtility;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 public class CarServerComponent extends Component {
 
     private static final Logger logger = LoggerFactory.getLogger(CarServerComponent.class);

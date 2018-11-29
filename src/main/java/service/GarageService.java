@@ -10,7 +10,7 @@ public class GarageService {
 
     private GarageDAO garageDAO;
 
-    //TODO: Solve logic without instantiation
+//    TODO: Solve logic without instantiation
     public GarageService() {
         garageDAO = new GarageDAO();
     }
@@ -26,13 +26,13 @@ public class GarageService {
         return garageList;
     }
 
-    public Garage getGarageById(Integer id) {
-        return garageDAO.findById(id);
-    }
-
     public Garage saveGarage(Garage garage) {
         garageDAO.save(garage);
         return getGarageById(garage.getId());
+    }
+
+    public Garage getGarageById(Integer id) {
+        return garageDAO.findById(id);
     }
 
     public Garage updateGarage(Garage garage) {

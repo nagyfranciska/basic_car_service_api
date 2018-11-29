@@ -8,6 +8,7 @@ public class JPAUtility {
     private static EntityManagerFactory emFactory;
 
     public static EntityManager getEntityManager() {
+
         return emFactory.createEntityManager();
     }
 
@@ -18,4 +19,5 @@ public class JPAUtility {
     public static void initJPA() {
         emFactory = Persistence.createEntityManagerFactory("jpa");
     }
+
 }

@@ -19,6 +19,7 @@ public class GaragesServerResource extends ServerResource {
 
     @Post
     public Garage saveGarage(Garage garage) {
+        System.out.println("GARAGE: " + garage.toString());
         return garageService.saveGarage(garage);
     }
 }

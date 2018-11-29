@@ -25,13 +25,13 @@ public class CustomerService {
         return customerList;
     }
 
-    public Customer getCustomerById(Integer id) {
-        return customerDAO.findById(id);
-    }
-
     public Customer saveCustomer(Customer customer) {
         customerDAO.save(customer);
         return getCustomerById(customer.getId());
+    }
+
+    public Customer getCustomerById(Integer id) {
+        return customerDAO.findById(id);
     }
 
     public Customer updateCustomer(Customer customer) {
