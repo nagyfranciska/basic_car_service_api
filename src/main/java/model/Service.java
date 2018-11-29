@@ -1,28 +1,42 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+@Entity
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
+
+    @Column(name = "CAR_TYPE", nullable = false)
     private String start;
+
+    @Column(name = "CAR_TYPE", nullable = false)
     private String end;
+
+    @Column(name = "CAR_TYPE", nullable = false)
     private Integer price;
+
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "GARAGE_ID")
     private Garage garage;
+
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "CAR_ID")
     private Car car;
+
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "CUST_ID")
     private Customer customer;
 
     public Service() {

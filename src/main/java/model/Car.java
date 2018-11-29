@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -31,7 +31,7 @@ public class Car {
     @Column(name = "SIZE", nullable = false)
     private Integer size;
 
-    @Column(name = "DOOR COUNT", nullable = false)
+    @Column(name = "DOOR_COUNT", nullable = false)
     private Integer doorCount;
 
     @Column(name = "COLOR", nullable = false)
@@ -44,7 +44,7 @@ public class Car {
 
     @JsonBackReference
     @ManyToOne()
-    @JoinColumn(name = "")
+    @JoinColumn(name = "CUST_ID")
     private Customer customer;
 
     public Car() {
@@ -57,7 +57,7 @@ public class Car {
         this.size = size;
         this.doorCount = door;
         this.color = color;
-        serviceList = new ArrayList<>();
+        serviceList = new CopyOnWriteArrayList<>();
     }
 
     public CarType getCarType() {
