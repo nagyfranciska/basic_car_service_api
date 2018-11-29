@@ -16,7 +16,6 @@ public class InitializerService {
         CarDAO carDAO = new CarDAO();
         ServiceDAO serviceDAO = new ServiceDAO();
 
-
         Customer customerA = new Customer("Arthur Weasley", "13, Odú utca, Widra St. Capdel",
                 "13, Odú utca, Widra St. Capdel", "free");
         Customer customerB = new Customer("Albert Runcorn", "128/B, Lettingham utca, London",
