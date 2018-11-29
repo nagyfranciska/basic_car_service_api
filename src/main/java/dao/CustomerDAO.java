@@ -19,19 +19,20 @@ public class CustomerDAO {
         return q.getResultList();
     }
 
-    public void save(Customer customer) {
+    public Customer save(Customer customer) {
         manager.getTransaction().begin();
         manager.persist(customer);
         manager.getTransaction().commit();
         manager.close();
         System.out.println("new customer is saved");
+        return customer;
     }
 
     public Customer findById(Integer id) {
         return manager.find(Customer.class, id);
     }
 
-    public void update(Customer customer) {
+    public Customer update(Customer customer) {
         Customer customerToUpdate = manager.find(Customer.class, customer.getId());
         manager.getTransaction().begin();
         customerToUpdate.setName(customer.getName());
@@ -43,10 +44,12 @@ public class CustomerDAO {
         manager.getTransaction().commit();
         manager.close();
         System.out.println("customer is updated");
+        return customer;
     }
 
-    public void delete(Customer customer) {
+    public Customer delete(Customer customer) {
         manager.remove(customer);
+        return customer;
     }
 
 }

@@ -19,19 +19,22 @@ public class GarageDAO {
         return q.getResultList();
     }
 
-    public void save(Garage garage) {
+    public Garage save(Garage garage) {
         manager.getTransaction().begin();
         manager.persist(garage);
         manager.getTransaction().commit();
         manager.close();
         System.out.println("new garage is saved");
+        return garage;
     }
+
 
     public Garage findById(Integer id) {
         return manager.find(Garage.class, id);
     }
 
-    public void update(Garage garage) {
+
+    public Garage update(Garage garage) {
         Garage garageToUpdate = manager.find(Garage.class, garage.getId());
         manager.getTransaction().begin();
         garageToUpdate.setAddress(garage.getAddress());
@@ -41,10 +44,12 @@ public class GarageDAO {
         manager.getTransaction().commit();
         manager.close();
         System.out.println("garage is updated");
+        return garageToUpdate;
     }
 
-    public void delete(Garage garage) {
+    public Garage delete(Garage garage) {
         manager.remove(garage);
+        return garage;
     }
 
 }

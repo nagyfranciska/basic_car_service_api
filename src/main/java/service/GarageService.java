@@ -19,8 +19,7 @@ public class GarageService {
     }
 
     public Garage saveGarage(Garage newGarage) {
-        garageDAO.save(newGarage);
-        return garageDAO.findById(newGarage.getId());
+        return garageDAO.save(newGarage);
     }
 
     public Garage getGarageById(Integer id) {
@@ -28,12 +27,11 @@ public class GarageService {
     }
 
     public Garage updateGarage(Garage garage) {
-        garageDAO.update(garage);
-        return garageDAO.findById(garage.getId());
+        return garageDAO.update(garage);
     }
 
     public Garage deleteGarage(Garage garage) {
-        garageDAO.delete(garage);
-        return garage;
+        return garageDAO.delete(garage);
+
     }
 }

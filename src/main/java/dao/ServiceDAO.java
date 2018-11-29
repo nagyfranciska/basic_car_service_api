@@ -19,12 +19,13 @@ public class ServiceDAO {
         return q.getResultList();
     }
 
-    public void save(Service service) {
+    public Service save(Service service) {
         manager.getTransaction().begin();
         manager.persist(service);
         manager.getTransaction().commit();
         manager.close();
         System.out.println("new service is saved");
+        return service;
     }
 
     public Service findById(Integer id) {
@@ -37,7 +38,7 @@ public class ServiceDAO {
         return q.getResultList();
     }
 
-    public void update(Service service) {
+    public Service update(Service service) {
         Service serviceToUpdate = manager.find(Service.class, service.getId());
         manager.getTransaction().begin();
         serviceToUpdate.setStart(service.getStart());
@@ -49,10 +50,12 @@ public class ServiceDAO {
         manager.getTransaction().commit();
         manager.close();
         System.out.println("service is updated");
+        return service;
     }
 
-    public void delete(Service service) {
+    public Service delete(Service service) {
         manager.remove(service);
+        return service;
     }
 
 }

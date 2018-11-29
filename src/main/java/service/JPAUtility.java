@@ -6,14 +6,17 @@ import javax.persistence.Persistence;
 
 public class JPAUtility {
     private static EntityManagerFactory emFactory;
-    public static EntityManager getEntityManager(){
+
+    public static EntityManager getEntityManager() {
+
         return emFactory.createEntityManager();
     }
-    public static void close(){
+
+    public static void close() {
         emFactory.close();
     }
 
-    public static void initFactory() {
+    public static void initJPA() {
         emFactory = Persistence.createEntityManagerFactory("jpa");
     }
 
