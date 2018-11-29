@@ -6,40 +6,56 @@ import model.Car;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CarService {
 
     private CarDAO carDAO;
+    private CustomerService customerService;
 
     //TODO: Solve logic without instantiation
     public CarService() {
         carDAO = new CarDAO();
     }
 
-    public List getCars() {
-        return carDAO.findAll();
+    public List<Car> getCarsByCustomer(Integer customerId) {
+        List rawList = carDAO.findAllByCustomer(customerId);
+        List<Car> carList = new CopyOnWriteArrayList<>();
+        try {
+            rawList.forEach(c -> carList.add((Car)c));
+        } catch (TypeNotPresentException e) {
+            System.out.println("error in CarService with carList");
+        }
+        return carList;
     }
 
-    public Car getCarById(Integer id) {
-        return carDAO.findById(id);
+    public Car getCarById(Integer customerId, Integer carId) {
+        Car car = (Car)carDAO.findById(customerId, carId);
+        return car;
     }
 
-    public Car saveCar(Car newCar) {
-        if (isValid(newCar)) {
-            carDAO.save(newCar);
-            return carDAO.findById(newCar.getId());
+    public Car saveCar(Car car, Integer customerId) {
+        if (isValid(car)) {
+            car.setCustomer(customerService.getCustomerById(customerId));
+            carDAO.save(car);
+            return getCarById(customerId, car.getId());
         }
         return null;
     }
 
-    public Car updateCar(Car car) {
-       carDAO.update(car);
-       return carDAO.findById(car.getId());
+    public Car updateCar(Integer customerId, Car car) {
+        carDAO.update(car);
+        customerService.getCustomerById(customerId).getCarList().set(car.getId(), car);
+        Car updatedCar = (Car)carDAO.findById(customerId, car.getId());
+        return updatedCar;
     }
 
-    public Car deleteCar(Car car) {
+    public Car deleteCar(Integer customerId, Car car) {
+        Car deletedCar = (Car)carDAO.findById(customerId, car.getId());
+        int carId = car.getId();
+        customerService.getCustomerById(customerId).getCarList().remove(carId);
         carDAO.delete(car);
-        return car;
+        return deletedCar;
     }
 
     private boolean isValid(Car car) {

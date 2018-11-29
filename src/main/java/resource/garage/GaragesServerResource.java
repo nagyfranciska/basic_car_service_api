@@ -13,7 +13,7 @@ public class GaragesServerResource extends ServerResource {
     public static GarageService garageService = new GarageService();
 
     @Get
-    public List getGarages() {
+    public List<Garage> getGarages() {
         return garageService.getGarages();
     }
 

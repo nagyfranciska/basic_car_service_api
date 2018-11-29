@@ -18,12 +18,7 @@ public class GarageDAOTest {
     static Garage garage03;
 
     @BeforeClass
-    public void setup() {
-
-
-        MockitoAnnotations.initMocks(this);
-
-
+    public static void setup() {
 
         dao = Mockito.mock(GarageDAO.class);
         garage01 = new Garage("name", "address", 5);
@@ -36,6 +31,8 @@ public class GarageDAOTest {
 
     @Test
     public void testGetAll() {
+        dao.save(garage01);
+        dao.save(garage02);
         Assert.assertEquals(2, dao.findAll().size());
     }
 

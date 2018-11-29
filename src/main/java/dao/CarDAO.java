@@ -14,25 +14,31 @@ public class CarDAO {
     public CarDAO() {
     }
 
-    public List findAll() {
-        Query q = manager.createQuery("SELECT * FROM Car");
+    public List findAllByCustomer(Integer customerId) {
+        Query q = manager.createQuery("SELECT c FROM Car c WHERE CUST_ID = ?1");
+        q.setParameter(1,customerId);
         return q.getResultList();
     }
 
-    public Car save(Car car) {
+    public List findAll() {
+        Query q = manager.createQuery("SELECT c FROM Car c");
+        return q.getResultList();
+    }
+    public void save(Car car) {
         manager.getTransaction().begin();
         manager.persist(car);
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("new car is saved");
-        return car;
     }
 
-    public Car findById(Integer id) {
-        return manager.find(Car.class, id);
+    public Object findById(Integer customerId, Integer carId) {
+        Query q = manager.createQuery("SELECT c FROM Car c WHERE CUST_ID = ?1 AND ID = 2?");
+        q.setParameter(1, customerId);
+        q.setParameter(2, carId);
+        return q.getSingleResult();
     }
 
-    public Car update(Car car) {
+    public void update(Car car) {
         Car carToUpdate = manager.find(Car.class, car.getId());
         manager.getTransaction().begin();
         carToUpdate.setRegistrationDate(car.getRegistrationDate());
@@ -44,14 +50,9 @@ public class CarDAO {
         carToUpdate.setSize(car.getSize());
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("car is updated");
-        return carToUpdate;
     }
 
-    public Car delete(Car car) {
+    public void delete(Car car) {
         manager.remove(car);
-        return car;
     }
-
-
 }
