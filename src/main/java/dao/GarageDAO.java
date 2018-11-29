@@ -1,6 +1,8 @@
 package dao;
 
 import model.Garage;
+import service.JPAUtility;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -13,7 +15,7 @@ public class GarageDAO {
     }
 
     public List findAll() {
-        Query q = manager.createQuery("SELECT * FROM Garage");
+        Query q = manager.createQuery("SELECT g FROM Garage g");
         return q.getResultList();
     }
 

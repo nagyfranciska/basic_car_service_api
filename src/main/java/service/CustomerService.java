@@ -18,13 +18,13 @@ public class CustomerService {
         return customerDAO.findAll();
     }
 
-    public Customer getCustomerById(Integer id) {
-        return customerDAO.findById(id);
-    }
-
     public Customer saveCustomer(Customer customer) {
         customerDAO.save(customer);
         return customerDAO.findById(customer.getId());
+    }
+
+    public Customer getCustomerById(Integer id) {
+        return customerDAO.findById(id);
     }
 
     public Customer updateCustomer(Customer customer) {

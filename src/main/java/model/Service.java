@@ -12,17 +12,17 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "CAR_TYPE", nullable = false)
+    @Column(name = "START", nullable = false)
     private String start;
 
-    @Column(name = "CAR_TYPE", nullable = false)
+    @Column(name = "END", nullable = false)
     private String end;
 
-    @Column(name = "CAR_TYPE", nullable = false)
+    @Column(name = "PRICE", nullable = false)
     private Integer price;
 
     @JsonBackReference
