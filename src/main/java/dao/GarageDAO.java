@@ -20,10 +20,11 @@ public class GarageDAO {
     }
 
     public Garage save(Garage garage) {
-        manager.getTransaction().begin();
-        manager.persist(garage);
-        manager.getTransaction().commit();
-        manager.close();
+        EntityManager manager2 = JPAUtility.getEntityManager();
+        manager2.getTransaction().begin();
+        manager2.persist(garage);
+        manager2.getTransaction().commit();
+        manager2.close();
         System.out.println("new garage is saved");
         return garage;
     }

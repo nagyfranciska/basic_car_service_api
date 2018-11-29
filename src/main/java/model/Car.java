@@ -117,4 +117,12 @@ public class Car {
     public void setServiceList(List<Service> serviceList) {
         this.serviceList = serviceList;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }
