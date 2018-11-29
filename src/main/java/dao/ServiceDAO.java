@@ -9,36 +9,56 @@ import java.util.List;
 
 public class ServiceDAO {
 
-    private EntityManager manager = JPAUtility.getEntityManager();
-
     public ServiceDAO() {
     }
 
     public List findAll() {
-        Query q = manager.createQuery("SELECT * FROM Service");
-        return q.getResultList();
+        EntityManager manager = JPAUtility.getEntityManager();
+        Query q = manager.createQuery("SELECT s FROM Service s");
+        List result = q.getResultList();
+        manager.close();
+        return result;
     }
 
-    public Service save(Service service) {
+    public List findAllByCarIdAndCustomerId(Integer customerId, Integer carId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE CUST_ID = ?1 AND CAR_ID = ?2");
+        q.setParameter(1, customerId);
+        q.setParameter(2, carId);
+        List result = q.getResultList();
+        manager.close();
+        return result;
+    }
+
+    public List findAllByGarage(Integer garageId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1");
+        q.setParameter(1, garageId);
+        List result = q.getResultList();
+        manager.close();
+        return result;
+    }
+
+    public Object findByIdAndGarageId(Integer garageId, Integer serviceId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1 AND ID = ?2");
+        q.setParameter(1, garageId);
+        q.setParameter(2, serviceId);
+        Object result = q.getSingleResult();
+        manager.close();
+        return result;
+    }
+
+    public void save(Service service) {
+        EntityManager manager = JPAUtility.getEntityManager();
         manager.getTransaction().begin();
         manager.persist(service);
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("new service is saved");
-        return service;
     }
 
-    public Service findById(Integer id) {
-        return manager.find(Service.class, id);
-    }
-
-    public List findByCar(Integer carId) {
-        Query q = manager.createQuery("SELECT * FROM Service WHERE CAR_ID = ?1");
-        q.setParameter(1, carId);
-        return q.getResultList();
-    }
-
-    public Service update(Service service) {
+    public void update(Service service) {
+        EntityManager manager = JPAUtility.getEntityManager();
         Service serviceToUpdate = manager.find(Service.class, service.getId());
         manager.getTransaction().begin();
         serviceToUpdate.setStart(service.getStart());
@@ -49,13 +69,12 @@ public class ServiceDAO {
         serviceToUpdate.setCustomer(service.getCustomer());
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("service is updated");
-        return service;
     }
 
-    public Service delete(Service service) {
+    public void delete(Service service) {
+        EntityManager manager = JPAUtility.getEntityManager();
         manager.remove(service);
-        return service;
+        manager.close();
     }
 
 }

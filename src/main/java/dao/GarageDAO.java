@@ -9,33 +9,36 @@ import java.util.List;
 
 public class GarageDAO {
 
-    private EntityManager manager = JPAUtility.getEntityManager();
-
     public GarageDAO() {
     }
 
     public List findAll() {
+        EntityManager manager = JPAUtility.getEntityManager();
         Query q = manager.createQuery("SELECT g FROM Garage g");
-        return q.getResultList();
+        List result = q.getResultList();
+        manager.close();
+        return result;
     }
 
-    public Garage save(Garage garage) {
-        EntityManager manager2 = JPAUtility.getEntityManager();
-        manager2.getTransaction().begin();
-        manager2.persist(garage);
-        manager2.getTransaction().commit();
-        manager2.close();
-        System.out.println("new garage is saved");
-        return garage;
+    public void save(Garage garage) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        manager.persist(garage);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
 
     public Garage findById(Integer id) {
-        return manager.find(Garage.class, id);
+        EntityManager manager = JPAUtility.getEntityManager();
+        Garage result = manager.find(Garage.class, id);
+        manager.close();
+        return result;
     }
 
 
-    public Garage update(Garage garage) {
+    public void update(Garage garage) {
+        EntityManager manager = JPAUtility.getEntityManager();
         Garage garageToUpdate = manager.find(Garage.class, garage.getId());
         manager.getTransaction().begin();
         garageToUpdate.setAddress(garage.getAddress());
@@ -44,13 +47,12 @@ public class GarageDAO {
         garageToUpdate.setServiceList(garage.getServiceList());
         manager.getTransaction().commit();
         manager.close();
-        System.out.println("garage is updated");
-        return garageToUpdate;
     }
 
-    public Garage delete(Garage garage) {
+    public void delete(Garage garage) {
+        EntityManager manager = JPAUtility.getEntityManager();
         manager.remove(garage);
-        return garage;
+        manager.close();
     }
 
 }

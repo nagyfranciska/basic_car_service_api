@@ -4,6 +4,7 @@ import dao.GarageDAO;
 import model.Garage;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GarageService {
 
@@ -14,12 +15,20 @@ public class GarageService {
         garageDAO = new GarageDAO();
     }
 
-    public List getGarages() {
-        return garageDAO.findAll();
+    public List<Garage> getGarages() {
+        List rawList = garageDAO.findAll();
+        List<Garage> garageList = new CopyOnWriteArrayList<>();
+        try {
+            rawList.forEach(g -> garageList.add((Garage) g));
+        } catch (TypeNotPresentException e) {
+            System.out.println("error in GarageService with garageList");
+        }
+        return garageList;
     }
 
-    public Garage saveGarage(Garage newGarage) {
-        return garageDAO.save(newGarage);
+    public Garage saveGarage(Garage garage) {
+        garageDAO.save(garage);
+        return getGarageById(garage.getId());
     }
 
     public Garage getGarageById(Integer id) {
@@ -27,11 +36,13 @@ public class GarageService {
     }
 
     public Garage updateGarage(Garage garage) {
-        return garageDAO.update(garage);
+        garageDAO.update(garage);
+        return getGarageById(garage.getId());
     }
 
     public Garage deleteGarage(Garage garage) {
-        return garageDAO.delete(garage);
-
+        Garage deletedGarage = getGarageById(garage.getId());
+        garageDAO.delete(garage);
+        return deletedGarage;
     }
 }
