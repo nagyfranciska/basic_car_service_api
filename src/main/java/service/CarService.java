@@ -43,12 +43,14 @@ public class CarService {
         return null;
     }
 
-    public Car updateCar(Integer customerId, Car car) {
-        carDAO.update(car);
-        customerService.getCustomerById(customerId).getCarList().set(car.getId(), car);
-        Car updatedCar = (Car)carDAO.findById(customerId, car.getId());
-        return updatedCar;
-    }
+    //TODO: Implement update() method on LinkedHashSet
+//    public Car updateCar(Integer customerId, Car car) {
+//
+//        carDAO.update(car);
+//        customerService.getCustomerById(customerId).getCarList().set(car.getId(), car);
+//        Car updatedCar = (Car)carDAO.findById(customerId, car.getId());
+//        return updatedCar;
+//    }
 
     public Car deleteCar(Integer customerId, Car car) {
         Car deletedCar = (Car)carDAO.findById(customerId, car.getId());
