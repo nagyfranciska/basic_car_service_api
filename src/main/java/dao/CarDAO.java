@@ -1,6 +1,5 @@
 package dao;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Car;
 import service.JPAUtility;
 
@@ -15,7 +14,7 @@ public class CarDAO {
 
     public List findAllByCustomer(Integer customerId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT c FROM Car c WHERE CUST_ID = ?1");
+        Query q = manager.createQuery("SELECT c FROM Car c WHERE c.customer.id = ?1");
         q.setParameter(1, customerId);
         List result = q.getResultList();
         manager.close();
@@ -40,7 +39,7 @@ public class CarDAO {
 
     public Object findById(Integer customerId, Integer carId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT c FROM Car c WHERE CUST_ID = ?1 AND ID = 2?");
+        Query q = manager.createQuery("SELECT c FROM Car c WHERE CUST_ID = ?1 AND ID = ?2");
         q.setParameter(1, customerId);
         q.setParameter(2, carId);
         Object result = q.getSingleResult();

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -28,7 +28,7 @@ public class Garage {
     @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
-    private List<Service> serviceList;
+    private Set<Service> serviceList;
 
     public Garage() {
     }
@@ -37,10 +37,10 @@ public class Garage {
         this.name = name;
         this.address = address;
         this.capacity = capacity;
-        serviceList = new CopyOnWriteArrayList<>();
+        serviceList = new LinkedHashSet<>();
     }
 
-    public List<Service> getServiceList() {
+    public Set<Service> getServiceList() {
         return serviceList;
     }
 
@@ -72,7 +72,7 @@ public class Garage {
         this.capacity = capacity;
     }
 
-    public void setServiceList(List<Service> serviceList) {
+    public void setServiceList(Set<Service> serviceList) {
         this.serviceList = serviceList;
     }
 }

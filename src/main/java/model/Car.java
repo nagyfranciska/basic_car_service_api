@@ -3,12 +3,10 @@ package model;
 import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Car {
 
     @Id
@@ -35,9 +33,10 @@ public class Car {
     private String color;
 
     @JsonManagedReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "car", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
-    private List<Service> serviceList;
+    private Set<Service> serviceList;
 
     @JsonBackReference
     @JsonIgnore
@@ -55,7 +54,7 @@ public class Car {
         this.size = size;
         this.doorCount = door;
         this.color = color;
-        serviceList = new CopyOnWriteArrayList<>();
+        serviceList = new LinkedHashSet<>();
     }
 
     public CarType getCarType() {
@@ -110,11 +109,11 @@ public class Car {
         return id;
     }
 
-    public List<Service> getServiceList() {
+    public Set<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<Service> serviceList) {
+    public void setServiceList(Set<Service> serviceList) {
         this.serviceList = serviceList;
     }
 

@@ -19,11 +19,12 @@ public class CarServerResource extends ServerResource {
         return carService.getCarById(customerId, carId);
     }
 
-    @Put
-    public Car updateCar(Car car) {
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return carService.updateCar(customerId, car);
-    }
+    //TODO: Implement LinkedHashset in CarService
+//    @Put
+//    public Car updateCar(Car car) {
+//        Integer customerId = Integer.parseInt(getAttribute("customerId"));
+//        return carService.updateCar(customerId, car);
+//    }
 
     @Delete
     public Car deleteCar(Car car) {
