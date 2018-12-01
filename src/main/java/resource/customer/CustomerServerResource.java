@@ -11,7 +11,7 @@ import service.CustomerService;
 public class CustomerServerResource extends ServerResource {
 
     @Inject
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Get
     public Customer getCustomer() {

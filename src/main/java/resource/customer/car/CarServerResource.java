@@ -11,7 +11,7 @@ import service.CarService;
 public class CarServerResource extends ServerResource {
 
     @Inject
-    CarService carService;
+    private CarService carService;
 
 
     @Get

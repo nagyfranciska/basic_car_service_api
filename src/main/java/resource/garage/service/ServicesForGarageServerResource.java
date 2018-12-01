@@ -13,7 +13,7 @@ import java.util.List;
 public class ServicesForGarageServerResource extends ServerResource {
 
     @Inject
-    ServiceService serviceService;
+    private ServiceService serviceService;
 
     @Get
     public List<Service> getServices() {

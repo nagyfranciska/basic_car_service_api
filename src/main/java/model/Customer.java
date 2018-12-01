@@ -88,15 +88,8 @@ public class Customer {
         return carList;
     }
 
-    public void setCarList(Set<Car> carList) {
-        this.carList = carList;
-    }
-
     public Set<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(Set<Service> serviceList) {
-        this.serviceList = serviceList;
-    }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class CustomersServerResource extends ServerResource {
 
     @Inject
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Get
     public List<Customer> getCustomers() {

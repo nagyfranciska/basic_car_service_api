@@ -1,8 +1,6 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
@@ -72,7 +70,4 @@ public class Garage {
         this.capacity = capacity;
     }
 
-    public void setServiceList(Set<Service> serviceList) {
-        this.serviceList = serviceList;
-    }
 }

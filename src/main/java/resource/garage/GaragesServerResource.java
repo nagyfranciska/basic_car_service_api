@@ -12,7 +12,7 @@ import java.util.List;
 public class GaragesServerResource extends ServerResource {
 
     @Inject
-    GarageService garageService;
+    private GarageService garageService;
 
     @Get
     public List<Garage> getGarages() {

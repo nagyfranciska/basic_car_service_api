@@ -11,7 +11,7 @@ import java.util.List;
 public class CarsServerResource extends ServerResource {
 
     @Inject
-    CarService carService;
+    private CarService carService;
 
     @Get
     public List<Car> getCarsByCustomer() {

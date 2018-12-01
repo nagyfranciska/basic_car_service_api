@@ -4,14 +4,13 @@ import com.google.inject.Inject;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class JPAUtility {
 
     @Inject
     private EntityManagerFactory emFactory;
 
-    public EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
 
         return emFactory.createEntityManager();
     }

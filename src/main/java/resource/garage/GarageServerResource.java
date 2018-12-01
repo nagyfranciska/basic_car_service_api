@@ -11,7 +11,7 @@ import service.GarageService;
 public class GarageServerResource extends ServerResource {
 
     @Inject
-    GarageService garageService;
+    private GarageService garageService;
 
     @Get
     public Garage getGarage() {

@@ -111,10 +111,6 @@ public class Car {
         return serviceList;
     }
 
-    public void setServiceList(Set<Service> serviceList) {
-        this.serviceList = serviceList;
-    }
-
     public Customer getCustomer() {
         return customer;
     }
