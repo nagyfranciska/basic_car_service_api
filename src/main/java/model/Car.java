@@ -123,15 +123,4 @@ public class Car {
         this.customer = customer;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof Car) {
-            Car other = (Car) obj;
-            return this.id.equals(other.getId());
-        }
-        return false;
-    }
 }

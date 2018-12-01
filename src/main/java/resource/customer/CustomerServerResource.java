@@ -18,7 +18,7 @@ public class CustomerServerResource extends ServerResource {
 
     @Put
     public Customer updateCustomer(Customer customer) {
-        return customerService.updateCustomer(customer);
+        return customerService.updateCustomer(customer, Integer.parseInt(getAttribute("customerId")));
     }
 
     @Delete

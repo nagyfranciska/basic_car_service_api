@@ -26,9 +26,8 @@ public class CustomerService {
         return customerDAO.findById(id);
     }
 
-    public Customer updateCustomer(Customer customer) {
-        customerDAO.update(customer);
-        return getCustomerById(customer.getId());
+    public Customer updateCustomer(Customer customer, Integer customerId) {
+        return customerDAO.update(customer, customerId);
     }
 
     public Customer deleteCustomer(Integer customerId) {

@@ -20,6 +20,6 @@ public class ServicesForGarageServerResource extends ServerResource {
 
     @Post
     public Service saveService(Service service) {
-        return serviceService.saveService(Integer.parseInt(getAttribute("garageId")), service);
+        return serviceService.saveService(service, Integer.parseInt(getAttribute("garageId")));
     }
 }

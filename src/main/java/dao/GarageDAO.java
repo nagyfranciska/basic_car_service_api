@@ -37,17 +37,17 @@ public class GarageDAO {
         return result;
     }
 
-    //TODO: Fix update
-    public void update(Garage garage) {
+    public Garage update(Garage newGarage, Integer garageId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Garage garageToUpdate = manager.find(Garage.class, garage.getId());
         manager.getTransaction().begin();
-        garageToUpdate.setAddress(garage.getAddress());
-        garageToUpdate.setCapacity(garage.getCapacity());
-        garageToUpdate.setName(garage.getName());
-        garageToUpdate.setServiceList(garage.getServiceList());
+        Garage garage = manager.find(Garage.class, garageId);
+        garage.setAddress(newGarage.getAddress());
+        garage.setCapacity(newGarage.getCapacity());
+        garage.setName(newGarage.getName());
+        manager.merge(garage);
         manager.getTransaction().commit();
         manager.close();
+        return garage;
     }
 
     public Garage delete(Integer garageId) {

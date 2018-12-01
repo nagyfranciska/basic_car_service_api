@@ -22,7 +22,7 @@ public class CarService {
 
     public List<Car> getCarsByCustomer(Integer customerId) {
         return carDAO.findAllByCustomer(customerId);
-      }
+    }
 
     public Car getCarById(Integer carId) {
         return carDAO.findById(carId);
@@ -37,12 +37,9 @@ public class CarService {
         throw new ResourceException(Status.CLIENT_ERROR_NOT_ACCEPTABLE, "Car validation failed");
     }
 
-    //TODO: Correct validation (without samePlate), implement Merge in DAO
-    public Car updateCar(Integer customerId, Car car) {
-        carDAO.update(car);
-        customerService.getCustomerById(customerId).getCarList().remove(car);
-        customerService.getCustomerById(customerId).getCarList().add(car);
-        return carDAO.findById(car.getId());
+    //TODO: Correct validation (without samePlate)
+    public Car updateCar(Car car, Integer carId) {
+        return carDAO.update(car, carId);
     }
 
     public Car deleteCar(Integer carId) {

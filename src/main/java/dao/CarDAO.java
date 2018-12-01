@@ -1,6 +1,7 @@
 package dao;
 
 import model.Car;
+import model.Customer;
 import service.JPAUtility;
 
 import javax.persistence.EntityManager;
@@ -47,20 +48,20 @@ public class CarDAO {
         return result;
     }
 
-    //TODO: Fix this
-    public void update(Car car) {
+    public Car update(Car newCar, Integer carId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Car carToUpdate = manager.find(Car.class, car.getId());
         manager.getTransaction().begin();
-        carToUpdate.setRegistrationDate(car.getRegistrationDate());
-        carToUpdate.setColor(car.getColor());
-        carToUpdate.setPlate(car.getPlate());
-        carToUpdate.setDoorCount(car.getDoorCount());
-        carToUpdate.setServiceList(car.getServiceList());
-        carToUpdate.setCarType(car.getCarType());
-        carToUpdate.setSize(car.getSize());
+        Car car = manager.find(Car.class, carId);
+        car.setCarType(newCar.getCarType());
+        car.setPlate(newCar.getPlate());
+        car.setRegistrationDate(newCar.getRegistrationDate());
+        car.setSize(newCar.getSize());
+        car.setDoorCount(newCar.getDoorCount());
+        car.setColor(newCar.getColor());
+        manager.merge(car);
         manager.getTransaction().commit();
         manager.close();
+        return car;
     }
 
     public Car delete(Integer carId) {

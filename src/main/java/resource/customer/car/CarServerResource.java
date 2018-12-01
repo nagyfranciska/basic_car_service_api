@@ -19,9 +19,7 @@ public class CarServerResource extends ServerResource {
 
     @Put
     public Car updateCar(Car car) {
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        Integer carId = Integer.parseInt(getAttribute("carId"));
-        return carService.updateCar(customerId, car);
+        return carService.updateCar(car, Integer.parseInt(getAttribute("carId")));
     }
 
     @Delete

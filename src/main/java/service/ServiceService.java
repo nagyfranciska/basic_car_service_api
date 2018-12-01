@@ -8,7 +8,7 @@ import java.util.List;
 public class ServiceService {
 
     private ServiceDAO serviceDAO;
-    private GarageService garageService;
+    private GarageService garageService = new GarageService();
 
     public ServiceService() {
         serviceDAO = new ServiceDAO();
@@ -26,16 +26,14 @@ public class ServiceService {
         return serviceDAO.findById(serviceId);
     }
 
-    public Service saveService(Integer garageId, Service service) {
+    public Service saveService(Service service, Integer garageId) {
         service.setGarage(garageService.getGarageById(garageId));
         serviceDAO.save(service);
         return serviceDAO.findById(service.getId());
     }
 
-    public Service updateService(Integer garageId, Service service) {
-        serviceDAO.update(service);
-        garageService.getGarageById(garageId).getServiceList().add(service);
-        return serviceDAO.findById(service.getId());
+    public Service updateService(Service service, Integer serviceId) {
+        return serviceDAO.update(service, serviceId);
     }
 
     public Service deleteService(Integer serviceId) {

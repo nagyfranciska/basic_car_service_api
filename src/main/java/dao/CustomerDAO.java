@@ -36,19 +36,18 @@ public class CustomerDAO {
         return result;
     }
 
-    //TODO: Fix update
-    public void update(Customer customer) {
+    public Customer update(Customer newCustomer, Integer customerId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Customer customerToUpdate = manager.find(Customer.class, customer.getId());
         manager.getTransaction().begin();
-        customerToUpdate.setName(customer.getName());
-        customerToUpdate.setType(customer.getType());
-        customerToUpdate.setAddress(customer.getAddress());
-        customerToUpdate.setInvoiceAddress(customer.getInvoiceAddress());
-        customerToUpdate.setCarList(customer.getCarList());
-        customerToUpdate.setServiceList(customer.getServiceList());
+        Customer customer = manager.find(Customer.class, customerId);
+        customer.setName(newCustomer.getName());
+        customer.setType(newCustomer.getType());
+        customer.setAddress(newCustomer.getAddress());
+        customer.setInvoiceAddress(newCustomer.getInvoiceAddress());
+        manager.merge(customer);
         manager.getTransaction().commit();
         manager.close();
+        return customer;
     }
 
     public Customer delete(Integer customerId) {

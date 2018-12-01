@@ -27,9 +27,8 @@ public class GarageService {
         return garageDAO.findById(id);
     }
 
-    public Garage updateGarage(Garage garage) {
-        garageDAO.update(garage);
-        return getGarageById(garage.getId());
+    public Garage updateGarage(Garage garage, Integer garageId) {
+        return garageDAO.update(garage, garageId);
     }
 
     public Garage deleteGarage(Integer garageId) {

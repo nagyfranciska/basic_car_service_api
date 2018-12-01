@@ -18,7 +18,7 @@ public class GarageServerResource extends ServerResource {
 
     @Put
     public Garage updateGarage(Garage garage) {
-        return garageService.updateGarage(garage);
+        return garageService.updateGarage(garage, Integer.parseInt(getAttribute("garageId")));
     }
 
     @Delete

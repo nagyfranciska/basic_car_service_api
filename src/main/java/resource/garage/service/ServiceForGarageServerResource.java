@@ -18,8 +18,7 @@ public class ServiceForGarageServerResource extends ServerResource {
 
     @Put
     public Service updateService(Service service) {
-        Integer garageId = Integer.parseInt(getAttribute("garageId"));
-       return serviceService.updateService(garageId, service);
+       return serviceService.updateService(service, Integer.parseInt(getAttribute("serviceId")));
     }
 
     @Delete

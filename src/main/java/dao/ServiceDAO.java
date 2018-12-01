@@ -4,7 +4,6 @@ import model.Service;
 import service.JPAUtility;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -56,19 +55,17 @@ public class ServiceDAO {
         manager.close();
     }
 
-    //TODO: Fix update
-    public void update(Service service) {
+    public Service update(Service newService, Integer serviceId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Service serviceToUpdate = manager.find(Service.class, service.getId());
         manager.getTransaction().begin();
-        serviceToUpdate.setStart(service.getStart());
-        serviceToUpdate.setEnd(service.getEnd());
-        serviceToUpdate.setPrice(service.getPrice());
-        serviceToUpdate.setCar(service.getCar());
-        serviceToUpdate.setGarage(service.getGarage());
-        serviceToUpdate.setCustomer(service.getCustomer());
+        Service service = manager.find(Service.class, serviceId);
+        service.setStart(newService.getStart());
+        service.setEnd(newService.getEnd());
+        service.setPrice(newService.getPrice());
+        manager.merge(service);
         manager.getTransaction().commit();
         manager.close();
+        return service;
     }
 
     public Service delete(Integer serviceId) {
