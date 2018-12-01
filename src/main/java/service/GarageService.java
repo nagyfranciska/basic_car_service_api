@@ -1,5 +1,6 @@
 package service;
 
+import com.google.inject.Inject;
 import dao.GarageDAO;
 import model.Garage;
 
@@ -8,10 +9,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GarageService {
 
+    @Inject
     private GarageDAO garageDAO;
 
     public GarageService() {
-        garageDAO = new GarageDAO();
     }
 
     public List<Garage> getGarages() {

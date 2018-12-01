@@ -1,5 +1,6 @@
 package resource.garage.service;
 
+import com.google.inject.Inject;
 import model.Service;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -11,7 +12,8 @@ import java.util.List;
 
 public class ServicesForGarageServerResource extends ServerResource {
 
-    static ServiceService serviceService = ServicesForCarServerResource.serviceService;
+    @Inject
+    ServiceService serviceService;
 
     @Get
     public List<Service> getServices() {

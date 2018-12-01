@@ -12,6 +12,8 @@ import resource.garage.service.ServicesForGarageServerResource;
 
 public class CarServerApplication extends Application {
 
+    
+
     CarServerApplication() {
         setName("model.Car Server App No.1");
     }
