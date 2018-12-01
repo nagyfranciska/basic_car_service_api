@@ -9,7 +9,7 @@ import model.*;
 public class InitializerService {
 
     public static void main(String args[]) {
-        JPAUtility.initJPA();
+//        JPAUtility.initJPA();
 
         CustomerDAO customerDAO = new CustomerDAO();
         GarageDAO garageDAO = new GarageDAO();

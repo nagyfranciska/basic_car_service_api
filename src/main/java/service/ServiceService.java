@@ -4,6 +4,7 @@ import dao.ServiceDAO;
 import model.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServiceService {
@@ -50,7 +51,7 @@ public class ServiceService {
 
     public Service updateService(Integer garageId, Service service) {
         serviceDAO.update(service);
-        garageService.getGarageById(garageId).getServiceList().set(service.getId(), service);
+        garageService.getGarageById(garageId).getServiceList().add(service);
         return (Service)serviceDAO.findByIdAndGarageId(garageId, service.getId());
     }
 

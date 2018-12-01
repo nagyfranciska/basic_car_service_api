@@ -1,18 +1,23 @@
 package service;
 
+import com.google.inject.Inject;
 import dao.CustomerDAO;
 import model.Customer;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CustomerService {
 
-    private CustomerDAO customerDAO;
+    @Inject
+    CustomerDAO customerDAO;
 
-    //TODO: Solve logic without instantiation
     public CustomerService() {
-        customerDAO = new CustomerDAO();
     }
+
+//        public List<Customer> getCustomers2() {
+//        return customerDAO.findAll2();
+//    }
 
     public List<Customer> getCustomers() {
         List rawList = customerDAO.findAll();

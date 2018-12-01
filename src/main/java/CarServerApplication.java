@@ -1,5 +1,9 @@
+
+import com.google.inject.Inject;
+import model.Customer;
 import org.restlet.Application;
 import org.restlet.Restlet;
+import org.restlet.ext.guice.FinderFactory;
 import org.restlet.routing.Router;
 import resource.customer.*;
 import resource.customer.car.CarServerResource;
@@ -12,6 +16,9 @@ import resource.garage.service.ServicesForGarageServerResource;
 
 public class CarServerApplication extends Application {
 
+    @Inject
+    private FinderFactory finder;
+
     CarServerApplication() {
         setName("model.Car Server App No.1");
     }
@@ -20,7 +27,7 @@ public class CarServerApplication extends Application {
 
         Router router = new Router(getContext());
 
-        router.attach("/customers", CustomersServerResource.class);
+        router.attach("/customers", finder.finder(CustomersServerResource.class));
         router.attach("/customers/{customerId}", CustomerServerResource.class);
 
         router.attach("/customers/{customerId}/cars", CarsServerResource.class);

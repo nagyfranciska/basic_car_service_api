@@ -7,13 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class ServiceDAO {
+public class ServiceDAO extends JPAUtility{
 
     public ServiceDAO() {
     }
 
     public List findAll() {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT s FROM Service s");
         List result = q.getResultList();
         manager.close();
@@ -21,7 +21,7 @@ public class ServiceDAO {
     }
 
     public List findAllByCarIdAndCustomerId(Integer customerId, Integer carId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT s FROM Service s WHERE CUST_ID = ?1 AND CAR_ID = ?2");
         q.setParameter(1, customerId);
         q.setParameter(2, carId);
@@ -31,7 +31,7 @@ public class ServiceDAO {
     }
 
     public List findAllByGarage(Integer garageId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1");
         q.setParameter(1, garageId);
         List result = q.getResultList();
@@ -40,7 +40,7 @@ public class ServiceDAO {
     }
 
     public Object findByIdAndGarageId(Integer garageId, Integer serviceId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1 AND ID = ?2");
         q.setParameter(1, garageId);
         q.setParameter(2, serviceId);
@@ -50,7 +50,7 @@ public class ServiceDAO {
     }
 
     public void save(Service service) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(service);
         manager.getTransaction().commit();
@@ -58,7 +58,7 @@ public class ServiceDAO {
     }
 
     public void update(Service service) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Service serviceToUpdate = manager.find(Service.class, service.getId());
         manager.getTransaction().begin();
         serviceToUpdate.setStart(service.getStart());
@@ -72,7 +72,7 @@ public class ServiceDAO {
     }
 
     public void delete(Service service) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.remove(service);
         manager.close();
     }
