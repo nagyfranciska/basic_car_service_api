@@ -10,7 +10,6 @@ public class ServiceService {
     private ServiceDAO serviceDAO;
     private GarageService garageService;
 
-    //TODO: Solve logic without instantiation
     public ServiceService() {
         serviceDAO = new ServiceDAO();
     }
@@ -33,11 +32,10 @@ public class ServiceService {
         return serviceDAO.findById(service.getId());
     }
 
-    //TODO: Fix update
     public Service updateService(Integer garageId, Service service) {
         serviceDAO.update(service);
         garageService.getGarageById(garageId).getServiceList().add(service);
-        return (Service)serviceDAO.findById(service.getId());
+        return serviceDAO.findById(service.getId());
     }
 
     public Service deleteService(Integer serviceId) {

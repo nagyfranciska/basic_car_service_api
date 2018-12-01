@@ -33,8 +33,6 @@ public class Car {
     private String color;
 
     @JsonIgnore
-    //TODO: Deletion probably doesn't work because of persisting back
-    //see: https://stackoverflow.com/questions/16898085/jpa-hibernate-remove-entity-sometimes-not-working
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "car", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;

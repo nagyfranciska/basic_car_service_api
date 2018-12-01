@@ -10,7 +10,6 @@ public class GarageService {
 
     private GarageDAO garageDAO;
 
-//    TODO: Solve logic without instantiation
     public GarageService() {
         garageDAO = new GarageDAO();
     }

@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ServicesForCarServerResource extends ServerResource {
 
-    //TODO: Solve logic without instantiation
     public static ServiceService serviceService = new ServiceService();
 
     @Get

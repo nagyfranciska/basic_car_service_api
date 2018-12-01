@@ -9,7 +9,6 @@ public class CustomerService {
 
     private CustomerDAO customerDAO;
 
-    //TODO: Solve logic without instantiation
     public CustomerService() {
         customerDAO = new CustomerDAO();
     }

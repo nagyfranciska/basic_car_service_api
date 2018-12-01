@@ -10,7 +10,6 @@ import java.util.List;
 
 public class CustomersServerResource extends ServerResource {
 
-    //TODO: Solve logic without instantiation
     public static CustomerService customerService = new CustomerService();
 
     @Get

@@ -15,7 +15,6 @@ public class CarService {
     private CarDAO carDAO;
     private CustomerService customerService;
 
-    //TODO: Solve logic without instantiation
     public CarService() {
         customerService = new CustomerService();
         carDAO = new CarDAO();
