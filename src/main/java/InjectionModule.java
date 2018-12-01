@@ -1,5 +1,3 @@
-package di;
-
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -19,6 +17,8 @@ public class InjectionModule extends AbstractModule {
 
     @Override
     protected void configure() {
+
+        bind(CarServerApplication.class).asEagerSingleton();
 
         bind(CustomerDAO.class).asEagerSingleton();
         bind(CarDAO.class).asEagerSingleton();

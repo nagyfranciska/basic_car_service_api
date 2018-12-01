@@ -1,12 +1,8 @@
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import di.InjectionModule;
 import org.restlet.Component;
 import org.restlet.data.Protocol;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import service.JPAUtility;
 
 public class CarServerComponent extends Component {
 
@@ -28,9 +24,8 @@ public class CarServerComponent extends Component {
     }
 
     @Inject
-    public CarServerComponent() throws Exception {
+    public CarServerComponent(CarServerApplication app) throws Exception {
 
-        CarServerApplication app = new CarServerApplication();
         getServers().add(Protocol.HTTP, 8080);
         getDefaultHost().attachDefault(app);
 //        JPAUtility.initJPA();
