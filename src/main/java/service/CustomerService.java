@@ -2,8 +2,8 @@ package service;
 
 import dao.CustomerDAO;
 import model.Customer;
+
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CustomerService {
 
@@ -15,14 +15,7 @@ public class CustomerService {
     }
 
     public List<Customer> getCustomers() {
-        List rawList = customerDAO.findAll();
-        List<Customer> customerList = new CopyOnWriteArrayList<>();
-        try {
-            rawList.forEach(c -> customerList.add((Customer)c));
-        } catch (TypeNotPresentException e) {
-            System.out.println("error in CustomerService with customerList");
-        }
-        return customerList;
+        return customerDAO.findAll();
     }
 
     public Customer saveCustomer(Customer customer) {
@@ -39,9 +32,7 @@ public class CustomerService {
         return getCustomerById(customer.getId());
     }
 
-    public Customer deleteCustomer(Customer customer) {
-        Customer deletedCustomer = getCustomerById(customer.getId());
-        customerDAO.delete(customer);
-        return deletedCustomer;
+    public Customer deleteCustomer(Integer customerId) {
+        return customerDAO.delete(customerId);
     }
 }

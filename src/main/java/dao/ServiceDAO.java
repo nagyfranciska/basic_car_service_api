@@ -5,6 +5,7 @@ import service.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class ServiceDAO {
@@ -12,39 +13,37 @@ public class ServiceDAO {
     public ServiceDAO() {
     }
 
-    public List findAll() {
+    public List<Service> findAll() {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT s FROM Service s");
-        List result = q.getResultList();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s", Service.class);
+        List<Service> result = q.getResultList();
         manager.close();
         return result;
     }
 
-    public List findAllByCarIdAndCustomerId(Integer customerId, Integer carId) {
+    public List<Service> findAllByCar(Integer carId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT s FROM Service s WHERE CUST_ID = ?1 AND CAR_ID = ?2");
-        q.setParameter(1, customerId);
-        q.setParameter(2, carId);
-        List result = q.getResultList();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE CAR_ID = ?1", Service.class);
+        q.setParameter(1, carId);
+        List<Service> result = q.getResultList();
         manager.close();
         return result;
     }
 
-    public List findAllByGarage(Integer garageId) {
+    public List<Service> findAllByGarage(Integer garageId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1");
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1", Service.class);
         q.setParameter(1, garageId);
-        List result = q.getResultList();
+        List<Service> result = q.getResultList();
         manager.close();
         return result;
     }
 
-    public Object findByIdAndGarageId(Integer garageId, Integer serviceId) {
+    public Service findById(Integer serviceId) {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1 AND ID = ?2");
-        q.setParameter(1, garageId);
-        q.setParameter(2, serviceId);
-        Object result = q.getSingleResult();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE ID = ?1", Service.class);
+        q.setParameter(1, serviceId);
+        Service result = q.getSingleResult();
         manager.close();
         return result;
     }
@@ -57,6 +56,7 @@ public class ServiceDAO {
         manager.close();
     }
 
+    //TODO: Fix update
     public void update(Service service) {
         EntityManager manager = JPAUtility.getEntityManager();
         Service serviceToUpdate = manager.find(Service.class, service.getId());
@@ -71,10 +71,17 @@ public class ServiceDAO {
         manager.close();
     }
 
-    public void delete(Service service) {
+    public Service delete(Integer serviceId) {
         EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        Service service = manager.find(Service.class, serviceId);
+        service = manager.merge(service);
         manager.remove(service);
+        manager.joinTransaction();
+        manager.flush();
+        manager.getTransaction().commit();
         manager.close();
+        return service;
     }
 
 }

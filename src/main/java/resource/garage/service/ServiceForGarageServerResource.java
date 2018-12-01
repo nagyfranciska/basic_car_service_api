@@ -13,11 +13,8 @@ public class ServiceForGarageServerResource extends ServerResource {
 
     @Get
     public Service getService() {
-        Integer serviceId = Integer.parseInt(getAttribute("serviceId"));
-        Integer garageId = Integer.parseInt(getAttribute("garageId"));
-        return serviceService.getServiceByIdByGarage(garageId, serviceId);
+        return serviceService.getServiceById(Integer.parseInt(getAttribute("serviceId")));
     }
-
 
     @Put
     public Service updateService(Service service) {
@@ -26,8 +23,7 @@ public class ServiceForGarageServerResource extends ServerResource {
     }
 
     @Delete
-    public Service deleteService(Service service) {
-        Integer garageId = Integer.parseInt(getAttribute("garageId"));
-        return serviceService.deleteService(garageId, service);
+    public Service deleteService() {
+        return serviceService.deleteService(Integer.parseInt(getAttribute("serviceId")));
     }
 }

@@ -5,6 +5,7 @@ import service.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class GarageDAO {
@@ -12,10 +13,10 @@ public class GarageDAO {
     public GarageDAO() {
     }
 
-    public List findAll() {
+    public List<Garage> findAll() {
         EntityManager manager = JPAUtility.getEntityManager();
-        Query q = manager.createQuery("SELECT g FROM Garage g");
-        List result = q.getResultList();
+        TypedQuery<Garage> q = manager.createQuery("SELECT g FROM Garage g", Garage.class);
+        List<Garage> result = q.getResultList();
         manager.close();
         return result;
     }
@@ -36,7 +37,7 @@ public class GarageDAO {
         return result;
     }
 
-
+    //TODO: Fix update
     public void update(Garage garage) {
         EntityManager manager = JPAUtility.getEntityManager();
         Garage garageToUpdate = manager.find(Garage.class, garage.getId());
@@ -49,10 +50,17 @@ public class GarageDAO {
         manager.close();
     }
 
-    public void delete(Garage garage) {
+    public Garage delete(Integer garageId) {
         EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        Garage garage = manager.find(Garage.class, garageId);
+        manager.merge(garage);
         manager.remove(garage);
+        manager.joinTransaction();
+        manager.flush();
+        manager.getTransaction().commit();
         manager.close();
+        return garage;
     }
 
 }

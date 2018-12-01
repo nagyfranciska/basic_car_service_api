@@ -16,14 +16,7 @@ public class GarageService {
     }
 
     public List<Garage> getGarages() {
-        List rawList = garageDAO.findAll();
-        List<Garage> garageList = new CopyOnWriteArrayList<>();
-        try {
-            rawList.forEach(g -> garageList.add((Garage) g));
-        } catch (TypeNotPresentException e) {
-            System.out.println("error in GarageService with garageList");
-        }
-        return garageList;
+        return garageDAO.findAll();
     }
 
     public Garage saveGarage(Garage garage) {
@@ -40,9 +33,7 @@ public class GarageService {
         return getGarageById(garage.getId());
     }
 
-    public Garage deleteGarage(Garage garage) {
-        Garage deletedGarage = getGarageById(garage.getId());
-        garageDAO.delete(garage);
-        return deletedGarage;
+    public Garage deleteGarage(Integer garageId) {
+        return garageDAO.delete(garageId);
     }
 }

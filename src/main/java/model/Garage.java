@@ -1,14 +1,14 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Garage {
 
     @Id
@@ -25,7 +25,7 @@ public class Garage {
     @Column(name = "CAPACITY", nullable = false)
     private Integer capacity;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;

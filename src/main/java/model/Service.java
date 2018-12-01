@@ -1,9 +1,9 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 public class Service {
@@ -22,19 +22,16 @@ public class Service {
     @Column(name = "PRICE", nullable = false)
     private Integer price;
 
-    @JsonBackReference
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "GARAGE_ID")
     private Garage garage;
 
-    @JsonBackReference
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CAR_ID")
     private Car car;
 
-    @JsonBackReference
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CUST_ID")
@@ -100,4 +97,6 @@ public class Service {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+
 }

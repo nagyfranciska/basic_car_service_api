@@ -32,13 +32,13 @@ public class Car {
     @Column(name = "COLOR", nullable = false)
     private String color;
 
-    @JsonManagedReference
     @JsonIgnore
+    //TODO: Deletion probably doesn't work because of persisting back
+    //see: https://stackoverflow.com/questions/16898085/jpa-hibernate-remove-entity-sometimes-not-working
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "car", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
 
-    @JsonBackReference
     @JsonIgnore
     @ManyToOne()
     @JoinColumn(name = "CUST_ID")
@@ -123,5 +123,17 @@ public class Car {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof Car) {
+            Car other = (Car) obj;
+            return this.id.equals(other.getId());
+        }
+        return false;
     }
 }
