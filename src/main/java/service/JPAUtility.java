@@ -9,19 +9,15 @@ import javax.persistence.Persistence;
 public class JPAUtility {
 
     @Inject
-    private static EntityManagerFactory emFactory;
+    private EntityManagerFactory emFactory;
 
-    public static EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
 
         return emFactory.createEntityManager();
     }
 
-    public static void close() {
+    public void close() {
         emFactory.close();
     }
-
-//    public static void initJPA() {
-//        emFactory = Persistence.createEntityManagerFactory("jpa");
-//    }
 
 }

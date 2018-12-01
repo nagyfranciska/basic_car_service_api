@@ -1,8 +1,10 @@
-import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import org.restlet.Component;
+import org.restlet.Context;
+import org.restlet.Server;
 import org.restlet.data.Protocol;
+import org.restlet.ext.guice.RestletGuice;
 
 public class CarServerComponent extends Component {
 
@@ -11,7 +13,7 @@ public class CarServerComponent extends Component {
 
     public static void main(String[] args) throws Exception {
 
-        injector = Guice.createInjector(new InjectionModule());
+        injector = RestletGuice.createInjector(new InjectionModule());
         CarServerComponent component = injector.getInstance(CarServerComponent.class);
         component.start();
 
@@ -26,9 +28,8 @@ public class CarServerComponent extends Component {
     @Inject
     public CarServerComponent(CarServerApplication app) throws Exception {
 
-        getServers().add(Protocol.HTTP, 8080);
-        getDefaultHost().attachDefault(app);
-//        JPAUtility.initJPA();
+        getServers().add(new Server(new Context(), Protocol.HTTP, 8080));
+        getDefaultHost().attach(app);
 
     }
 }

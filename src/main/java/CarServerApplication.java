@@ -1,3 +1,4 @@
+import com.google.inject.Inject;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.ext.guice.FinderFactory;
@@ -13,6 +14,7 @@ import resource.garage.service.ServicesForGarageServerResource;
 
 public class CarServerApplication extends Application {
 
+    @Inject
     private FinderFactory finder;
 
    public CarServerApplication() {
