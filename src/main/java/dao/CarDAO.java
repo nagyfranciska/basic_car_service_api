@@ -3,6 +3,7 @@ package dao;
 import model.Car;
 import service.JPAUtility;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -72,5 +73,12 @@ public class CarDAO extends JPAUtility{
         manager.getTransaction().commit();
         manager.close();
         return car;
+    }
+
+    public boolean plateExists(String plate) {
+        EntityManager manager = getEntityManager();
+        Query q = manager.createQuery("SELECT 1 from Car c WHERE plate = ?1");
+        q.setParameter(1, plate);
+        return (q.getSingleResult() != null);
     }
 }

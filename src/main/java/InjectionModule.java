@@ -5,10 +5,7 @@ import dao.CarDAO;
 import dao.CustomerDAO;
 import dao.GarageDAO;
 import dao.ServiceDAO;
-import service.CarService;
-import service.CustomerService;
-import service.GarageService;
-import service.ServiceService;
+import service.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -29,6 +26,8 @@ public class InjectionModule extends AbstractModule {
         bind(CarService.class).asEagerSingleton();
         bind(GarageService.class).asEagerSingleton();
         bind(ServiceService.class).asEagerSingleton();
+
+        bind(CarValidationService.class).asEagerSingleton();
 
     }
 
