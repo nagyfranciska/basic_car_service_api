@@ -1,55 +1,87 @@
 package dao;
 
 import model.Service;
+import service.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
-
 public class ServiceDAO {
-
-    static EntityManager mananger = JPAUtility.getEntityManager();
 
     public ServiceDAO() {
     }
 
+    public List<Service> findAll() {
+        EntityManager manager = JPAUtility.getEntityManager();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s", Service.class);
+        List<Service> result = q.getResultList();
+        manager.close();
+        return result;
+    }
+
+    public List<Service> findAllByCar(Integer carId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE CAR_ID = ?1", Service.class);
+        q.setParameter(1, carId);
+        List<Service> result = q.getResultList();
+        manager.close();
+        return result;
+    }
+
+    public List<Service> findAllByGarage(Integer garageId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1", Service.class);
+        q.setParameter(1, garageId);
+        List<Service> result = q.getResultList();
+        manager.close();
+        return result;
+    }
+
+    public Service findById(Integer serviceId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE ID = ?1", Service.class);
+        q.setParameter(1, serviceId);
+        Service result = q.getSingleResult();
+        manager.close();
+        return result;
+    }
+
     public void save(Service service) {
-        mananger.getTransaction().begin();
-        mananger.persist(service);
-        mananger.getTransaction().commit();
-        mananger.close();
-        JPAUtility.close();
-        System.out.println("new service is saved");
+        EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        manager.persist(service);
+        manager.getTransaction().commit();
+        manager.close();
     }
 
+    //TODO: Fix update
     public void update(Service service) {
-        Service garageToUpdate = mananger.find(Service.class, service.getId());
-        mananger.getTransaction().begin();
-
-        garageToUpdate.setStart(service.getStart());
-        garageToUpdate.setEnd(service.getEnd());
-        garageToUpdate.setPrice(service.getPrice());
-        garageToUpdate.setCar(service.getCar());
-        garageToUpdate.setGarage(service.getGarage());
-        garageToUpdate.setCustomer(service.getCustomer());
-
-        mananger.getTransaction().commit();
-        mananger.close();
-        System.out.println("service is updated");
+        EntityManager manager = JPAUtility.getEntityManager();
+        Service serviceToUpdate = manager.find(Service.class, service.getId());
+        manager.getTransaction().begin();
+        serviceToUpdate.setStart(service.getStart());
+        serviceToUpdate.setEnd(service.getEnd());
+        serviceToUpdate.setPrice(service.getPrice());
+        serviceToUpdate.setCar(service.getCar());
+        serviceToUpdate.setGarage(service.getGarage());
+        serviceToUpdate.setCustomer(service.getCustomer());
+        manager.getTransaction().commit();
+        manager.close();
     }
 
-    public void delete(Service service) {
-        mananger.remove(service);
-    }
-
-    public Service findById(Integer id) {
-        return mananger.find(Service.class, id);
-    }
-
-    public List findAll() {
-        Query q = mananger.createQuery("SELECT * FROM Service");
-        return q.getResultList();
+    public Service delete(Integer serviceId) {
+        EntityManager manager = JPAUtility.getEntityManager();
+        manager.getTransaction().begin();
+        Service service = manager.find(Service.class, serviceId);
+        service = manager.merge(service);
+        manager.remove(service);
+        manager.joinTransaction();
+        manager.flush();
+        manager.getTransaction().commit();
+        manager.close();
+        return service;
     }
 
 }

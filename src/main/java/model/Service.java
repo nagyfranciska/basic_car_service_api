@@ -1,28 +1,40 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.io.Serializable;
 
+@Entity
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
+
+    @Column(name = "START", nullable = false)
     private String start;
+
+    @Column(name = "END", nullable = false)
     private String end;
+
+    @Column(name = "PRICE", nullable = false)
     private Integer price;
-    @JsonBackReference
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "GARAGE_ID")
     private Garage garage;
-    @JsonBackReference
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "CAR_ID")
     private Car car;
-    @JsonBackReference
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne()
+    @JoinColumn(name = "CUST_ID")
     private Customer customer;
 
     public Service() {
@@ -85,4 +97,6 @@ public class Service {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+
 }

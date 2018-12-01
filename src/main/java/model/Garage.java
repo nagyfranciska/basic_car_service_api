@@ -1,23 +1,22 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Garage {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "GARAGE", unique = true, nullable = false)
+    @Column(name = "NAME", unique = true, nullable = false)
     private String name;
 
     @Column(name = "ADDRESS", nullable = false)
@@ -26,10 +25,10 @@ public class Garage {
     @Column(name = "CAPACITY", nullable = false)
     private Integer capacity;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
-    private List<Service> serviceList;
+    private Set<Service> serviceList;
 
     public Garage() {
     }
@@ -38,14 +37,42 @@ public class Garage {
         this.name = name;
         this.address = address;
         this.capacity = capacity;
-        serviceList = new CopyOnWriteArrayList<>();
+        serviceList = new LinkedHashSet<>();
     }
 
-    public List<Service> getServiceList() {
+    public Set<Service> getServiceList() {
         return serviceList;
     }
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setServiceList(Set<Service> serviceList) {
+        this.serviceList = serviceList;
     }
 }

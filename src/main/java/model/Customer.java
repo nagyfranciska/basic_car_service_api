@@ -1,32 +1,28 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @JsonManagedReference
-    @JsonIgnoreProperties
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "CAR_LIST")
-    private List<Car> carList;
+    private Set<Car> carList;
 
-    @JsonManagedReference
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
-    private List<Service> serviceList;
+    private Set<Service> serviceList;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -48,8 +44,8 @@ public class Customer {
         this.address = address;
         this.invoiceAddress = invoiceAddress;
         this.type = type;
-        carList = new CopyOnWriteArrayList<>();
-        serviceList = new CopyOnWriteArrayList<>();
+        carList = new LinkedHashSet<>();
+        serviceList = new LinkedHashSet<>();
     }
 
     public Integer getId() {
@@ -88,19 +84,19 @@ public class Customer {
         this.type = type;
     }
 
-    public List<Car> getCarList() {
+    public Set<Car> getCarList() {
         return carList;
     }
 
-    public void setCarList(List<Car> carList) {
+    public void setCarList(Set<Car> carList) {
         this.carList = carList;
     }
 
-    public List<Service> getServiceList() {
+    public Set<Service> getServiceList() {
         return serviceList;
     }
 
-    public void setServiceList(List<Service> serviceList) {
+    public void setServiceList(Set<Service> serviceList) {
         this.serviceList = serviceList;
     }
 }

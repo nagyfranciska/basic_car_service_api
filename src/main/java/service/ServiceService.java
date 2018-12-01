@@ -4,36 +4,41 @@ import dao.ServiceDAO;
 import model.Service;
 
 import java.util.List;
-import java.util.Map;
 
 public class ServiceService {
 
-    public ServiceDAO serviceDAO;
+    private ServiceDAO serviceDAO;
+    private GarageService garageService;
 
     public ServiceService() {
         serviceDAO = new ServiceDAO();
     }
 
-    public List getServices() {
-        return serviceDAO.findAll();
+    public List<Service> getServicesByCar(Integer carId) {
+        return serviceDAO.findAllByCar(carId);
     }
 
-    public Service getServiceById(Integer id) {
-        return serviceDAO.findById(id);
+    public List<Service> getServicesByGarage(Integer garageId) {
+        return serviceDAO.findAllByGarage(garageId);
     }
 
-    public Service saveService(Service service) {
+    public Service getServiceById(Integer serviceId) {
+        return serviceDAO.findById(serviceId);
+    }
+
+    public Service saveService(Integer garageId, Service service) {
+        service.setGarage(garageService.getGarageById(garageId));
         serviceDAO.save(service);
         return serviceDAO.findById(service.getId());
     }
 
-    public Service updateService(Service service) {
+    public Service updateService(Integer garageId, Service service) {
         serviceDAO.update(service);
+        garageService.getGarageById(garageId).getServiceList().add(service);
         return serviceDAO.findById(service.getId());
     }
 
-    public Service deleteService(Service service) {
-        serviceDAO.delete(service);
-        return service;
+    public Service deleteService(Integer serviceId) {
+        return serviceDAO.delete(serviceId);
     }
 }

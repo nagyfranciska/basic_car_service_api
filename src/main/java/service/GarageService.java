@@ -4,36 +4,35 @@ import dao.GarageDAO;
 import model.Garage;
 
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GarageService {
 
-    GarageDAO garageDAO;
+    private GarageDAO garageDAO;
 
     public GarageService() {
         garageDAO = new GarageDAO();
     }
 
-    public List getGarages() {
+    public List<Garage> getGarages() {
         return garageDAO.findAll();
+    }
+
+    public Garage saveGarage(Garage garage) {
+        garageDAO.save(garage);
+        return getGarageById(garage.getId());
     }
 
     public Garage getGarageById(Integer id) {
         return garageDAO.findById(id);
     }
 
-    public Garage saveGarage(Garage newGarage) {
-        garageDAO.save(newGarage);
-        return garageDAO.findById(newGarage.getId());
-    }
-
     public Garage updateGarage(Garage garage) {
         garageDAO.update(garage);
-        return garageDAO.findById(garage.getId());
+        return getGarageById(garage.getId());
     }
 
-    public Garage deleteGarage(Garage garage) {
-        garageDAO.delete(garage);
-        return garage;
+    public Garage deleteGarage(Integer garageId) {
+        return garageDAO.delete(garageId);
     }
 }

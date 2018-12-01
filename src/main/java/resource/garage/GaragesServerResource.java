@@ -7,14 +7,13 @@ import org.restlet.resource.ServerResource;
 import service.GarageService;
 
 import java.util.List;
-import java.util.Map;
 
 public class GaragesServerResource extends ServerResource {
 
     public static GarageService garageService = new GarageService();
 
     @Get
-    public List getGarages() {
+    public List<Garage> getGarages() {
         return garageService.getGarages();
     }
 
