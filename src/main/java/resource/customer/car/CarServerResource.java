@@ -9,26 +9,23 @@ import service.CarService;
 
 public class CarServerResource extends ServerResource {
 
-    public CarService carService = CarsServerResource.carService;
+    private CarService carService = CarsServerResource.carService;
 
 
     @Get
     public Car getCar() {
-        Integer carId = Integer.parseInt(getAttribute("carId"));
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return carService.getCarById(customerId, carId);
+        return carService.getCarById(Integer.parseInt(getAttribute("carId")));
     }
 
-    //TODO: Implement LinkedHashset in CarService
-//    @Put
-//    public Car updateCar(Car car) {
-//        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-//        return carService.updateCar(customerId, car);
-//    }
+    @Put
+    public Car updateCar(Car car) {
+        Integer customerId = Integer.parseInt(getAttribute("customerId"));
+        Integer carId = Integer.parseInt(getAttribute("carId"));
+        return carService.updateCar(customerId, car);
+    }
 
     @Delete
-    public Car deleteCar(Car car) {
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return carService.deleteCar(customerId, car);
+    public Car deleteCar() {
+        return carService.deleteCar(Integer.parseInt(getAttribute("carId")));
     }
 }

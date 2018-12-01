@@ -5,14 +5,13 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <File name="MyFile" fileName="C:\Users\nagy.franciska\Desktop\study\code\car\src\main\logFile.log">
+        <File name="MyFile" fileName="C:\Onbox\Learning\apps\cardealer\basic_car_service_api\logs\warnLog.log">
             <PatternLayout pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
     </appenders>
 
     <loggers>
         <root level="debug">
-            <appender-ref ref="Console" level="trace"/>
             <appender-ref ref="MyFile" level="warn"/>
         </root>
     </loggers>

@@ -1,7 +1,6 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.util.LinkedHashSet;
@@ -15,13 +14,11 @@ public class Customer {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @JsonManagedReference
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "CAR_LIST")
     private Set<Car> carList;
 
-    @JsonManagedReference
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")

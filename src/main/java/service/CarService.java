@@ -2,6 +2,8 @@ package service;
 
 import dao.CarDAO;
 import model.Car;
+import org.restlet.data.Status;
+import org.restlet.resource.ResourceException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,49 +17,37 @@ public class CarService {
 
     //TODO: Solve logic without instantiation
     public CarService() {
+        customerService = new CustomerService();
         carDAO = new CarDAO();
     }
 
     public List<Car> getCarsByCustomer(Integer customerId) {
-        List rawList = carDAO.findAllByCustomer(customerId);
-        List<Car> carList = new CopyOnWriteArrayList<>();
-        try {
-            rawList.forEach(c -> carList.add((Car)c));
-        } catch (TypeNotPresentException e) {
-            System.out.println("error in CarService with carList");
-        }
-        return carList;
-    }
+        return carDAO.findAllByCustomer(customerId);
+      }
 
-    public Car getCarById(Integer customerId, Integer carId) {
-        Car car = (Car)carDAO.findById(customerId, carId);
-        return car;
+    public Car getCarById(Integer carId) {
+        return carDAO.findById(carId);
     }
 
     public Car saveCar(Car car, Integer customerId) {
         if (isValid(car)) {
             car.setCustomer(customerService.getCustomerById(customerId));
             carDAO.save(car);
-            return getCarById(customerId, car.getId());
+            return getCarById(car.getId());
         }
-        return null;
+        throw new ResourceException(Status.CLIENT_ERROR_NOT_ACCEPTABLE, "Car validation failed");
     }
 
-    //TODO: Implement update() method on LinkedHashSet
-//    public Car updateCar(Integer customerId, Car car) {
-//
-//        carDAO.update(car);
-//        customerService.getCustomerById(customerId).getCarList().set(car.getId(), car);
-//        Car updatedCar = (Car)carDAO.findById(customerId, car.getId());
-//        return updatedCar;
-//    }
+    //TODO: Correct validation (without samePlate), implement Merge in DAO
+    public Car updateCar(Integer customerId, Car car) {
+        carDAO.update(car);
+        customerService.getCustomerById(customerId).getCarList().remove(car);
+        customerService.getCustomerById(customerId).getCarList().add(car);
+        return carDAO.findById(car.getId());
+    }
 
-    public Car deleteCar(Integer customerId, Car car) {
-        Car deletedCar = (Car)carDAO.findById(customerId, car.getId());
-        int carId = car.getId();
-        customerService.getCustomerById(customerId).getCarList().remove(carId);
-        carDAO.delete(car);
-        return deletedCar;
+    public Car deleteCar(Integer carId) {
+        return carDAO.delete(carId);
     }
 
     private boolean isValid(Car car) {
@@ -72,6 +62,7 @@ public class CarService {
         return car.getPlate().matches("[A-Z]{3}-[0-9]{3}$");
     }
 
+    //TODO: Refactor this to a query
     private boolean hasSamePlate(Car car) {
         List<Car> carList = new ArrayList<>();
         try {

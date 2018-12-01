@@ -15,13 +15,11 @@ public class ServicesForGarageServerResource extends ServerResource {
 
     @Get
     public List<Service> getServices() {
-        Integer garageId = Integer.parseInt(getAttribute("garageId"));
-        return serviceService.getServicesByGarage(garageId);
+        return serviceService.getServicesByGarage(Integer.parseInt(getAttribute("garageId")));
     }
 
     @Post
     public Service saveService(Service service) {
-        Integer garageId = Integer.parseInt(getAttribute("garageId"));
-        return serviceService.saveService(garageId, service);
+        return serviceService.saveService(Integer.parseInt(getAttribute("garageId")), service);
     }
 }

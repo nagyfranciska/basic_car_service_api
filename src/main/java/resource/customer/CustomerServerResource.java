@@ -13,8 +13,7 @@ public class CustomerServerResource extends ServerResource {
 
     @Get
     public Customer getCustomer() {
-        Integer id = Integer.parseInt(getAttribute("customerId"));
-        return customerService.getCustomerById(id);
+        return customerService.getCustomerById(Integer.parseInt(getAttribute("customerId")));
     }
 
     @Put
@@ -23,7 +22,7 @@ public class CustomerServerResource extends ServerResource {
     }
 
     @Delete
-    public Customer deleteCustomer(Customer customer) {
-        return customerService.deleteCustomer(customer);
+    public Customer deleteCustomer() {
+        return customerService.deleteCustomer(Integer.parseInt(getAttribute("customerId")));
     }
 }

@@ -13,13 +13,11 @@ public class CarsServerResource extends ServerResource {
 
     @Get
     public List<Car> getCarsByCustomer() {
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return carService.getCarsByCustomer(customerId);
+        return carService.getCarsByCustomer(Integer.parseInt(getAttribute("customerId")));
     }
 
     @Post
     public Car saveCar(Car car) {
-        Integer customerId = Integer.parseInt(getAttribute("customerId"));
-        return carService.saveCar(car, customerId);
+        return carService.saveCar(car, Integer.parseInt(getAttribute("customerId")));
     }
 }

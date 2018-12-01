@@ -59,7 +59,7 @@ public class GarageDAOTest {
 
     @Test
     public void testDeleteGarage() {
-        dao.delete(garage01);
+        dao.delete(garage01.getId());
         Assert.assertEquals(1, dao.findAll().size());
     }
 }
