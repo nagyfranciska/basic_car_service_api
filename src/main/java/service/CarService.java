@@ -1,5 +1,6 @@
 package service;
 
+import com.google.inject.Inject;
 import dao.CarDAO;
 import model.Car;
 import org.restlet.data.Status;
@@ -12,12 +13,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CarService {
 
+    @Inject
     private CarDAO carDAO;
+    @Inject
     private CustomerService customerService;
 
     public CarService() {
-        customerService = new CustomerService();
-        carDAO = new CarDAO();
     }
 
     public List<Car> getCarsByCustomer(Integer customerId) {

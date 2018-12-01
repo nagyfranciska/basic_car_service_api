@@ -1,5 +1,6 @@
 package resource.customer.car;
 
+import com.google.inject.Inject;
 import model.Car;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
@@ -9,7 +10,8 @@ import service.CarService;
 
 public class CarServerResource extends ServerResource {
 
-    private CarService carService = CarsServerResource.carService;
+    @Inject
+    CarService carService;
 
 
     @Get

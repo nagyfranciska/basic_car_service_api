@@ -8,13 +8,13 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class CustomerDAO {
+public class CustomerDAO extends JPAUtility{
 
     public CustomerDAO() {
     }
 
     public List<Customer> findAll() {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         TypedQuery<Customer> q = manager.createQuery("SELECT c FROM Customer c", Customer.class);
         List<Customer> result = q.getResultList();
         manager.close();
@@ -22,7 +22,7 @@ public class CustomerDAO {
     }
 
     public void save(Customer customer) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(customer);
         manager.getTransaction().commit();
@@ -30,14 +30,14 @@ public class CustomerDAO {
     }
 
     public Customer findById(Integer id) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Customer result = manager.find(Customer.class, id);
         manager.close();
         return result;
     }
 
     public Customer update(Customer newCustomer, Integer customerId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Customer customer = manager.find(Customer.class, customerId);
         customer.setName(newCustomer.getName());
@@ -51,7 +51,7 @@ public class CustomerDAO {
     }
 
     public Customer delete(Integer customerId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Customer customer = manager.find(Customer.class, customerId);
         customer = manager.merge(customer);

@@ -8,13 +8,13 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class GarageDAO {
+public class GarageDAO extends JPAUtility{
 
     public GarageDAO() {
     }
 
     public List<Garage> findAll() {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager =getEntityManager();
         TypedQuery<Garage> q = manager.createQuery("SELECT g FROM Garage g", Garage.class);
         List<Garage> result = q.getResultList();
         manager.close();
@@ -22,7 +22,7 @@ public class GarageDAO {
     }
 
     public void save(Garage garage) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(garage);
         manager.getTransaction().commit();
@@ -31,14 +31,14 @@ public class GarageDAO {
 
 
     public Garage findById(Integer id) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Garage result = manager.find(Garage.class, id);
         manager.close();
         return result;
     }
 
     public Garage update(Garage newGarage, Integer garageId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Garage garage = manager.find(Garage.class, garageId);
         garage.setAddress(newGarage.getAddress());
@@ -51,7 +51,7 @@ public class GarageDAO {
     }
 
     public Garage delete(Integer garageId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Garage garage = manager.find(Garage.class, garageId);
         manager.merge(garage);

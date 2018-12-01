@@ -1,5 +1,6 @@
 package service;
 
+import com.google.inject.Inject;
 import dao.ServiceDAO;
 import model.Service;
 
@@ -7,12 +8,13 @@ import java.util.List;
 
 public class ServiceService {
 
+    @Inject
     private ServiceDAO serviceDAO;
-    private GarageService garageService = new GarageService();
 
-    public ServiceService() {
-        serviceDAO = new ServiceDAO();
-    }
+    @Inject
+    private GarageService garageService;
+
+    public ServiceService() {}
 
     public List<Service> getServicesByCar(Integer carId) {
         return serviceDAO.findAllByCar(carId);

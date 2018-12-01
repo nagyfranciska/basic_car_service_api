@@ -1,5 +1,6 @@
 package resource.garage;
 
+import com.google.inject.Inject;
 import model.Garage;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
@@ -9,7 +10,8 @@ import service.GarageService;
 
 public class GarageServerResource extends ServerResource {
 
-    GarageService garageService = GaragesServerResource.garageService;
+    @Inject
+    GarageService garageService;
 
     @Get
     public Garage getGarage() {
