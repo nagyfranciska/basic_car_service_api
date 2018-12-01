@@ -1,5 +1,6 @@
 package service;
 
+import com.google.inject.Inject;
 import dao.CustomerDAO;
 import model.Customer;
 
@@ -7,11 +8,10 @@ import java.util.List;
 
 public class CustomerService {
 
+    @Inject
     private CustomerDAO customerDAO;
 
-    public CustomerService() {
-        customerDAO = new CustomerDAO();
-    }
+    public CustomerService() {}
 
     public List<Customer> getCustomers() {
         return customerDAO.findAll();

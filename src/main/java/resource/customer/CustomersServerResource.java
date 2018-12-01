@@ -1,5 +1,6 @@
 package resource.customer;
 
+import com.google.inject.Inject;
 import model.Customer;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
@@ -10,7 +11,8 @@ import java.util.List;
 
 public class CustomersServerResource extends ServerResource {
 
-    public static CustomerService customerService = new CustomerService();
+    @Inject
+    CustomerService customerService;
 
     @Get
     public List<Customer> getCustomers() {

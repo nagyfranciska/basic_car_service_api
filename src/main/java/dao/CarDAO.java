@@ -2,19 +2,17 @@ package dao;
 
 import model.Car;
 import service.JPAUtility;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class CarDAO {
+public class CarDAO extends JPAUtility{
 
     public CarDAO() {
     }
 
     public List<Car> findAllByCustomer(Integer customerId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c WHERE c.customer.id = ?1", Car.class);
         q.setParameter(1, customerId);
         List<Car> result = q.getResultList();
@@ -23,7 +21,7 @@ public class CarDAO {
     }
 
     public List<Car> findAll() {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c", Car.class);
         List<Car> result = q.getResultList();
         manager.close();
@@ -31,7 +29,7 @@ public class CarDAO {
     }
 
     public void save(Car car) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(car);
         manager.getTransaction().commit();
@@ -39,7 +37,7 @@ public class CarDAO {
     }
 
     public Car findById(Integer carId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c WHERE ID = ?1", Car.class);
         q.setParameter(1, carId);
         Car result = q.getSingleResult();
@@ -49,7 +47,7 @@ public class CarDAO {
 
     //TODO: Fix this
     public void update(Car car) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         Car carToUpdate = manager.find(Car.class, car.getId());
         manager.getTransaction().begin();
         carToUpdate.setRegistrationDate(car.getRegistrationDate());
@@ -64,7 +62,7 @@ public class CarDAO {
     }
 
     public Car delete(Integer carId) {
-        EntityManager manager = JPAUtility.getEntityManager();
+        EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Car car = manager.find(Car.class, carId);
         car = manager.merge(car);
