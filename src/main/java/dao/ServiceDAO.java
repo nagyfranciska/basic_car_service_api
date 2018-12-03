@@ -47,12 +47,13 @@ public class ServiceDAO extends JPAUtility{
         return result;
     }
 
-    public void save(Service service) {
+    public Service save(Service service) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(service);
         manager.getTransaction().commit();
         manager.close();
+        return service;
     }
 
     public Service update(Service newService, Integer serviceId) {

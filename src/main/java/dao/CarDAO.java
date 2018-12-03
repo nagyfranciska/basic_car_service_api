@@ -1,10 +1,16 @@
 package dao;
 
 import model.Car;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import service.JPAUtility;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import java.util.List;
 
 public class CarDAO extends JPAUtility{
@@ -29,12 +35,13 @@ public class CarDAO extends JPAUtility{
         return result;
     }
 
-    public void save(Car car) {
+    public Car save(Car car) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(car);
         manager.getTransaction().commit();
         manager.close();
+        return car;
     }
 
     public Car findById(Integer carId) {
@@ -75,10 +82,10 @@ public class CarDAO extends JPAUtility{
         return car;
     }
 
-    public boolean plateExists(String plate) {
+    public boolean plateIsUnique(String plate) {
         EntityManager manager = getEntityManager();
-        Query q = manager.createQuery("SELECT 1 from Car c WHERE plate = ?1");
+        Query q = manager.createQuery("SELECT 1 from Car c WHERE c.plate = ?1");
         q.setParameter(1, plate);
-        return (q.getSingleResult() != null);
+        return (q.getResultList().size() == 0);
     }
 }

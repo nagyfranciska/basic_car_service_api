@@ -20,12 +20,13 @@ public class CustomerDAO extends JPAUtility{
         return result;
     }
 
-    public void save(Customer customer) {
+    public Customer save(Customer customer) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(customer);
         manager.getTransaction().commit();
         manager.close();
+        return customer;
     }
 
     public Customer findById(Integer id) {

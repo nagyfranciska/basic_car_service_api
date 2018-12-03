@@ -30,8 +30,7 @@ public class ServiceService {
 
     public Service saveService(Service service, Integer garageId) {
         service.setGarage(garageService.getGarageById(garageId));
-        serviceDAO.save(service);
-        return serviceDAO.findById(service.getId());
+        return serviceDAO.save(service);
     }
 
     public Service updateService(Service service, Integer serviceId) {

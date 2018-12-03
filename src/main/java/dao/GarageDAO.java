@@ -20,12 +20,13 @@ public class GarageDAO extends JPAUtility{
         return result;
     }
 
-    public void save(Garage garage) {
+    public Garage save(Garage garage) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(garage);
         manager.getTransaction().commit();
         manager.close();
+        return garage;
     }
 
 

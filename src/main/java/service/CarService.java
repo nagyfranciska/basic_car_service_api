@@ -31,14 +31,14 @@ public class CarService {
     public Car getCarById(Integer carId) {
         return carDAO.findById(carId);
     }
-    
+
     public Car saveCar(Car car, Integer customerId) {
         if (validationService.carIsValid(car)) {
             car.setCustomer(customerService.getCustomerById(customerId));
-            carDAO.save(car);
-            return getCarById(car.getId());
+            return carDAO.save(car);
+        } else {
+            return null;
         }
-        throw new ResourceException(Status.CLIENT_ERROR_BAD_REQUEST, "Car validation failed");
     }
 
     public Car updateCar(Car car, Integer carId) {

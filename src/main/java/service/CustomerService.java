@@ -18,8 +18,7 @@ public class CustomerService {
     }
 
     public Customer saveCustomer(Customer customer) {
-        customerDAO.save(customer);
-        return getCustomerById(customer.getId());
+        return customerDAO.save(customer);
     }
 
     public Customer getCustomerById(Integer id) {
@@ -33,4 +32,5 @@ public class CustomerService {
     public Customer deleteCustomer(Integer customerId) {
         return customerDAO.delete(customerId);
     }
+
 }

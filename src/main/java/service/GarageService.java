@@ -19,8 +19,7 @@ public class GarageService {
     }
 
     public Garage saveGarage(Garage garage) {
-        garageDAO.save(garage);
-        return getGarageById(garage.getId());
+        return garageDAO.save(garage);
     }
 
     public Garage getGarageById(Integer id) {
