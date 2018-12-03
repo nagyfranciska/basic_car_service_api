@@ -1,3 +1,5 @@
+package di;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
@@ -6,6 +8,7 @@ import dao.CarDAO;
 import dao.CustomerDAO;
 import dao.GarageDAO;
 import dao.ServiceDAO;
+import server.CarServerApplication;
 import service.*;
 import log.SLF4JTypeListener;
 import org.slf4j.Logger;
