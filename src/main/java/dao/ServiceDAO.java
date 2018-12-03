@@ -3,11 +3,12 @@ package dao;
 import model.Service;
 import service.JPAUtility;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class ServiceDAO extends JPAUtility{
+public class ServiceDAO extends JPAUtility {
 
     public ServiceDAO() {
     }
@@ -60,13 +61,17 @@ public class ServiceDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Service service = manager.find(Service.class, serviceId);
-        service.setStart(newService.getStart());
-        service.setEnd(newService.getEnd());
-        service.setPrice(newService.getPrice());
-        manager.merge(service);
-        manager.getTransaction().commit();
-        manager.close();
-        return service;
+        if (service != null) {
+            service.setStart(newService.getStart());
+            service.setEnd(newService.getEnd());
+            service.setPrice(newService.getPrice());
+            manager.merge(service);
+            manager.getTransaction().commit();
+            manager.close();
+            return service;
+        } else {
+            return save(newService);
+        }
     }
 
     public Service delete(Integer serviceId) {

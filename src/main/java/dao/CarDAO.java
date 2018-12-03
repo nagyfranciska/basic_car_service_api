@@ -57,16 +57,20 @@ public class CarDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Car car = manager.find(Car.class, carId);
-        car.setCarType(newCar.getCarType());
-        car.setPlate(newCar.getPlate());
-        car.setRegistrationDate(newCar.getRegistrationDate());
-        car.setSize(newCar.getSize());
-        car.setDoorCount(newCar.getDoorCount());
-        car.setColor(newCar.getColor());
-        manager.merge(car);
-        manager.getTransaction().commit();
-        manager.close();
-        return car;
+        if(car != null) {
+            car.setCarType(newCar.getCarType());
+            car.setPlate(newCar.getPlate());
+            car.setRegistrationDate(newCar.getRegistrationDate());
+            car.setSize(newCar.getSize());
+            car.setDoorCount(newCar.getDoorCount());
+            car.setColor(newCar.getColor());
+            manager.merge(car);
+            manager.getTransaction().commit();
+            manager.close();
+            return car;
+        } else {
+            return save(newCar);
+        }
     }
 
     public Car delete(Integer carId) {
@@ -86,6 +90,6 @@ public class CarDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT 1 from Car c WHERE c.plate = ?1");
         q.setParameter(1, plate);
-        return (q.getResultList().size() == 0);
+        return (q.getResultList().isEmpty());
     }
 }

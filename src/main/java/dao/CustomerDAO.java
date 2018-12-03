@@ -1,6 +1,7 @@
 package dao;
 
 import model.Customer;
+import org.restlet.resource.ResourceException;
 import service.JPAUtility;
 
 import javax.persistence.EntityManager;
@@ -40,14 +41,18 @@ public class CustomerDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Customer customer = manager.find(Customer.class, customerId);
-        customer.setName(newCustomer.getName());
-        customer.setType(newCustomer.getType());
-        customer.setAddress(newCustomer.getAddress());
-        customer.setInvoiceAddress(newCustomer.getInvoiceAddress());
-        manager.merge(customer);
-        manager.getTransaction().commit();
-        manager.close();
-        return customer;
+        if (customer != null) {
+            customer.setName(newCustomer.getName());
+            customer.setType(newCustomer.getType());
+            customer.setAddress(newCustomer.getAddress());
+            customer.setInvoiceAddress(newCustomer.getInvoiceAddress());
+            manager.merge(customer);
+            manager.getTransaction().commit();
+            manager.close();
+            return customer;
+        } else {
+            return save(newCustomer);
+        }
     }
 
     public Customer delete(Integer customerId) {
