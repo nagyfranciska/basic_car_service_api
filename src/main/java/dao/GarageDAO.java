@@ -29,10 +29,9 @@ public class GarageDAO extends JPAUtility {
         return garage;
     }
 
-
-    public Garage findById(Integer id) {
+    public Garage findById(Integer garageId) {
         EntityManager manager = getEntityManager();
-        Garage result = manager.find(Garage.class, id);
+        Garage result = manager.find(Garage.class, garageId);
         manager.close();
         return result;
     }
@@ -58,13 +57,17 @@ public class GarageDAO extends JPAUtility {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Garage garage = manager.find(Garage.class, garageId);
-        manager.merge(garage);
-        manager.remove(garage);
-        manager.joinTransaction();
-        manager.flush();
-        manager.getTransaction().commit();
-        manager.close();
-        return garage;
+        if (garage != null) {
+            manager.merge(garage);
+            manager.remove(garage);
+            manager.joinTransaction();
+            manager.flush();
+            manager.getTransaction().commit();
+            manager.close();
+            return garage;
+        } else {
+            return null;
+        }
     }
 
 }

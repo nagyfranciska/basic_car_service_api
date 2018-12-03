@@ -22,17 +22,17 @@ public class CarDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c WHERE c.customer.id = ?1", Car.class);
         q.setParameter(1, customerId);
-        List<Car> result = q.getResultList();
+        List<Car> carList = q.getResultList();
         manager.close();
-        return result;
+        return carList;
     }
 
     public List<Car> findAll() {
         EntityManager manager = getEntityManager();
         TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c", Car.class);
-        List<Car> result = q.getResultList();
+        List<Car> carList = q.getResultList();
         manager.close();
-        return result;
+        return carList;
     }
 
     public Car save(Car car) {
@@ -46,11 +46,9 @@ public class CarDAO extends JPAUtility{
 
     public Car findById(Integer carId) {
         EntityManager manager = getEntityManager();
-        TypedQuery<Car> q = manager.createQuery("SELECT c FROM Car c WHERE ID = ?1", Car.class);
-        q.setParameter(1, carId);
-        Car result = q.getSingleResult();
+        Car car = manager.find(Car.class, carId);
         manager.close();
-        return result;
+        return car;
     }
 
     public Car update(Car newCar, Integer carId) {
@@ -77,13 +75,17 @@ public class CarDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Car car = manager.find(Car.class, carId);
-        car = manager.merge(car);
-        manager.remove(car);
-        manager.joinTransaction();
-        manager.flush();
-        manager.getTransaction().commit();
-        manager.close();
-        return car;
+        if (car != null) {
+            car = manager.merge(car);
+            manager.remove(car);
+            manager.joinTransaction();
+            manager.flush();
+            manager.getTransaction().commit();
+            manager.close();
+            return car;
+        } else {
+            return null;
+        }
     }
 
     public boolean plateIsUnique(String plate) {

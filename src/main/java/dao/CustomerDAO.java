@@ -30,9 +30,9 @@ public class CustomerDAO extends JPAUtility{
         return customer;
     }
 
-    public Customer findById(Integer id) {
+    public Customer findById(Integer customerId) {
         EntityManager manager = getEntityManager();
-        Customer result = manager.find(Customer.class, id);
+        Customer result = manager.find(Customer.class, customerId);
         manager.close();
         return result;
     }
@@ -59,12 +59,17 @@ public class CustomerDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Customer customer = manager.find(Customer.class, customerId);
-        customer = manager.merge(customer);
-        manager.remove(customer);
-        manager.joinTransaction();
-        manager.flush();
-        manager.getTransaction().commit();
-        manager.close();
-        return customer;
+        if (customer != null) {
+            customer = manager.merge(customer);
+            manager.remove(customer);
+            manager.joinTransaction();
+            manager.flush();
+            manager.getTransaction().commit();
+            manager.close();
+            return customer;
+        } else {
+            return null;
+        }
     }
+
 }
