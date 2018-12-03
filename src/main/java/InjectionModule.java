@@ -1,19 +1,27 @@
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.matcher.Matchers;
 import dao.CarDAO;
 import dao.CustomerDAO;
 import dao.GarageDAO;
 import dao.ServiceDAO;
 import service.*;
+import log.SLF4JTypeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class InjectionModule extends AbstractModule {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(InjectionModule.class);
+
     @Override
     protected void configure() {
+
+        bindListener(Matchers.any(), new SLF4JTypeListener());
 
         bind(CarServerApplication.class).asEagerSingleton();
 
