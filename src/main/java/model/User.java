@@ -1,9 +1,9 @@
-//package model;
+package model;
 //
-//import javax.persistence.*;
+import javax.persistence.*;
 //
 //@Entity
-//public class User {
+public class User extends org.restlet.security.User {
 //
 //    @Id
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,4 +22,50 @@
 //        this.name = name;
 //        this.password = password;
 //    }
-//}
+
+
+    private Integer id;
+    private String name;
+    private Integer garageId;
+    private Integer CustomerId;
+
+    public User() {
+    }
+
+    public User(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getGarageId() {
+        return garageId;
+    }
+
+    public void setGarageId(Integer garageId) {
+        this.garageId = garageId;
+    }
+
+    public Integer getCustomerId() {
+        return CustomerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        CustomerId = customerId;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+}

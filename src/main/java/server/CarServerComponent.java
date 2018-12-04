@@ -25,7 +25,7 @@ public class CarServerComponent extends Component {
     public CarServerComponent(CarServerApplication app) throws Exception {
 
         getServers().add(new Server(new Context(), Protocol.HTTP, 8080));
-        getDefaultHost().attach(app);
+        getDefaultHost().attachDefault(app);
 
     }
 }
