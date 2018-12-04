@@ -2,11 +2,12 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mindrot.jbcrypt.BCrypt;
+import org.restlet.security.User;
 
 import javax.persistence.*;
 
 @Entity()
-public class CDUser {
+public class CDUser extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +29,10 @@ public class CDUser {
     private Garage garage;
 
     public CDUser() {
+    }
+
+    public CDUser(String username) {
+        super(username);
     }
 
     public CDUser(String username, String password, Customer customer, Garage garage) {

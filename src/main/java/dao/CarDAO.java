@@ -86,6 +86,8 @@ public class CarDAO extends JPAUtility{
         EntityManager manager = getEntityManager();
         Query q = manager.createQuery("SELECT 1 from Car c WHERE c.plate = ?1");
         q.setParameter(1, plate);
-        return (q.getResultList().isEmpty());
+        List cars = q.getResultList();
+        manager.close();
+        return cars.isEmpty();
     }
 }
