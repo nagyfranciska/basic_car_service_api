@@ -28,6 +28,11 @@ public class Garage {
     @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
+    @Column(name = "USER_LIST")
+    private Set<CDUser> userList;
+
     public Garage() {
     }
 
@@ -36,6 +41,7 @@ public class Garage {
         this.address = address;
         this.capacity = capacity;
         serviceList = new LinkedHashSet<>();
+        userList = new LinkedHashSet<>();
     }
 
     public Set<Service> getServiceList() {
@@ -68,6 +74,10 @@ public class Garage {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public Set<CDUser> getUserList() {
+        return userList;
     }
 
 }

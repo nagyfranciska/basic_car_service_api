@@ -1,7 +1,7 @@
 package dao;
 
 import model.Garage;
-import service.JPAUtility;
+import service.utility.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

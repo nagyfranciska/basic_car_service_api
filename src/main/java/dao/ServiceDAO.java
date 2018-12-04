@@ -1,9 +1,8 @@
 package dao;
 
 import model.Service;
-import service.JPAUtility;
+import service.utility.JPAUtility;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -23,7 +22,7 @@ public class ServiceDAO extends JPAUtility {
 
     public List<Service> findAllByCar(Integer carId) {
         EntityManager manager = getEntityManager();
-        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE CAR_ID = ?1", Service.class);
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE s.car.id = ?1", Service.class);
         q.setParameter(1, carId);
         List<Service> serviceList = q.getResultList();
         manager.close();
@@ -32,7 +31,7 @@ public class ServiceDAO extends JPAUtility {
 
     public List<Service> findAllByGarage(Integer garageId) {
         EntityManager manager = getEntityManager();
-        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE GARAGE_ID = ?1", Service.class);
+        TypedQuery<Service> q = manager.createQuery("SELECT s FROM Service s WHERE s.garage.id = ?1", Service.class);
         q.setParameter(1, garageId);
         List<Service> serviceList = q.getResultList();
         manager.close();

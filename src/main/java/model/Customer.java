@@ -15,14 +15,19 @@ public class Customer {
     private Integer id;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "CAR_LIST")
     private Set<Car> carList;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
     @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+    @Column(name = "USER_LIST")
+    private Set<CDUser> userList;
 
     @Column(name = "NAME", nullable = false)
     private String name;
@@ -46,6 +51,7 @@ public class Customer {
         this.type = type;
         carList = new LinkedHashSet<>();
         serviceList = new LinkedHashSet<>();
+        userList = new LinkedHashSet<>();
     }
 
     public Integer getId() {
@@ -90,6 +96,10 @@ public class Customer {
 
     public Set<Service> getServiceList() {
         return serviceList;
+    }
+
+    public Set<CDUser> getUserList() {
+        return userList;
     }
 
 }

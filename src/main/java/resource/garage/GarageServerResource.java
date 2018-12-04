@@ -6,7 +6,7 @@ import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
-import service.GarageService;
+import service.model.GarageService;
 
 public class GarageServerResource extends ServerResource {
 

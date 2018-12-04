@@ -1,4 +1,4 @@
-package service;
+package service.utility;
 
 import dao.CarDAO;
 import dao.CustomerDAO;

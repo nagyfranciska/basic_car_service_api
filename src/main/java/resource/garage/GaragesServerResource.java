@@ -5,7 +5,7 @@ import model.Garage;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
-import service.GarageService;
+import service.model.GarageService;
 
 import java.util.List;
 

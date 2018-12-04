@@ -1,14 +1,13 @@
 package resource.customer;
 
 import com.google.inject.Inject;
-import com.google.inject.Provides;
 import log.Log;
 import model.Customer;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 import org.slf4j.Logger;
-import service.CustomerService;
+import service.model.CustomerService;
 
 import java.util.List;
 
@@ -22,7 +21,6 @@ public class CustomersServerResource extends ServerResource {
 
     @Get
     public List<Customer> getCustomers() {
-        logger.info("Here we are, finally");
         return customerService.getCustomers();
     }
 

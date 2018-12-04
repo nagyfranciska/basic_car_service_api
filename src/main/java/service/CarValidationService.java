@@ -6,6 +6,7 @@ import exception.validation.PlateExistsException;
 import exception.validation.PlateFormatException;
 import exception.validation.RegDateInvalidException;
 import model.Car;
+import service.model.CustomerService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -18,11 +19,11 @@ public class CarValidationService {
     @Inject
     private CustomerService customerService;
 
-    boolean carIsValid(Car car) {
+    public boolean carIsValid(Car car) {
         return (hasValidRegDate(car.getRegistrationDate()) && hasValidPlate(car.getPlate()) && hasUniquePlate(car.getPlate()));
     }
 
-    boolean carUpdateIsValid(Car car) {
+    public boolean carUpdateIsValid(Car car) {
         return (hasValidRegDate(car.getRegistrationDate()) && hasValidPlate(car.getPlate()));
     }
 

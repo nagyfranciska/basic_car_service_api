@@ -1,8 +1,7 @@
 package dao;
 
 import model.Customer;
-import org.restlet.resource.ResourceException;
-import service.JPAUtility;
+import service.utility.JPAUtility;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

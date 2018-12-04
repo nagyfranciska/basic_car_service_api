@@ -1,4 +1,4 @@
-package service;
+package service.utility;
 
 import com.google.inject.Inject;
 
