@@ -2,7 +2,11 @@ package service;
 
 import com.google.inject.Inject;
 import dao.CustomerDAO;
+import exception.general.CDNotFoundException;
 import model.Customer;
+import org.restlet.Response;
+import org.restlet.data.Status;
+import org.restlet.resource.ResourceException;
 
 import java.util.List;
 
@@ -11,19 +15,31 @@ public class CustomerService {
     @Inject
     private CustomerDAO customerDAO;
 
-    public CustomerService() {}
+    public CustomerService() {
+    }
 
     public List<Customer> getCustomers() {
-        return customerDAO.findAll();
+        List<Customer> customers = customerDAO.findAll();
+        if (customers.isEmpty()) {
+            Response.getCurrent().setStatus(Status.SUCCESS_NO_CONTENT);
+            return null;
+        } else {
+            return customers;
+        }
     }
 
     public Customer saveCustomer(Customer customer) {
-        customerDAO.save(customer);
-        return getCustomerById(customer.getId());
+        Response.getCurrent().setStatus(Status.SUCCESS_CREATED);
+        return customerDAO.save(customer);
     }
 
-    public Customer getCustomerById(Integer id) {
-        return customerDAO.findById(id);
+    public Customer getCustomerById(Integer customerId) {
+        Customer customer = customerDAO.findById(customerId);
+        if (customer != null) {
+            return customer;
+        } else {
+            throw new CDNotFoundException("Customer");
+        }
     }
 
     public Customer updateCustomer(Customer customer, Integer customerId) {
@@ -31,6 +47,12 @@ public class CustomerService {
     }
 
     public Customer deleteCustomer(Integer customerId) {
-        return customerDAO.delete(customerId);
+        Customer customer = customerDAO.delete(customerId);
+        if (customer != null) {
+            return customer;
+        } else {
+            throw new CDNotFoundException("Customer");
+        }
     }
+
 }
