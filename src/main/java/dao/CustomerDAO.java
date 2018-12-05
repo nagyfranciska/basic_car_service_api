@@ -37,6 +37,8 @@ public class CustomerDAO extends JPAUtility{
         return result;
     }
 
+    //TODO : postman failed with id 4, worked with id 1 (non-existing based on postmen getCustomers)
+    // it creates a new customer with a new id --> check why it worked at the garage and why not here
     public Customer update(Customer newCustomer, Integer customerId) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
@@ -55,6 +57,7 @@ public class CustomerDAO extends JPAUtility{
         }
     }
 
+    //TODO : same problem as at garage delete
     public Customer delete(Integer customerId) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();

@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mindrot.jbcrypt.BCrypt;
 import org.restlet.security.User;
 
@@ -27,8 +28,33 @@ public class CDUser extends User {
     @JoinColumn
     private Customer customer;
 
+    @Transient
+    @JsonIgnore
+    private String email;
+
+    @Transient
+    @JsonIgnore
+    private volatile String firstName;
+
+    @Transient
+    @JsonIgnore
+    private volatile String identifier;
+
+    @Transient
+    @JsonIgnore
+    private volatile String lastName;
+
+    @Transient
+    @JsonIgnore
+    private volatile char[] secret;
 
     public CDUser() {
+    }
+
+    //TODO : password and username required, garage and customer >> delete from constructor
+//    getters and setterf for garage and customer (if both)
+    public CDUser(String name) {
+        this.name = name;
     }
 
     public CDUser(String name, String rawPassword, Garage garage, Customer customer) {

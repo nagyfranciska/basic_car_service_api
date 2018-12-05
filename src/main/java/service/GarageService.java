@@ -45,6 +45,8 @@ public class GarageService {
         return garageDAO.update(garage, garageId);
     }
 
+
+    //TODO : postman garage delete by id fails for some reason
     public Garage deleteGarage(Integer garageId) {
         Garage garage = garageDAO.delete(garageId);
         if (garage != null) {

@@ -52,6 +52,7 @@ public class UserService {
         }
     }
 
+    //TODO: postman gives it back even is it belongs to customers and we change url to garages (only considers the id, not the belongings)
     public CDUser getUserById(Integer userId){
         CDUser user = userDAO.findById(userId);
         if (user != null) {

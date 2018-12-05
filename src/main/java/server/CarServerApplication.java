@@ -1,6 +1,7 @@
 package server;
 
 import com.google.inject.Inject;
+import oauth.UserVerifier;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
@@ -24,6 +25,9 @@ public class CarServerApplication extends Application {
 
     @Inject
     private FinderFactory finder;
+
+    @Inject
+    private UserVerifier userVerifier;
 
    public CarServerApplication() {
         setName("Restlet Car Service");
@@ -52,17 +56,15 @@ public class CarServerApplication extends Application {
         router.attach("/garages/{garageId}/services", finder.finder(ServicesForGarageServerResource.class));
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
 
-//
-//        ChallengeAuthenticator basicAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Basic Authentication");
-//
-//        MapVerifier verifier = new MapVerifier();
-//        verifier.getLocalSecrets().put("admin", "password".toCharArray());
-//        basicAuthenticator.setVerifier(verifier);
-//        basicAuthenticator.setNext(router);
+        ChallengeAuthenticator basicAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Basic Authentication");
+        MapVerifier ver = new MapVerifier();
+        ver.getLocalSecrets().put("user", "pwd".toCharArray());
+        basicAuthenticator.setVerifier(ver);
+//        basicAuthenticator.setVerifier(userVerifier);
+        basicAuthenticator.setNext(router);
 
-//        return basicAuthenticator;
-
-    return router;
+        return basicAuthenticator;
+//    return router;
    }
 
 }

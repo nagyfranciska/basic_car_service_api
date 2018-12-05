@@ -24,3 +24,23 @@
 2018-10-05 10:10:06.959 [Restlet-1717635349] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
 2018-23-05 10:23:38.530 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-07-05 11:07:41.030 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-24-05 12:24:51.359 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-29-05 12:29:49.283 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-25-05 13:25:52.060 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-28-05 13:28:43.891 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-28-05 13:28:48.476 [Restlet-417797162] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-28-05 13:28:53.815 [Restlet-417797162] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-30-05 13:30:18.305 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-30-05 13:30:50.735 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-31-05 13:31:14.344 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-13-05 14:13:15.678 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-16-05 14:16:29.745 [Restlet-1475249187] ERROR ExceptionMapperStandardImpl.java - HHH000346: Error during managed flush [org.hibernate.TransientPropertyValueException: object references an unsaved transient instance - save the transient instance before flushing : model.CDUser.customer -> model.Customer]
+2018-34-05 14:34:50.112 [Restlet-1475249187] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-42-05 14:42:46.087 [Restlet-1475249187] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-48-05 14:48:27.949 [Restlet-1475249187] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-50-05 14:50:52.311 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-51-05 14:51:32.217 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-55-05 14:55:11.515 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-56-05 14:56:19.643 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-57-05 14:57:42.703 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-58-05 14:58:07.528 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
