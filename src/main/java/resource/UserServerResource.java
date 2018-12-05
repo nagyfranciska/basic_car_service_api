@@ -1,7 +1,7 @@
 package resource;
 
 import com.google.inject.Inject;
-import model.CDUser;
+import model.User;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Put;
@@ -14,17 +14,17 @@ public class UserServerResource extends ServerResource {
     private UserService userService;
 
     @Get
-    public CDUser getUser() {
+    public User getUser() {
         return userService.getUserById(Integer.parseInt(getAttribute("userId")));
     }
 
     @Put
-    public CDUser updateUser(CDUser user) {
+    public User updateUser(User user) {
         return userService.updateUser(user, Integer.parseInt(getAttribute("userId")));
     }
 
     @Delete
-    public CDUser deleteUser() {
+    public User deleteUser() {
         return userService.deleteUser(Integer.parseInt(getAttribute("userId")));
     }
 

@@ -57,10 +57,10 @@ public class CarServerApplication extends Application {
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
 
         ChallengeAuthenticator basicAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Basic Authentication");
-        MapVerifier ver = new MapVerifier();
-        ver.getLocalSecrets().put("user", "pwd".toCharArray());
-        basicAuthenticator.setVerifier(ver);
-//        basicAuthenticator.setVerifier(userVerifier);
+//        MapVerifier ver = new MapVerifier();
+//        ver.getLocalSecrets().put("user", "pwd".toCharArray());
+//        basicAuthenticator.setVerifier(ver);
+        basicAuthenticator.setVerifier(userVerifier);
         basicAuthenticator.setNext(router);
 
         return basicAuthenticator;

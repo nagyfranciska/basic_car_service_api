@@ -31,7 +31,7 @@ public class Garage {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
 //    @Column(name = "USER_LIST")
-    private Set<CDUser> userList;
+    private Set<User> userList;
 
     public Garage() {
     }
@@ -76,11 +76,11 @@ public class Garage {
         this.capacity = capacity;
     }
 
-    public Set<CDUser> getUserList() {
+    public Set<User> getUserList() {
         return userList;
     }
 
-    public void setUserList(Set<CDUser> userList) {
+    public void setUserList(Set<User> userList) {
         this.userList = userList;
     }
 }

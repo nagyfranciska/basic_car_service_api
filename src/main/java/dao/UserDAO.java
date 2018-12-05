@@ -1,6 +1,6 @@
 package dao;
 
-import model.CDUser;
+import model.User;
 import service.JPAUtility;
 
 import javax.persistence.EntityManager;
@@ -11,33 +11,33 @@ public class UserDAO extends JPAUtility {
 
     public UserDAO() {}
 
-    public List<CDUser> findAll() {
+    public List<User> findAll() {
         EntityManager manager = getEntityManager();
-        TypedQuery<CDUser> q = manager.createQuery("SELECT u FROM CDUser u", CDUser.class);
-        List<CDUser> userList = q.getResultList();
+        TypedQuery<User> q = manager.createQuery("SELECT u FROM User u", User.class);
+        List<User> userList = q.getResultList();
         manager.close();
         return userList;
     }
 
-    public List<CDUser> findAllByCustomer(Integer customerId) {
+    public List<User> findAllByCustomer(Integer customerId) {
         EntityManager manager = getEntityManager();
-        TypedQuery<CDUser> q = manager.createQuery("SELECT u FROM CDUser u WHERE u.customer.id = ?1", CDUser.class);
+        TypedQuery<User> q = manager.createQuery("SELECT u FROM User u WHERE u.customer.id = ?1", User.class);
         q.setParameter(1, customerId);
-        List<CDUser> userList = q.getResultList();
+        List<User> userList = q.getResultList();
         manager.close();
         return userList;
     }
 
-    public List<CDUser> findAllByGarage(Integer garageId) {
+    public List<User> findAllByGarage(Integer garageId) {
         EntityManager manager = getEntityManager();
-        TypedQuery<CDUser> q = manager.createQuery("SELECT u FROM CDUser u WHERE u.garage.id = ?1", CDUser.class);
+        TypedQuery<User> q = manager.createQuery("SELECT u FROM User u WHERE u.garage.id = ?1", User.class);
         q.setParameter(1, garageId);
-        List<CDUser> userList = q.getResultList();
+        List<User> userList = q.getResultList();
         manager.close();
         return userList;
     }
 
-    public CDUser save(CDUser user) {
+    public User save(User user) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         manager.persist(user);
@@ -46,26 +46,26 @@ public class UserDAO extends JPAUtility {
         return user;
     }
 
-    public CDUser findById(Integer userId) {
+    public User findById(Integer userId) {
         EntityManager manager = getEntityManager();
-        CDUser user = manager.find(CDUser.class, userId);
+        User user = manager.find(User.class, userId);
         manager.close();
         return user;
     }
 
     public String getPasswordByUsername(String name) {
         EntityManager manager = getEntityManager();
-        TypedQuery<String> q = manager.createQuery("SELECT u.password FROM CDUSER u WHERE u.username = ?1", String.class);
+        TypedQuery<String> q = manager.createQuery("SELECT u.password FROM User u WHERE u.name = ?1", String.class);
         q.setParameter(1, name);
         List<String> passwordList = q.getResultList();
         manager.close();
         return ((passwordList.isEmpty() || passwordList.size() > 1) ? null : passwordList.get(0));
     }
 
-    public CDUser update(CDUser user, Integer userId) {
+    public User update(User user, Integer userId) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
-        CDUser userToUpdate = manager.find(CDUser.class, userId);
+        User userToUpdate = manager.find(User.class, userId);
         if (userToUpdate != null) {
             userToUpdate.setName(user.getName());
             userToUpdate.setPassword(user.getPassword());
@@ -78,10 +78,10 @@ public class UserDAO extends JPAUtility {
         }
     }
 
-    public CDUser delete(Integer userId) {
+    public User delete(Integer userId) {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
-        CDUser user = manager.find(CDUser.class, userId);
+        User user = manager.find(User.class, userId);
         if (user != null) {
             user = manager.merge(user);
             manager.remove(user);

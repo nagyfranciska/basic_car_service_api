@@ -3,7 +3,7 @@ package service;
 import com.google.inject.Inject;
 import dao.UserDAO;
 import javassist.NotFoundException;
-import model.CDUser;
+import model.User;
 import org.restlet.Response;
 import org.restlet.data.Status;
 
@@ -22,8 +22,8 @@ public class UserService {
 
     public UserService() {}
 
-    public List<CDUser> getUsers() {
-        List<CDUser> userList = userDAO.findAll();
+    public List<User> getUsers() {
+        List<User> userList = userDAO.findAll();
         if (userList.isEmpty()) {
             Response.getCurrent().setStatus(Status.SUCCESS_NO_CONTENT);
             return null;
@@ -32,8 +32,8 @@ public class UserService {
         }
     }
 
-    public List<CDUser> getUsersByCustomer(Integer customerId) {
-        List<CDUser> userList = userDAO.findAllByCustomer(customerId);
+    public List<User> getUsersByCustomer(Integer customerId) {
+        List<User> userList = userDAO.findAllByCustomer(customerId);
         if (userList.isEmpty()) {
             Response.getCurrent().setStatus(Status.SUCCESS_NO_CONTENT);
             return null;
@@ -42,8 +42,8 @@ public class UserService {
         }
     }
 
-    public List<CDUser> getUsersByGarage(Integer garageId) {
-        List<CDUser> userList = userDAO.findAllByGarage(garageId);
+    public List<User> getUsersByGarage(Integer garageId) {
+        List<User> userList = userDAO.findAllByGarage(garageId);
         if (userList.isEmpty()) {
             Response.getCurrent().setStatus(Status.SUCCESS_NO_CONTENT);
             return null;
@@ -53,8 +53,8 @@ public class UserService {
     }
 
     //TODO: postman gives it back even is it belongs to customers and we change url to garages (only considers the id, not the belongings)
-    public CDUser getUserById(Integer userId){
-        CDUser user = userDAO.findById(userId);
+    public User getUserById(Integer userId){
+        User user = userDAO.findById(userId);
         if (user != null) {
             return user;
         } else {
@@ -66,25 +66,25 @@ public class UserService {
         } return null;
     }
 
-    public CDUser saveUserToGarage(CDUser user, Integer garageId) {
+    public User saveUserToGarage(User user, Integer garageId) {
         user.setGarage(garageService.getGarageById(garageId));
         Response.getCurrent().setStatus(Status.SUCCESS_CREATED);
         return userDAO.save(user);
     }
 
-    public CDUser saveUserToCustomer(CDUser user, Integer customerId) {
+    public User saveUserToCustomer(User user, Integer customerId) {
         user.setCustomer(customerService.getCustomerById(customerId));
         Response.getCurrent().setStatus(Status.SUCCESS_CREATED);
         return userDAO.save(user);
     }
 
-    public CDUser updateUser(CDUser user, Integer userId) {
+    public User updateUser(User user, Integer userId) {
         return userDAO.update(user, userId);
     }
 
     //TODO : fix exception handling
-    public CDUser deleteUser(Integer userId){
-        CDUser user = userDAO.delete(userId);
+    public User deleteUser(Integer userId){
+        User user = userDAO.delete(userId);
         if (user != null) {
             return user;
         } else {

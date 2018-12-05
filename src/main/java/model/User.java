@@ -2,12 +2,11 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.mindrot.jbcrypt.BCrypt;
-import org.restlet.security.User;
 
 import javax.persistence.*;
 
 @Entity
-public class CDUser extends User {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,36 +27,16 @@ public class CDUser extends User {
     @JoinColumn
     private Customer customer;
 
-    @Transient
-    @JsonIgnore
-    private String email;
-
-    @Transient
-    @JsonIgnore
-    private volatile String firstName;
-
-    @Transient
-    @JsonIgnore
-    private volatile String identifier;
-
-    @Transient
-    @JsonIgnore
-    private volatile String lastName;
-
-    @Transient
-    @JsonIgnore
-    private volatile char[] secret;
-
-    public CDUser() {
+    public User() {
     }
 
     //TODO : password and username required, garage and customer >> delete from constructor
 //    getters and setterf for garage and customer (if both)
-    public CDUser(String name) {
+    public User(String name) {
         this.name = name;
     }
 
-    public CDUser(String name, String rawPassword, Garage garage, Customer customer) {
+    public User(String name, String rawPassword, Garage garage, Customer customer) {
         this.name = name;
         this.password = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
         this.garage = garage;

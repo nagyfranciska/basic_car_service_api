@@ -27,7 +27,7 @@ public class Customer {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
 //    @Column(name = "USER_LIST")
-    private Set<CDUser> userList;
+    private Set<User> userList;
 
 //    @Column(name = "NAME", nullable = false)
     private String name;
@@ -98,11 +98,11 @@ public class Customer {
         return serviceList;
     }
 
-    public Set<CDUser> getUserList() {
+    public Set<User> getUserList() {
         return userList;
     }
 
-    public void setUserList(Set<CDUser> userList) {
+    public void setUserList(Set<User> userList) {
         this.userList = userList;
     }
 }

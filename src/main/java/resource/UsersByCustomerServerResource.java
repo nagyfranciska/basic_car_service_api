@@ -1,7 +1,7 @@
 package resource;
 
 import com.google.inject.Inject;
-import model.CDUser;
+import model.User;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -15,12 +15,12 @@ public class UsersByCustomerServerResource extends ServerResource {
     private UserService userService;
 
     @Get
-    public List<CDUser> getUsersByCustomer() {
+    public List<User> getUsersByCustomer() {
         return userService.getUsersByCustomer(Integer.parseInt(getAttribute("customerId")));
     }
 
     @Post
-    public CDUser saveUser(CDUser user) {
+    public User saveUser(User user) {
         return userService.saveUserToCustomer(user, Integer.parseInt(getAttribute("customerId")));
     }
 }
