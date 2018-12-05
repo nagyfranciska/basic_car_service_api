@@ -63,8 +63,6 @@ public class UserDAO extends JPAUtility {
         if (user != null) {
             user.setUsername(newUser.getUsername());
             user.setPassword(newUser.getPassword());
-            user.setCustomer(newUser.getCustomer());
-            user.setGarage(newUser.getGarage());
             manager.merge(user);
             manager.getTransaction().commit();
             manager.close();
