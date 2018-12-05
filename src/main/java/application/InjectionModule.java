@@ -12,6 +12,8 @@ import service.*;
 import log.SLF4JTypeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import service.authentication.BasicAuthService;
+import service.authentication.UserVerifier;
 import service.model.CarService;
 import service.model.CustomerService;
 import service.model.GarageService;
@@ -42,6 +44,8 @@ public class InjectionModule extends AbstractModule {
         bind(ServiceService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
+        bind(BasicAuthService.class).asEagerSingleton();
+        bind(UserVerifier.class).asEagerSingleton();
 
     }
 

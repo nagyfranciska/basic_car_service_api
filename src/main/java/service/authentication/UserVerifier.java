@@ -36,7 +36,7 @@ public class UserVerifier extends SecretVerifier {
         if (pwdHashed == null) {
             return RESULT_UNKNOWN;
         } else {
-            return (BCrypt.checkpw(pwd, pwdHashed) ? RESULT_VALID : RESULT_INVALID);
+            return(pwd.equals(pwdHashed) ? RESULT_VALID : RESULT_INVALID);
         }
 
     }

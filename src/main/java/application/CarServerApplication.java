@@ -24,6 +24,9 @@ public class CarServerApplication extends Application {
     @Inject
     private FinderFactory finder;
 
+    @Inject
+    private BasicAuthService authService;
+
    public CarServerApplication() {
         setName("model.Car Server App No.1");
     }
@@ -31,7 +34,6 @@ public class CarServerApplication extends Application {
     public Restlet createInboundRoot() {
 
         Router router = new Router(getContext());
-        BasicAuthService authService = new BasicAuthService(getContext());
 
         router.attach("/customers", finder.finder(CustomersServerResource.class));
         router.attach("/customers/{customerId}", finder.finder(CustomerServerResource.class));
