@@ -20,3 +20,7 @@
 2018-28-28 09:28:20.012 [main] ERROR server.CarServerComponent - This is an error from server.CarServerComponent
 2018-57-28 09:57:15.764 [main] WARN  server.CarServerComponent - This is a warn from server.CarServerComponent
 2018-57-28 09:57:15.765 [main] ERROR server.CarServerComponent - This is an error from server.CarServerComponent
+2018-08-05 10:08:12.550 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-10-05 10:10:06.959 [Restlet-1717635349] WARN  SessionImpl.java - HHH000027: Calling joinTransaction() on a non JTA EntityManager
+2018-23-05 10:23:38.530 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-07-05 11:07:41.030 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)

@@ -1,5 +1,6 @@
 package model;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.restlet.security.User;
 
 import javax.persistence.*;
@@ -30,9 +31,11 @@ public class CDUser extends User {
     public CDUser() {
     }
 
-    public CDUser(String name, String password) {
+    public CDUser(String name, String rawPassword, Garage garage, Customer customer) {
         this.name = name;
-        this.password = password;
+        this.password = BCrypt.hashpw(rawPassword, BCrypt.gensalt());
+        this.garage = garage;
+        this.customer = customer;
     }
 
     public Integer getId() {
@@ -52,7 +55,7 @@ public class CDUser extends User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
     public Garage getGarage() {

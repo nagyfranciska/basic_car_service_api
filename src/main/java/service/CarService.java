@@ -6,10 +6,6 @@ import exception.general.CDNotFoundException;
 import model.Car;
 import org.restlet.Response;
 import org.restlet.data.Status;
-import org.restlet.resource.ResourceException;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CarService {

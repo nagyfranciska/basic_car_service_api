@@ -8,6 +8,9 @@ import org.restlet.ext.guice.FinderFactory;
 import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
+import resource.UserServerResource;
+import resource.UsersByCustomerServerResource;
+import resource.UsersByGarageServerResource;
 import resource.customer.*;
 import resource.customer.car.CarServerResource;
 import resource.customer.car.CarsServerResource;
@@ -23,7 +26,7 @@ public class CarServerApplication extends Application {
     private FinderFactory finder;
 
    public CarServerApplication() {
-        setName("model.Car Server App No.1");
+        setName("Restlet Car Service");
     }
 
     public Restlet createInboundRoot() {
@@ -33,12 +36,18 @@ public class CarServerApplication extends Application {
         router.attach("/customers", finder.finder(CustomersServerResource.class));
         router.attach("/customers/{customerId}", finder.finder(CustomerServerResource.class));
 
+        router.attach("/customers/{customerId}/users", finder.finder(UsersByCustomerServerResource.class));
+        router.attach("/customers/{customerId}/users/{userId}", finder.finder(UserServerResource.class));
+
         router.attach("/customers/{customerId}/cars", finder.finder(CarsServerResource.class));
         router.attach("/customers/{customerId}/cars/{carId}", finder.finder(CarServerResource.class));
         router.attach("/customers/{customerId}/cars/{carId}/services", finder.finder(ServicesForCarServerResource.class));
 
         router.attach("/garages", finder.finder(GaragesServerResource.class));
         router.attach("/garages/{garageId}", finder.finder(GarageServerResource.class));
+
+        router.attach("/garages/{garageId}/users", finder.finder(UsersByGarageServerResource.class));
+        router.attach("/garages/{garageId}/users/{userId}", finder.finder(UserServerResource.class));
 
         router.attach("/garages/{garageId}/services", finder.finder(ServicesForGarageServerResource.class));
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
