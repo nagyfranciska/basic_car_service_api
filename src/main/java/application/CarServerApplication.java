@@ -54,7 +54,6 @@ public class CarServerApplication extends Application {
         router.attach("/customers/{customerId}/users", finder.finder(UsersByCustomerServerResource.class));
         router.attach("/customers/{customerId}/users/{userId}", finder.finder(UserServerResource.class));
 
-
         ChallengeAuthenticator authenticator = authService.getAuthenticator();
         authenticator.setNext(router);
 

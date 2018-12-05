@@ -28,6 +28,26 @@ public class CDUser extends User {
     @JoinColumn(name = "GARAGE_ID")
     private Garage garage;
 
+    @Transient
+    @JsonIgnore
+    private String email;
+
+    @Transient
+    @JsonIgnore
+    private volatile String firstName;
+
+    @Transient
+    @JsonIgnore
+    private volatile String identifier;
+
+    @Transient
+    @JsonIgnore
+    private volatile String lastName;
+
+    @Transient
+    @JsonIgnore
+    private volatile char[] secret;
+
     public CDUser() {
     }
 
