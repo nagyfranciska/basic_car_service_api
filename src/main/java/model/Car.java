@@ -11,35 +11,35 @@ public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+//    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "CAR_TYPE", nullable = false)
+//    @Column(name = "CAR_TYPE", nullable = false)
     private CarType carType;
 
-    @Column(name = "PLATE", nullable = false)
+//    @Column(name = "PLATE", nullable = false)
     private String plate;
 
-    @Column(name = "REG_DATE", nullable = false)
+//    @Column(name = "REG_DATE", nullable = false)
     private String registrationDate;
 
-    @Column(name = "SIZE", nullable = false)
+//    @Column(name = "SIZE", nullable = false)
     private Integer size;
 
-    @Column(name = "DOOR_COUNT", nullable = false)
+//    @Column(name = "DOOR_COUNT", nullable = false)
     private Integer doorCount;
 
-    @Column(name = "COLOR", nullable = false)
+//    @Column(name = "COLOR", nullable = false)
     private String color;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "car", orphanRemoval = true)
-    @Column(name = "SERVICE_LIST")
+//    @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
 
     @JsonIgnore
     @ManyToOne()
-    @JoinColumn(name = "CUST_ID")
+    @JoinColumn
     private Customer customer;
 
     public Car() {

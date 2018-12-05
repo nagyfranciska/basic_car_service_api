@@ -4,11 +4,7 @@ import com.google.inject.Inject;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.data.ChallengeScheme;
-import org.restlet.data.Reference;
 import org.restlet.ext.guice.FinderFactory;
-import org.restlet.ext.oauth.*;
-import org.restlet.ext.oauth.internal.ClientManager;
-import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.MapVerifier;
@@ -47,40 +43,15 @@ public class CarServerApplication extends Application {
         router.attach("/garages/{garageId}/services", finder.finder(ServicesForGarageServerResource.class));
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
 
-        //       >> Oauth2 Authorization <<
 
-        // >> -- oauth server part -- <<
+        ChallengeAuthenticator basicAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Basic Authentication");
 
-//        - authorization endpoint -
-        router.attach(HttpOAuthHelper.getAuthPage(getContext()), AuthPageServerResource.class);
-        HttpOAuthHelper.setAuthPageTemplate("authorize.html", getContext());
-        HttpOAuthHelper.setAuthSkipApproved(true, getContext());
-        HttpOAuthHelper.setErrorPageTemplate("error.html", getContext());
-//        router.attach(HttpOAuthHelper.getLoginPage(getContext()), LoginPageServerResource.class);
+        MapVerifier verifier = new MapVerifier();
+        verifier.getLocalSecrets().put("admin", "password".toCharArray());
+        basicAuthenticator.setVerifier(verifier);
+        basicAuthenticator.setNext(router);
 
-//        - token endpoint -
-
-        ChallengeAuthenticator clientAuth = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Realm of Despair");
-        ClientVerifier clientVerifier = new ClientVerifier(getContext());
-        clientVerifier.setAcceptBodyMethod(true);
-        clientAuth.setNext(AccessTokenServerResource.class);
-        router.attach("/token", clientAuth);
-
-//        - token auth for resource server -
-
-        router.attach("token_auth", TokenAuthServerResource.class);
-
-        final Directory resource = new Directory(getContext(), "clap://system/resource");
-
-        router.attach("", resource);
-
-        // >>  --  server part -- <<
-
-        ChallengeAuthenticator bearerAuth = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Real of Madness");
-        bearerAuth.setVerifier(new TokenVerifier(new Reference("riap://component/oauth/token_auth")));
-        bearerAuth.setNext(router);
-
-        return bearerAuth;
+        return basicAuthenticator;
     }
 
 }

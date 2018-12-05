@@ -11,29 +11,34 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+//    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
-    @Column(name = "CAR_LIST")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+//    @Column(name = "CAR_LIST")
     private Set<Car> carList;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
-    @Column(name = "SERVICE_LIST")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+//    @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
 
-    @Column(name = "NAME", nullable = false)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer", orphanRemoval = true)
+//    @Column(name = "USER_LIST")
+    private Set<CDUser> userList;
+
+//    @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "ADDRESS", nullable = false)
+//    @Column(name = "ADDRESS", nullable = false)
     private String address;
 
-    @Column(name = "INVOICE_ADD", nullable = false)
+//    @Column(name = "INVOICE_ADD", nullable = false)
     private String invoiceAddress;
 
-    @Column(name = "TYPE", nullable = false)
+//    @Column(name = "TYPE", nullable = false)
     private String type;
 
     public Customer() {
@@ -46,6 +51,7 @@ public class Customer {
         this.type = type;
         carList = new LinkedHashSet<>();
         serviceList = new LinkedHashSet<>();
+        userList = new LinkedHashSet<>();
     }
 
     public Integer getId() {
@@ -92,4 +98,11 @@ public class Customer {
         return serviceList;
     }
 
+    public Set<CDUser> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Set<CDUser> userList) {
+        this.userList = userList;
+    }
 }

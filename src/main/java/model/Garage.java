@@ -11,22 +11,27 @@ public class Garage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+//    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "NAME", unique = true, nullable = false)
+//    @Column(name = "NAME", unique = true, nullable = false)
     private String name;
 
-    @Column(name = "ADDRESS", nullable = false)
+//    @Column(name = "ADDRESS", nullable = false)
     private String address;
 
-    @Column(name = "CAPACITY", nullable = false)
+//    @Column(name = "CAPACITY", nullable = false)
     private Integer capacity;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
-    @Column(name = "SERVICE_LIST")
+//    @Column(name = "SERVICE_LIST")
     private Set<Service> serviceList;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "garage", orphanRemoval = true)
+//    @Column(name = "USER_LIST")
+    private Set<CDUser> userList;
 
     public Garage() {
     }
@@ -36,6 +41,7 @@ public class Garage {
         this.address = address;
         this.capacity = capacity;
         serviceList = new LinkedHashSet<>();
+        userList = new LinkedHashSet<>();
     }
 
     public Set<Service> getServiceList() {
@@ -70,4 +76,11 @@ public class Garage {
         this.capacity = capacity;
     }
 
+    public Set<CDUser> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Set<CDUser> userList) {
+        this.userList = userList;
+    }
 }

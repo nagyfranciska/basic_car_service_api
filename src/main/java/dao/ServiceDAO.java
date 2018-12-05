@@ -2,8 +2,6 @@ package dao;
 
 import model.Service;
 import service.JPAUtility;
-
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;

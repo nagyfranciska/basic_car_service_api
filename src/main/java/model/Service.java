@@ -9,16 +9,16 @@ public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+//    @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "START", nullable = false)
+//    @Column(name = "START", nullable = false)
     private String start;
 
-    @Column(name = "END", nullable = false)
+//    @Column(name = "END", nullable = false)
     private String end;
 
-    @Column(name = "PRICE", nullable = false)
+//    @Column(name = "PRICE", nullable = false)
     private Integer price;
 
     @JsonIgnore
