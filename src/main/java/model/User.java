@@ -31,7 +31,7 @@ public class User {
     }
 
     //TODO : password and username required, garage and customer >> delete from constructor
-//    getters and setterf for garage and customer (if both)
+//    getters and setters for garage and customer (if both)
     public User(String name) {
         this.name = name;
     }

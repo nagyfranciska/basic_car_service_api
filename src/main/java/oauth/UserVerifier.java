@@ -15,7 +15,6 @@ public class UserVerifier extends SecretVerifier {
 
     public UserVerifier() {}
 
-    //Verifies that the proposed secret is correct for the specified request.
     @Override
     public int verify(Request request, Response response) {
         int result = RESULT_MISSING;
@@ -30,14 +29,11 @@ public class UserVerifier extends SecretVerifier {
         return result;
     }
 
-    //is above verifier is correct, it calls for this method and create new user
-    // >> it is customised for CDUSer - for this, made USER parent class' fields (extended by User) transient in model
     @Override
     protected org.restlet.security.User createUser(String identifier, Request request, Response response) {
         return new org.restlet.security.User(identifier);
     }
 
-    //Verifies that the identifier/secret couple is valid.
     @Override
     public int verify(String s, char[] chars) {
         String password = String.copyValueOf(chars);
