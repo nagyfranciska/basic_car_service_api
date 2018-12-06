@@ -32,15 +32,16 @@ public class InjectionModule extends AbstractModule {
         bind(GarageDAO.class).asEagerSingleton();
         bind(ServiceDAO.class).asEagerSingleton();
         bind(UserDAO.class).asEagerSingleton();
+        bind(ClientDAO.class).asEagerSingleton();
 
         bind(CustomerService.class).asEagerSingleton();
         bind(CarService.class).asEagerSingleton();
         bind(GarageService.class).asEagerSingleton();
         bind(ServiceService.class).asEagerSingleton();
         bind(UserService.class).asEagerSingleton();
+        bind(ClientService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
-        bind(CarClientManager.class).asEagerSingleton();
         bind(CarTokenManager.class).asEagerSingleton();
 
     }

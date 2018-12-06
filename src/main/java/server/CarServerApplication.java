@@ -5,7 +5,6 @@ import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Reference;
 import org.restlet.ext.oauth.TokenVerifier;
 import org.restlet.security.ChallengeAuthenticator;
-//import service.UserVerifier;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.ext.guice.FinderFactory;
