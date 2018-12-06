@@ -1,14 +1,15 @@
 package server;
 
 import com.google.inject.Inject;
-import oauth.UserVerifier;
+import org.restlet.data.ChallengeScheme;
+import org.restlet.data.Reference;
+import org.restlet.ext.oauth.TokenVerifier;
+import org.restlet.security.ChallengeAuthenticator;
+//import service.UserVerifier;
 import org.restlet.Application;
 import org.restlet.Restlet;
-import org.restlet.data.ChallengeScheme;
 import org.restlet.ext.guice.FinderFactory;
 import org.restlet.routing.Router;
-import org.restlet.security.ChallengeAuthenticator;
-import org.restlet.security.MapVerifier;
 import resource.UserServerResource;
 import resource.UsersByCustomerServerResource;
 import resource.UsersByGarageServerResource;
@@ -26,10 +27,7 @@ public class CarServerApplication extends Application {
     @Inject
     private FinderFactory finder;
 
-    @Inject
-    private UserVerifier userVerifier;
-
-   public CarServerApplication() {
+    public CarServerApplication() {
         setName("Restlet Car Service");
     }
 
@@ -56,15 +54,11 @@ public class CarServerApplication extends Application {
         router.attach("/garages/{garageId}/services", finder.finder(ServicesForGarageServerResource.class));
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
 
-        ChallengeAuthenticator basicAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_BASIC, "Basic Authentication");
-//        MapVerifier ver = new MapVerifier();
-//        ver.getLocalSecrets().put("user", "pwd".toCharArray());
-//        basicAuthenticator.setVerifier(ver);
-        basicAuthenticator.setVerifier(userVerifier);
-        basicAuthenticator.setNext(router);
+        ChallengeAuthenticator bearerAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Realm of Madness");
+        bearerAuthenticator.setVerifier(new TokenVerifier(new Reference("riap://component/oauth/token_auth")));
+        bearerAuthenticator.setNext(router);
 
-        return basicAuthenticator;
-//    return router;
+    return bearerAuthenticator;
+
    }
-
 }

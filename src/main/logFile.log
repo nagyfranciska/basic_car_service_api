@@ -710,3 +710,5 @@ Caused by: java.sql.SQLSyntaxErrorException: Table 'basicapi.user' doesn't exist
 2018-48-06 09:48:29.262 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-49-06 09:49:37.861 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-50-06 09:50:04.489 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-54-06 09:54:26.713 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-02-06 14:02:45.667 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)

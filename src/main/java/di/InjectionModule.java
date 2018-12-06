@@ -4,10 +4,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.matcher.Matchers;
-import dao.CarDAO;
-import dao.CustomerDAO;
-import dao.GarageDAO;
-import dao.ServiceDAO;
+import dao.*;
+import oauth.OauthApplication;
 import server.CarServerApplication;
 import service.*;
 import log.SLF4JTypeListener;
@@ -27,18 +25,23 @@ public class InjectionModule extends AbstractModule {
         bindListener(Matchers.any(), new SLF4JTypeListener());
 
         bind(CarServerApplication.class).asEagerSingleton();
+        bind(OauthApplication.class).asEagerSingleton();
 
         bind(CustomerDAO.class).asEagerSingleton();
         bind(CarDAO.class).asEagerSingleton();
         bind(GarageDAO.class).asEagerSingleton();
         bind(ServiceDAO.class).asEagerSingleton();
+        bind(UserDAO.class).asEagerSingleton();
 
         bind(CustomerService.class).asEagerSingleton();
         bind(CarService.class).asEagerSingleton();
         bind(GarageService.class).asEagerSingleton();
         bind(ServiceService.class).asEagerSingleton();
+        bind(UserService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
+        bind(CarClientManager.class).asEagerSingleton();
+        bind(CarTokenManager.class).asEagerSingleton();
 
     }
 
