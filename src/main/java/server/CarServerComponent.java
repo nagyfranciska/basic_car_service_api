@@ -32,6 +32,9 @@ public class CarServerComponent extends Component {
 //    http://localhost:8080/oauth/authorize?response_type=code&client_id=8bcfb431-9213-4143-98a1-407b9b1ded04&redirect_uri=http://localhost:8080/status&scope=read
     ///
     //TODO: create own Client, save it, add token to properties, change code to bearer_token
+    // own Client (implement retlet User)) + userService (extends userAbstractUserManager)
+    // add to Client's properties "token" (in client model, also set id)
+    // hibernate cannot handle string array (red_uri) >> convert to String, and back? or find a way for it?
 
     private static SampleUserManager userManager;
     private static ClientManager clientManager;

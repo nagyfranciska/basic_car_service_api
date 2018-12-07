@@ -1424,3 +1424,6 @@ Caused by: java.sql.SQLSyntaxErrorException: Specified key was too long; max key
 2018-13-07 14:13:47.166 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-14-07 14:14:38.776 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-18-07 14:18:25.316 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-19-07 14:19:27.357 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-35-07 15:35:07.709 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-37-07 15:37:08.864 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
