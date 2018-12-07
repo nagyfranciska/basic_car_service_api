@@ -5,7 +5,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.matcher.Matchers;
 import dao.*;
-import oauth.OauthApplication;
+import server.OauthApplication;
 import server.CarServerApplication;
 import service.*;
 import log.SLF4JTypeListener;

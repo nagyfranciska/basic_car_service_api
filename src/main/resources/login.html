@@ -7,8 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 
 <body>
@@ -17,8 +15,10 @@
         <div class="span8 offset2">
             <#if error?has_content>
             <div class="alert alert-error">
+                <#if error_description?has_content>
                 <h4 class="alert-heading">Error: ${error}</h4>
                 Error_Desc: ${error_description}
+            </#if>
             </div>
         </#if>
     </div>

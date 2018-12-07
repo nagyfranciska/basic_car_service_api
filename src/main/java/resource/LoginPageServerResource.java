@@ -1,28 +1,23 @@
 package resource;
 
-import com.google.inject.Inject;
 import freemarker.template.Configuration;
-import model.User;
+import model.SampleUser;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.ContextTemplateLoader;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.ext.oauth.AuthorizationBaseServerResource;
 import org.restlet.ext.oauth.OAuthException;
+import org.restlet.ext.oauth.internal.AuthSession;
 import org.restlet.representation.EmptyRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.security.SecretVerifier;
-import service.UserService;
+import server.CarServerComponent;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class LoginPageServerResource extends AuthorizationBaseServerResource {
-
-    @Inject
-    UserService userService;
 
     @Get("html")
     @Post("html")
@@ -32,19 +27,18 @@ public class LoginPageServerResource extends AuthorizationBaseServerResource {
         HashMap<String, Object> data = new HashMap<String, Object>();
         if (userId != null && !userId.isEmpty()) {
             String password = getQueryValue("password");
-            //TODO: into service and dao
-            List<User> userList = new CopyOnWriteArrayList<>();
-            userList.add((User) userService.getUsers().stream().filter(u -> u.getName().equals(userId)));
-            User user = userList.get(0);
-            if (user == null) {
+            getLogger().info("User=" + userId + ", Pass=" + password);
+            SampleUser sampleUser = CarServerComponent.getSampleUserManager().findUserById(userId);
+            if (sampleUser == null) {
                 data.put("error", "Authentication failed.");
                 data.put("error_description", "ID is invalid.");
             } else {
-                boolean result = SecretVerifier.compare(password.toCharArray(),
-                        user.getPassword().toCharArray());
+                boolean result = SecretVerifier.compare(password.toCharArray(), sampleUser.getPassword());
                 if (result) {
-                    getAuthSession().setScopeOwner(userId);
+                    AuthSession session = getAuthSession();
+                    session.setScopeOwner(userId);
                     String uri = getQueryValue("continue");
+                    getLogger().info("URI: " + uri);
                     redirectTemporary(uri);
                     return new EmptyRepresentation();
                 } else {
@@ -64,10 +58,8 @@ public class LoginPageServerResource extends AuthorizationBaseServerResource {
 
     protected TemplateRepresentation getLoginPage(String loginPage) {
         Configuration config = new Configuration();
-        config.setTemplateLoader(new ContextTemplateLoader(getContext(),
-                "clap:///"));
+        config.setTemplateLoader(new ContextTemplateLoader(getContext(), "clap:///"));
         getLogger().fine("loading: " + loginPage);
-        return new TemplateRepresentation(loginPage, config,
-                MediaType.TEXT_HTML);
+        return new TemplateRepresentation(loginPage, config, MediaType.TEXT_HTML);
     }
 }

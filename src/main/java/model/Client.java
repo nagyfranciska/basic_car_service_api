@@ -15,17 +15,17 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
     private String clientId;
     private char[] secret;
     private ClientType type;
-    private Map<String, Object> properties;
-    private String[] redirectURI;
+//    private Map<String, Object> properties;
+//    private String[] redirectURI;
 
     public Client() {}
 
-    public Client(char[] secret, ClientType type, Map<String, Object> properties, String[] redirectURI) {
-        this.clientId = RandomString.make(10);
+    public Client(char[] secret, ClientType type) {
+        this.clientId = RandomString.make(3);
         this.secret = secret;
         this.type = type;
-        this.properties = properties;
-        this.redirectURI = redirectURI;
+//        this.properties = properties;
+//        this.redirectURI = redirectURI;
     }
 
     @Override
