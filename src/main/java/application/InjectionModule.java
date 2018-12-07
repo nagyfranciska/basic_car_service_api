@@ -8,12 +8,14 @@ import dao.CarDAO;
 import dao.CustomerDAO;
 import dao.GarageDAO;
 import dao.ServiceDAO;
+import oauth.ClientService;
+import oauth.CDTokenManager;
+import oauth.OAuthServerApplication;
 import service.*;
 import log.SLF4JTypeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import service.authentication.BasicAuthService;
-import service.authentication.UserVerifier;
+import service.authentication.BearerAuthService;
 import service.model.CarService;
 import service.model.CustomerService;
 import service.model.GarageService;
@@ -44,8 +46,11 @@ public class InjectionModule extends AbstractModule {
         bind(ServiceService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
-        bind(BasicAuthService.class).asEagerSingleton();
-        bind(UserVerifier.class).asEagerSingleton();
+        bind(BearerAuthService.class).asEagerSingleton();
+
+        bind(OAuthServerApplication.class).asEagerSingleton();
+        bind(ClientService.class).asEagerSingleton();
+        bind(CDTokenManager.class).asEagerSingleton();
 
     }
 

@@ -78,4 +78,13 @@ public class UserService {
         }
     }
 
+    public CDUser getUserByUsername(String username) {
+        CDUser user = userDAO.getByUsername(username);
+        if (user != null) {
+            return user;
+        } else {
+            throw new CDNotFoundException("User");
+        }
+    }
+
 }

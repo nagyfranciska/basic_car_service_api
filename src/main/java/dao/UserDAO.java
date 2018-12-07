@@ -1,11 +1,9 @@
 package dao;
 
 import model.CDUser;
-import service.authentication.UserVerifier;
 import service.utility.JPAUtility;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -89,13 +87,13 @@ public class UserDAO extends JPAUtility {
         }
     }
 
-    public String getPasswordByUsername(String username) {
+    public CDUser getByUsername(String username) {
         EntityManager manager = getEntityManager();
-        TypedQuery<String> q = manager.createQuery("SELECT u.password from CDUser u WHERE u.username = ?1", String.class);
+        TypedQuery<CDUser> q = manager.createQuery("SELECT u from CDUser u WHERE u.username = ?1", CDUser.class);
         q.setParameter(1, username);
-        List<String> pwList = q.getResultList();
+        List<CDUser> userList = q.getResultList();
         manager.close();
-        return ((pwList.isEmpty() || pwList.size() >= 2) ? null : pwList.get(0));
+        return ((userList.isEmpty() || userList.size() >= 2) ? null : userList.get(0));
     }
 
 }

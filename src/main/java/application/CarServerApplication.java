@@ -17,7 +17,7 @@ import resource.service.ServicesByGarageServerResource;
 import resource.user.UserServerResource;
 import resource.user.UsersByCustomerServerResource;
 import resource.user.UsersByGarageServerResource;
-import service.authentication.BasicAuthService;
+import service.authentication.BearerAuthService;
 
 public class CarServerApplication extends Application {
 
@@ -25,7 +25,7 @@ public class CarServerApplication extends Application {
     private FinderFactory finder;
 
     @Inject
-    private BasicAuthService authService;
+    private BearerAuthService authService;
 
    public CarServerApplication() {
         setName("model.Car Server App No.1");
