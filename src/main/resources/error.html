@@ -16,8 +16,10 @@
     <div class="row" style="margin-top:50px;">
         <div class="span8 offset2">
             <div class="alert alert-error">
+                <#if error_description?has_content>
                 <h4 class="alert-heading">Error: ${error}</h4>
                 Error_Desc: ${error_description}
+            </#if>
             </div>
         </div>
     </div>

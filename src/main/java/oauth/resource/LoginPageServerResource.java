@@ -1,4 +1,4 @@
-package resource;
+package oauth.resource;
 
 import freemarker.template.Configuration;
 import model.SampleUser;

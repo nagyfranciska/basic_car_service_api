@@ -21,8 +21,6 @@ import resource.garage.service.ServicesForGarageServerResource;
 
 public class CarServerApplication extends Application {
 
-    public static String clientID, clientSecret;
-
     @Inject
     private FinderFactory finder;
 

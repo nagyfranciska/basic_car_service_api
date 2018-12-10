@@ -1,4 +1,9 @@
-package server;
+package oauth.server;
+import com.google.inject.Inject;
+import oauth.model.FinalClient;
+import oauth.service.ClientService;
+import oauth.resource.LoginPageServerResource;
+import oauth.service.FinalClientService;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.ext.oauth.*;
@@ -6,15 +11,20 @@ import org.restlet.ext.oauth.internal.ClientManager;
 import org.restlet.ext.oauth.internal.TokenManager;
 import org.restlet.resource.Directory;
 import org.restlet.routing.Router;
-import resource.LoginPageServerResource;
+import server.CarServerComponent;
 
 public class OauthApplication extends Application {
+
+    @Inject
+//    ClientService clientService;
+
+    FinalClientService clientService;
 
     @Override
     public synchronized Restlet createInboundRoot() {
         Router router = new Router(getContext());
 
-        getContext().getAttributes().put(ClientManager.class.getName(), CarServerComponent.getClientManager());
+        getContext().getAttributes().put(ClientManager.class.getName(), clientService);
         getContext().getAttributes().put(TokenManager.class.getName(), CarServerComponent.getTokenManager());
 
         // Setup Authorize Endpoint

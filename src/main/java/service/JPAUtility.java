@@ -11,7 +11,6 @@ public class JPAUtility {
     private EntityManagerFactory emFactory;
 
     protected EntityManager getEntityManager() {
-
         return emFactory.createEntityManager();
     }
 
