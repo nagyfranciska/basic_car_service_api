@@ -50,22 +50,27 @@ public class CarServerComponent extends Component {
         ///////// >> create two Clients, one without properties, one with it
         ///////// >> expected result: both of them is created, first one with 'token', second one with 'token' and 'code'
 
-//        String[] URIs = {"http://localhost:8080/status"};
-//        Client client = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, null);
-//
-//        Map<String, Object> map = new HashMap<>() {{put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.code);}};
-//        map.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.token);
-//
-//        Client client2 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, map);
-//
-//        ////////// >> get created Client, first is the null prop, second is given prop
-//
-////        Client client = injector.getInstance(ClientService.class).findById("");
-//
-//        System.out.println("client id: " + client.getClientId() + ",  secret: " + Arrays.toString(client.getClientSecret()));
-//        System.out.println(client.getProperties().get("supported_flow"));
-//        System.out.println("client id: " + client2.getClientId() + ",  secret: " + Arrays.toString(client2.getClientSecret()));
-//        System.out.println(client2.getProperties());
+        String[] URIs = {"http://localhost:8080/dummy"};
+        Map<String, Object> map = new HashMap<>();
+        map.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.code);
+
+
+        Client client1 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.CONFIDENTIAL, URIs, map);
+        Client client2 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.CONFIDENTIAL, URIs, null);
+        Client client3 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, map);
+        Client client4 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, null);
+
+
+        ////////// >> get created Client, first is the null prop, second is given prop
+
+//        Client client = injector.getInstance(ClientService.class).findById("FSuLX");
+
+        /////////
+
+        System.out.println("client id: " + client1.getClientId() + ",  secret: " + client1.getClientSecretAsString() + ", props (should be code): " + client1.getPropertiesAsString());
+        System.out.println("client id: " + client2.getClientId() + ",  secret: " + client2.getClientSecretAsString() + ", props (should be code): " + client2.getPropertiesAsString());
+        System.out.println("client id: " + client3.getClientId() + ",  secret: " + client3.getClientSecretAsString() + ", props (should be code): " + client3.getPropertiesAsString());
+        System.out.println("client id: " + client4.getClientId() + ",  secret: " + client4.getClientSecretAsString() + ", props (should be token): " + client4.getPropertiesAsString());
 
         CarServerComponent component = injector.getInstance(CarServerComponent.class);
 

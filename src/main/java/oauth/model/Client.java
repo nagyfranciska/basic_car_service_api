@@ -1,7 +1,5 @@
 package oauth.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import net.bytebuddy.utility.RandomString;
 import org.restlet.ext.oauth.GrantType;
 import org.restlet.ext.oauth.ResponseType;
@@ -39,23 +37,25 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
     public Client() {
     }
 
-    public Client(ClientType clientType, String[] redirectURIs, Map<String, Object> properties)
-//            throws JsonProcessingException
-    {
+    public Client(ClientType clientType, String[] redirectURIs, Map<String, Object> properties) {
         this.id = RandomString.make(5);
         this.secret = RandomString.make(3);
         this.clientType = clientType;
         this.type = clientType.toString();
 
-        if (properties != null && properties.containsValue(ResponseType.token)) {
+        // if we get responseTypes, accept them
+        if (properties != null) {
             this.properties = properties;
-        } else {
+            // if properties is null, set it by clientType
+        } else if(clientType.equals(ClientType.CONFIDENTIAL)) {
+            properties = new HashMap<>();
+            properties.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.code);
+        } else if(clientType.equals(ClientType.PUBLIC)) {
             properties = new HashMap<>();
             properties.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.token);
         }
-//        this.props = new ObjectMapper().writeValueAsString(properties);
-        //or:
-        if (properties.containsKey("supported_flows")) {
+
+        if (properties != null) {
             this.props = "supported_flows: " + properties.get("supported_flows").toString();
         }
         this.redirectUris = List.of(redirectURIs);
@@ -98,5 +98,13 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
 
     private boolean isFlowSupported(Object flow) {
         return Arrays.asList((Object[]) this.getProperties().get("supported_flows")).contains(flow);
+    }
+
+    public String getClientSecretAsString() {
+        return this.secret;
+    }
+
+    public String getPropertiesAsString() {
+        return this.props;
     }
 }
