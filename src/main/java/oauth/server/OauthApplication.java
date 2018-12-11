@@ -1,9 +1,7 @@
 package oauth.server;
 import com.google.inject.Inject;
-import oauth.model.FinalClient;
-import oauth.service.ClientService;
 import oauth.resource.LoginPageServerResource;
-import oauth.service.FinalClientService;
+import oauth.service.ClientService;
 import org.restlet.Application;
 import org.restlet.Restlet;
 import org.restlet.ext.oauth.*;
@@ -16,9 +14,7 @@ import server.CarServerComponent;
 public class OauthApplication extends Application {
 
     @Inject
-//    ClientService clientService;
-
-    FinalClientService clientService;
+    ClientService clientService;
 
     @Override
     public synchronized Restlet createInboundRoot() {

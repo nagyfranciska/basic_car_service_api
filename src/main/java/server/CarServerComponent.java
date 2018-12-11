@@ -4,9 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import di.InjectionModule;
-import oauth.model.FinalClient;
+import oauth.model.Client;
 import oauth.server.OauthApplication;
-import oauth.service.FinalClientService;
+import oauth.service.ClientService;
 import org.restlet.Component;
 import org.restlet.Context;
 import org.restlet.Server;
@@ -16,8 +16,7 @@ import org.restlet.ext.oauth.internal.TokenManager;
 import org.restlet.ext.oauth.internal.memory.MemoryTokenManager;
 import service.SampleUserManager;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Arrays;
 
 public class CarServerComponent extends Component {
 
@@ -43,13 +42,13 @@ public class CarServerComponent extends Component {
         Injector injector;
         injector = RestletGuice.createInjector(new InjectionModule());
 
-        List<String> uris = new CopyOnWriteArrayList<>();
-        uris.add("http://localhost:8080/status");
+//        List<String> uris = new CopyOnWriteArrayList<>();
+//        uris.add("http://localhost:8080/status");
+//
+//        FinalClient client = injector.getInstance(ClientService.class).saveClient(new Client());
+        Client client = injector.getInstance(ClientService.class).findById("gGB");
 
-        FinalClient client = injector.getInstance(FinalClientService.class).saveClient(new FinalClient(uris));
-//        FinalClient client = injector.getInstance(FinalClientService.class).getById("YSz");
-
-        System.out.println("client id: " + client.getId() + ",  secret: " + client.getSecret());
+        System.out.println("client id: " + client.getClientId() + ",  secret: " + Arrays.toString(client.getClientSecret()));
         System.out.println(client.getProperties());
 
         CarServerComponent component = injector.getInstance(CarServerComponent.class);
