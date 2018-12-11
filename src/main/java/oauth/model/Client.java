@@ -1,6 +1,8 @@
 package oauth.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.bytebuddy.utility.RandomString;
 import org.restlet.ext.oauth.GrantType;
 import org.restlet.ext.oauth.ResponseType;
 
@@ -14,38 +16,59 @@ import java.util.Map;
 public class Client implements org.restlet.ext.oauth.internal.Client {
 
     @Id
-    private String clientId;
-    private char[] clientSecret;
+    private String id;
+    private String secret;
+
+    @Transient
     private Client.ClientType clientType;
-    private String properties;
+    @Column(name = "CLIENT_TYPE")
+    private String type;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "CLIENT_REDIRECT_URIS",
+            joinColumns = @JoinColumn(name = "CLIENT_ID")
+    )
     private List<String> redirectUris;
 
-
+    @Transient
+    private Map<String, Object> properties;
+    @Column(name = "PROPERTIES")
+    private String props;
 
     public Client() {
     }
 
-    public Client(ClientType clientType, String[] redirectURIs, Map<String, Object> properties) {
-    }
+    public Client(ClientType clientType, String[] redirectURIs, Map<String, Object> properties)
+//            throws JsonProcessingException
+    {
+        this.id = RandomString.make(5);
+        this.secret = RandomString.make(3);
+        this.clientType = clientType;
+        this.type = clientType.toString();
 
-//
-//    public Client(String clientId, char[] clientSecret, ClientType clientType,
-//                  String[] redirectUris, Map<String, Object> properties) {
-//        this.clientId = clientId;
-//        this.clientSecret = clientSecret;
-//        this.clientType = clientType;
-////        this.properties = new ObjectMapper().writeValueAsString(properties);
-//        this.redirectUris = List.of(redirectUris);
-//    }
+        if (properties != null && properties.containsValue(ResponseType.token)) {
+            this.properties = properties;
+        } else {
+            properties = new HashMap<>();
+            properties.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.token);
+        }
+//        this.props = new ObjectMapper().writeValueAsString(properties);
+        //or:
+        if (properties.containsKey("supported_flows")) {
+            this.props = "supported_flows: " + properties.get("supported_flows").toString();
+        }
+        this.redirectUris = List.of(redirectURIs);
+    }
 
     @Override
     public String getClientId() {
-        return this.clientId;
+        return this.id;
     }
 
     @Override
     public char[] getClientSecret() {
-        return this.clientSecret;
+        return this.secret.toCharArray();
     }
 
     @Override
@@ -55,11 +78,7 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
 
     @Override
     public Map<String, Object> getProperties() {
-        try {
-            return new ObjectMapper().readValue(this.properties, HashMap.class);
-        } catch (Exception e) {
-            return null;
-        }
+        return this.properties;
     }
 
     @Override

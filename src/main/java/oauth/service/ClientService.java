@@ -16,7 +16,7 @@ public class ClientService implements ClientManager {
     @Override
     public org.restlet.ext.oauth.internal.Client createClient(org.restlet.ext.oauth.internal.Client.ClientType clientType,
                                                               String[] redirectURIs, Map<String, Object> properties) {
-        return clientDAO.save(new Client(clientType, redirectURIs, properties ));
+        return clientDAO.save(new Client(clientType, redirectURIs, properties));
     }
 
     public void deleteClient(String s) {

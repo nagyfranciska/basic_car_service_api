@@ -12,11 +12,16 @@ import org.restlet.Context;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 import org.restlet.ext.guice.RestletGuice;
+import org.restlet.ext.oauth.ResponseType;
 import org.restlet.ext.oauth.internal.TokenManager;
 import org.restlet.ext.oauth.internal.memory.MemoryTokenManager;
 import service.SampleUserManager;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CarServerComponent extends Component {
 
@@ -42,14 +47,25 @@ public class CarServerComponent extends Component {
         Injector injector;
         injector = RestletGuice.createInjector(new InjectionModule());
 
-//        List<String> uris = new CopyOnWriteArrayList<>();
-//        uris.add("http://localhost:8080/status");
-//
-//        FinalClient client = injector.getInstance(ClientService.class).saveClient(new Client());
-        Client client = injector.getInstance(ClientService.class).findById("gGB");
+        ///////// >> create two Clients, one without properties, one with it
+        ///////// >> expected result: both of them is created, first one with 'token', second one with 'token' and 'code'
 
-        System.out.println("client id: " + client.getClientId() + ",  secret: " + Arrays.toString(client.getClientSecret()));
-        System.out.println(client.getProperties());
+//        String[] URIs = {"http://localhost:8080/status"};
+//        Client client = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, null);
+//
+//        Map<String, Object> map = new HashMap<>() {{put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.code);}};
+//        map.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.token);
+//
+//        Client client2 = (Client) injector.getInstance(ClientService.class).createClient(org.restlet.ext.oauth.internal.Client.ClientType.PUBLIC, URIs, map);
+//
+//        ////////// >> get created Client, first is the null prop, second is given prop
+//
+////        Client client = injector.getInstance(ClientService.class).findById("");
+//
+//        System.out.println("client id: " + client.getClientId() + ",  secret: " + Arrays.toString(client.getClientSecret()));
+//        System.out.println(client.getProperties().get("supported_flow"));
+//        System.out.println("client id: " + client2.getClientId() + ",  secret: " + Arrays.toString(client2.getClientSecret()));
+//        System.out.println(client2.getProperties());
 
         CarServerComponent component = injector.getInstance(CarServerComponent.class);
 
