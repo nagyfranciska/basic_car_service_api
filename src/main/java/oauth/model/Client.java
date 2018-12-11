@@ -14,11 +14,10 @@ import java.util.Map;
 public class Client implements org.restlet.ext.oauth.internal.Client {
 
 
-    //TODO: hiaba a properties megfelelo beallitasa, crealasnal semmi gond, de ha
-    // az AuthServerResource methodjai lekerik a getterrel oket, null az ertekuk (properties, ClientType)
-    // most a ket dummy adatbol (props es type) alakitom at es kuldom vissza a value-kat, de ennek jol kene mukodni :/
-
-    // problema: this hasynalata a getter/setterben (vhol volt, vhol nem volt --> megnezni, kell-e)
+    //TODO:
+    // az AuthServerResource methodjai lekerik a ClientType-ot es a Properties-t. Null az ertekuk
+    // mert nincsenek lementve adatbazisba, ezert a ket dummy adatbol (props es type) beallitva adnam oket,
+    // de valamiert nem mukodik. :/ -- > kikommenteltem, es most siman megnezem h a dummyban szerepel-e a flow Object;
 
 
     @Id
@@ -81,45 +80,36 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
 
     @Override
     public ClientType getClientType() {
-        if (type.equals(ClientType.CONFIDENTIAL.toString())) {
-        return ClientType.CONFIDENTIAL;
-        }
-        return ClientType.PUBLIC;
+        return clientType;
     }
 
     @Override
     public Map<String, Object> getProperties() {
-        Map<String, Object> map = new HashMap<>();
-        if (props.contains("token")) {
-           map.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.token);
-           return map;
-        }
-        map.put(org.restlet.ext.oauth.internal.Client.PROPERTY_SUPPORTED_FLOWS, ResponseType.code);
-        return map;
+        return properties;
     }
 
     @Override
     public String[] getRedirectURIs() {
-        String[] uris = {redirectUris.get(0)};
+        String[] uris = new String[redirectUris.size()];
+        for (int i = 0; i < uris.length; i++) {
+            uris[i] = redirectUris.get(i);
+        }
         return uris;
-
-//        return (String[]) redirectUris.toArray();
     }
 
     @Override
     public boolean isGrantTypeAllowed(GrantType grantType) {
-        return true;
-//        return isFlowSupported(grantType);
+        return isFlowSupported(grantType);
     }
 
     @Override
     public boolean isResponseTypeAllowed(ResponseType responseType) {
-        return true;
-//        return isFlowSupported(responseType);
+        return isFlowSupported(responseType);
     }
 
     private boolean isFlowSupported(Object flow) {
-        return Arrays.asList((Object[]) getProperties().get("supported_flows")).contains(flow);
+        return props.contains(flow.toString());
+//        return Arrays.asList((Object[]) getProperties().get("supported_flows")).contains(flow);
     }
 
     public String getClientSecretAsString() {
