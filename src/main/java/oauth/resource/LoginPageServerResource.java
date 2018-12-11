@@ -1,43 +1,53 @@
 package oauth.resource;
 
+import com.google.inject.Inject;
 import freemarker.template.Configuration;
-import model.SampleUser;
+import model.User;
+import org.mindrot.jbcrypt.BCrypt;
 import org.restlet.data.MediaType;
 import org.restlet.ext.freemarker.ContextTemplateLoader;
 import org.restlet.ext.freemarker.TemplateRepresentation;
 import org.restlet.ext.oauth.AuthorizationBaseServerResource;
 import org.restlet.ext.oauth.OAuthException;
 import org.restlet.ext.oauth.internal.AuthSession;
+import org.restlet.ext.oauth.internal.RedirectionURI;
 import org.restlet.representation.EmptyRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
-import org.restlet.security.SecretVerifier;
-import server.CarServerComponent;
+import service.UserService;
 
 import java.util.HashMap;
 
 public class LoginPageServerResource extends AuthorizationBaseServerResource {
 
+    @Inject
+    private UserService userService;
+
+
     @Get("html")
     @Post("html")
     public Representation getPage() throws OAuthException {
         getLogger().info("Get Login");
-        String userId = getQueryValue("user_id");
+        String username = getQueryValue("user_id");
         HashMap<String, Object> data = new HashMap<String, Object>();
-        if (userId != null && !userId.isEmpty()) {
+        if (username != null && !username.isEmpty()) {
             String password = getQueryValue("password");
-            getLogger().info("User=" + userId + ", Pass=" + password);
-            SampleUser sampleUser = CarServerComponent.getSampleUserManager().findUserById(userId);
-            if (sampleUser == null) {
+            getLogger().info("User=" + username + ", Pass=" + password);
+
+            User user = userService.getUserByName(username);
+            if (user == null) {
                 data.put("error", "Authentication failed.");
                 data.put("error_description", "ID is invalid.");
             } else {
-                boolean result = SecretVerifier.compare(password.toCharArray(), sampleUser.getPassword());
-                if (result) {
-                    AuthSession session = getAuthSession();
-                    session.setScopeOwner(userId);
+                if (BCrypt.checkpw(password, user.getPassword())) {
+//                    AuthSession session = getAuthSession();
+//                    session.setScopeOwner(username);
                     String uri = getQueryValue("continue");
+                    // splittelni a redUri-t?
+                    RedirectionURI redirectionURI = new RedirectionURI(uri);
+                    AuthSession session = setupAuthSession(redirectionURI);
+                    session.setScopeOwner(username);
                     getLogger().info("URI: " + uri);
                     redirectTemporary(uri);
                     return new EmptyRepresentation();

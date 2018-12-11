@@ -4,6 +4,7 @@ import oauth.resource.LoginPageServerResource;
 import oauth.service.ClientService;
 import org.restlet.Application;
 import org.restlet.Restlet;
+import org.restlet.ext.guice.FinderFactory;
 import org.restlet.ext.oauth.*;
 import org.restlet.ext.oauth.internal.ClientManager;
 import org.restlet.ext.oauth.internal.TokenManager;
@@ -12,6 +13,9 @@ import org.restlet.routing.Router;
 import server.CarServerComponent;
 
 public class OauthApplication extends Application {
+
+    @Inject
+    private FinderFactory finder;
 
     @Inject
     ClientService clientService;
@@ -29,7 +33,7 @@ public class OauthApplication extends Application {
         HttpOAuthHelper.setAuthPageTemplate("authorize.html", getContext());
         HttpOAuthHelper.setAuthSkipApproved(true, getContext());
         HttpOAuthHelper.setErrorPageTemplate("error.html", getContext());
-        router.attach(HttpOAuthHelper.getLoginPage(getContext()), LoginPageServerResource.class);
+        router.attach(HttpOAuthHelper.getLoginPage(getContext()), finder.finder(LoginPageServerResource.class));
 
         // Setup Token Auth for Resources Server
         router.attach("/token_auth", TokenAuthServerResource.class);

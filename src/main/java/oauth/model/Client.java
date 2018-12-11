@@ -13,6 +13,16 @@ import java.util.Map;
 @Entity
 public class Client implements org.restlet.ext.oauth.internal.Client {
 
+//    {
+//        "id": "345345",
+//        "name": "Default web client",
+//        "secret": "34534w5rw3445r435r43",
+//        "grantTypes": ["implicit", "password"],
+//        "responseTypes": ["code", "token"],
+//        "clientType": "confidential",
+//        "redirectUris": ["http://localhost", "http://onbox.hu"]
+//    }
+
 
     //TODO:
     // az AuthServerResource methodjai lekerik a ClientType-ot es a Properties-t. Null az ertekuk

@@ -66,6 +66,10 @@ public class UserService {
         } return null;
     }
 
+    public User getUserByName(String username){
+        return userDAO.findByName(username);
+    }
+
     public User saveUserToGarage(User user, Integer garageId) {
         user.setGarage(garageService.getGarageById(garageId));
         Response.getCurrent().setStatus(Status.SUCCESS_CREATED);

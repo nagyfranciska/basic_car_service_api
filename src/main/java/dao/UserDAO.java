@@ -53,13 +53,13 @@ public class UserDAO extends JPAUtility {
         return user;
     }
 
-    public String getPasswordByUsername(String name) {
+    public User findByName(String username) {
         EntityManager manager = getEntityManager();
-        TypedQuery<String> q = manager.createQuery("SELECT u.password FROM User u WHERE u.name = ?1", String.class);
-        q.setParameter(1, name);
-        List<String> passwordList = q.getResultList();
+        TypedQuery<User> q = manager.createQuery("SELECT u FROM User u WHERE u.name = ?1", User.class);
+        q.setParameter(1, username);
+        List<User> userList = q.getResultList();
         manager.close();
-        return ((passwordList.isEmpty() || passwordList.size() > 1) ? null : passwordList.get(0));
+        return userList.get(0);
     }
 
     public User update(User user, Integer userId) {

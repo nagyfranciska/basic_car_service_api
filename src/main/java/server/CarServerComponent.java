@@ -4,43 +4,26 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 import di.InjectionModule;
-import oauth.model.Client;
 import oauth.server.OauthApplication;
-import oauth.service.ClientService;
 import org.restlet.Component;
 import org.restlet.Context;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 import org.restlet.ext.guice.RestletGuice;
-import org.restlet.ext.oauth.ResponseType;
 import org.restlet.ext.oauth.internal.TokenManager;
 import org.restlet.ext.oauth.internal.memory.MemoryTokenManager;
-import service.SampleUserManager;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CarServerComponent extends Component {
 
-
     ///
-//    http://localhost:8080/oauth/authorize?response_type=token&client_id=ZZkYn&redirect_uri=http://localhost:8080/status&scope=read
+//    http://localhost:8080/oauth/authorize?response_type=token&client_id=ZZkYn&redirect_uri=http://localhost:8080/customers&scope=read
     //
 
-    private static SampleUserManager userManager;
     private static TokenManager tokenManager;
-
-    public static SampleUserManager getSampleUserManager() {
-        return userManager;
-    }
 
     public static TokenManager getTokenManager() {
         return tokenManager;
     }
-
 
     public static void main(String[] args) throws Exception {
 
@@ -65,10 +48,6 @@ public class CarServerComponent extends Component {
 //        System.out.println("client id: " + client4.getClientId() + ",  secret: " + client4.getClientSecretAsString() + ", props (should be token): " + client4.getPropertiesAsString());
 
         ////////////
-
-        userManager = new SampleUserManager();
-        userManager.addUser("user").setPassword("none".toCharArray());
-        userManager.addUser("admin").setPassword("pwd".toCharArray());
 
         tokenManager = new MemoryTokenManager();
 
