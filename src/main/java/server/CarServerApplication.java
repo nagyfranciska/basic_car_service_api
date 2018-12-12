@@ -24,8 +24,6 @@ public class CarServerApplication extends Application {
     @Inject
     private FinderFactory finder;
 
-
-
     public CarServerApplication() {
         setName("Restlet Car Service");
     }
@@ -34,9 +32,7 @@ public class CarServerApplication extends Application {
 
         Router router = new Router(getContext());
 
-//        router.attach("/status", StatusServerResource.class);
-
-//        router.attach("/me", finder.finder(MeServerResource.class));
+        router.attach("/me", finder.finder(MeServerResource.class));
 
         router.attach("/customers", finder.finder(CustomersServerResource.class));
         router.attach("/customers/{customerId}", finder.finder(CustomerServerResource.class));
