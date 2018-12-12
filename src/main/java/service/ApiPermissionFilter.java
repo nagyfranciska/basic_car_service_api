@@ -50,6 +50,7 @@ public class ApiPermissionFilter extends Filter {
              return true;
          } else if (segment.equals("customers") && user.getCustomer() != null) {
              return true;
-         } return (segment.equals("me"));
+         }
+         return segment.equals("me");
     }
 }

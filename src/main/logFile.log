@@ -2125,3 +2125,4 @@ Caused by: java.sql.SQLIntegrityConstraintViolationException: Cannot add or upda
 2018-20-12 16:20:10.662 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-22-12 16:22:50.427 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 2018-24-12 16:24:16.112 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2018-35-12 16:35:12.595 [main] WARN  DriverManagerConnectionProviderImpl.java - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
