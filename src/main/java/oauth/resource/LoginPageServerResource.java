@@ -24,6 +24,7 @@ public class LoginPageServerResource extends AuthorizationBaseServerResource {
     @Inject
     private UserService userService;
 
+    //TODO: User model refact --> id to String
 
     @Get("html")
     @Post("html")
@@ -41,13 +42,9 @@ public class LoginPageServerResource extends AuthorizationBaseServerResource {
                 data.put("error_description", "ID is invalid.");
             } else {
                 if (BCrypt.checkpw(password, user.getPassword())) {
-//                    AuthSession session = getAuthSession();
-//                    session.setScopeOwner(username);
-                    String uri = getQueryValue("continue");
-                    // splittelni a redUri-t?
-                    RedirectionURI redirectionURI = new RedirectionURI(uri);
-                    AuthSession session = setupAuthSession(redirectionURI);
+                    AuthSession session = getAuthSession();
                     session.setScopeOwner(username);
+                    String uri = getQueryValue("continue");
                     getLogger().info("URI: " + uri);
                     redirectTemporary(uri);
                     return new EmptyRepresentation();

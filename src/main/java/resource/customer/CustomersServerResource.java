@@ -3,6 +3,7 @@ package resource.customer;
 import com.google.inject.Inject;
 import log.Log;
 import model.Customer;
+import model.User;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
@@ -21,6 +22,7 @@ public class CustomersServerResource extends ServerResource {
 
     @Get
     public List<Customer> getCustomers() {
+
         logger.info("Here we are");
         return customerService.getCustomers();
     }

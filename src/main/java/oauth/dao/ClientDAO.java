@@ -28,9 +28,11 @@ public class ClientDAO extends JPAUtility {
 
     public Client findById(String id) {
         EntityManager manager = getEntityManager();
-        Client client = manager.find(Client.class, id);
+        TypedQuery<Client> q = manager.createQuery("SELECT c FROM Client c WHERE c.id = ?1", Client.class);
+        q.setParameter(1, id);
+        List<Client> clientList = q.getResultList();
         manager.close();
-        return client;
+        return clientList.get(0);
     }
 
     public Client delete(String id) {

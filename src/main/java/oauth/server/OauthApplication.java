@@ -39,7 +39,7 @@ public class OauthApplication extends Application {
         router.attach("/token_auth", TokenAuthServerResource.class);
 
         final Directory resources = new Directory(getContext(), "clap://system/resources/");
-//        router.attach("", resources);
+        router.attach("", resources);
 
         return router;
     }

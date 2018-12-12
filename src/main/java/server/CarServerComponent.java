@@ -16,7 +16,8 @@ import org.restlet.ext.oauth.internal.memory.MemoryTokenManager;
 public class CarServerComponent extends Component {
 
     ///
-//    http://localhost:8080/oauth/authorize?response_type=token&client_id=ZZkYn&redirect_uri=http://localhost:8080/customers&scope=read
+//    http://localhost:8080/oauth/authorize?response_type=token&client_id=ZZkYn&redirect_uri=http://localhost:9090&scope=read
+//    after this, postman works correctly with given token!
     //
 
     private static TokenManager tokenManager;
@@ -66,7 +67,7 @@ public class CarServerComponent extends Component {
         getClients().add(Protocol.CLAP);
         getServers().add(new Server(new Context(), Protocol.HTTP, 8080));
 
-        getDefaultHost().attach("/", app);
+        getDefaultHost().attach("/api/v1", app);
         getDefaultHost().attach("/oauth", oauthApp);
         getInternalRouter().attach("/oauth", oauthApp);
 
