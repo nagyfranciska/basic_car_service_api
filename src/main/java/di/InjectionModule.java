@@ -44,6 +44,7 @@ public class InjectionModule extends AbstractModule {
         bind(ClientService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
+        bind(ApiPermissionFilter.class).asEagerSingleton();
 
     }
 

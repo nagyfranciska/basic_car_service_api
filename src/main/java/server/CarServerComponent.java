@@ -67,7 +67,7 @@ public class CarServerComponent extends Component {
         getClients().add(Protocol.CLAP);
         getServers().add(new Server(new Context(), Protocol.HTTP, 8080));
 
-        getDefaultHost().attach("/api/v1", app);
+        getDefaultHost().attach("/api", app);
         getDefaultHost().attach("/oauth", oauthApp);
         getInternalRouter().attach("/oauth", oauthApp);
 

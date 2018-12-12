@@ -18,11 +18,15 @@ import resource.garage.GarageServerResource;
 import resource.garage.GaragesServerResource;
 import resource.garage.service.ServiceForGarageServerResource;
 import resource.garage.service.ServicesForGarageServerResource;
+import service.ApiPermissionFilter;
 
 public class CarServerApplication extends Application {
 
     @Inject
     private FinderFactory finder;
+
+    @Inject
+    private ApiPermissionFilter permissionFilter;
 
     public CarServerApplication() {
         setName("Restlet Car Service");
@@ -53,12 +57,19 @@ public class CarServerApplication extends Application {
         router.attach("/garages/{garageId}/services", finder.finder(ServicesForGarageServerResource.class));
         router.attach("/garages/{garageId}/services/{serviceId}", finder.finder(ServiceForGarageServerResource.class));
 
+        // >> Filter <<
+
+        permissionFilter.setContext(getContext());
+        permissionFilter.setNext(router);
+
+        // >> OAuth2 <<
+
         ChallengeAuthenticator bearerAuthenticator = new ChallengeAuthenticator(getContext(), ChallengeScheme.HTTP_OAUTH_BEARER, "Realm of Madness");
         bearerAuthenticator.setVerifier(new TokenVerifier(new Reference("riap://component/oauth/token_auth")));
-        bearerAuthenticator.setNext(router);
+        bearerAuthenticator.setNext(permissionFilter);
+//        bearerAuthenticator.setNext(router);
 
     return bearerAuthenticator;
-
 
    }
 }
