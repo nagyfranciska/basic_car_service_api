@@ -4,6 +4,7 @@ import model.Client;
 import service.utility.JPAUtility;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class ClientDAO extends JPAUtility {
 
@@ -20,19 +21,23 @@ public class ClientDAO extends JPAUtility {
         EntityManager manager = getEntityManager();
         manager.getTransaction().begin();
         Client client = manager.find(Client.class, clientId);
-            client = manager.merge(client);
-            manager.remove(client);
-            manager.joinTransaction();
-            manager.flush();
-            manager.getTransaction().commit();
-            manager.close();
+        client = manager.merge(client);
+        manager.remove(client);
+        manager.joinTransaction();
+        manager.flush();
+        manager.getTransaction().commit();
+        manager.close();
     }
 
     public Client findById(String clientId) {
         EntityManager manager = getEntityManager();
-        Client car = manager.find(Client.class, clientId);
+        manager.getTransaction().begin();
+        TypedQuery<Client> q = manager.createQuery(
+                "SELECT c from Client c JOIN FETCH c.redirectUrisList WHERE c.id = ?1", Client.class);
+        q.setParameter(1, clientId);
+        Client client = q.getSingleResult();
         manager.close();
-        return car;
+        return client;
     }
 
 }

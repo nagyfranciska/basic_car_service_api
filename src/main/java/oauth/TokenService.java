@@ -6,7 +6,7 @@ import org.restlet.ext.oauth.internal.AuthSession;
 import org.restlet.ext.oauth.internal.Client;
 import org.restlet.ext.oauth.internal.Token;
 
-public class CDTokenManager extends AbstractTokenManager {
+public class TokenService extends AbstractTokenManager {
 
     //TODO: Implement all this shit
     @Override
@@ -25,17 +25,17 @@ public class CDTokenManager extends AbstractTokenManager {
     }
 
     @Override
-    public Token generateToken(Client client, String s, String[] strings) throws OAuthException {
+    public Token generateToken(Client client, String s, String[] strings) {
         return null;
     }
 
     @Override
-    public Token refreshToken(Client client, String s, String[] strings) throws OAuthException {
+    public Token refreshToken(Client client, String s, String[] strings) {
         return null;
     }
 
     @Override
-    public AuthSession restoreSession(String s) throws OAuthException {
+    public AuthSession restoreSession(String s) {
         return null;
     }
 
@@ -55,12 +55,12 @@ public class CDTokenManager extends AbstractTokenManager {
     }
 
     @Override
-    public String storeSession(AuthSession authSession) throws OAuthException {
+    public String storeSession(AuthSession authSession) {
         return null;
     }
 
     @Override
-    public Token validateToken(String s) throws OAuthException {
+    public Token validateToken(String s) {
         return null;
     }
 }

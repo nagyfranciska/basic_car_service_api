@@ -2,10 +2,7 @@ package service.authentication;
 
 import application.CarServerApplication;
 import com.google.inject.Inject;
-import oauth.CDTokenManager;
-import org.restlet.Application;
 import org.restlet.Context;
-import org.restlet.Request;
 import org.restlet.data.ChallengeScheme;
 import org.restlet.data.Reference;
 import org.restlet.ext.oauth.TokenVerifier;

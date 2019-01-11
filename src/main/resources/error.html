@@ -14,10 +14,14 @@
 <div class="container">
     <div class="row" style="margin-top:50px;">
         <div class="span8 offset2">
+            <#if error?has_content>
             <div class="alert alert-error">
                 <h4 class="alert-heading">Error: ${error}</h4>
+                <#if error_description??>
                 Error_Desc: ${error_description}
-            </div>
+            </#if>
+        </div>
+    </#if>
         </div>
     </div>
 </div>

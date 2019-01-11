@@ -17,9 +17,11 @@
             <#if error?has_content>
             <div class="alert alert-error">
                 <h4 class="alert-heading">Error: ${error}</h4>
+                <#if error_description??>
                 Error_Desc: ${error_description}
+                </#if>
             </div>
-        </#if>
+            </#if>
     </div>
     <div class="span8 offset2">
         <form action="login" method="get" class="form-horizontal">

@@ -24,21 +24,29 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
     @Column(name = "TYPE", nullable = false)
     private Client.ClientType clientType;
 
-    @Column(name = "PROPERTIES")
-    private String properties;
+    @Transient
+    private Map<String, Object> properties;
+
+    @Column(name = "PROPERTIES", nullable = false)
+    private String propertiesJson;
 
     @Column(name = "REDIRECT_URI", nullable = false)
     @ElementCollection()
     @CollectionTable(name = "CLIENT_REDIRECT_URIS", joinColumns = @JoinColumn(name = "CLIENT_ID"))
-    private List<String> redirectUris;
+    private List<String> redirectUrisList;
+
+    @Transient
+    private String[] redirectUris;
 
     public Client(String clientId, char[] clientSecret, ClientType clientType,
                   String[] redirectUris, Map<String, Object> properties) throws JsonProcessingException {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.clientType = clientType;
-        this.properties = new ObjectMapper().writeValueAsString(properties);
-        this.redirectUris = List.of(redirectUris);
+        this.properties = properties;
+        this.propertiesJson = new ObjectMapper().writeValueAsString(properties);
+        this.redirectUris = redirectUris;
+        this.redirectUrisList = List.of(redirectUris);
     }
 
     public Client() {
@@ -61,16 +69,56 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
 
     @Override
     public Map<String, Object> getProperties() {
-        try {
-            return new ObjectMapper().readValue(this.properties, HashMap.class);
-        } catch (Exception e) {
-            return null;
+        return this.properties;
+    }
+
+    public String getPropertiesJson() {
+        return this.propertiesJson;
+    }
+
+    public boolean convertProperties() {
+        if (this.properties == null) {
+            try {
+                this.properties = new ObjectMapper().readValue(this.propertiesJson, Map.class);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
         }
+        if (this.propertiesJson == null) {
+            try {
+                this.propertiesJson = new ObjectMapper().writeValueAsString(this.properties);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean convertRedirectUris() {
+        if (this.redirectUris == null) {
+            try {
+                this.redirectUris = redirectUrisList.toArray(String[]::new);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        if (this.redirectUrisList == null) {
+            try {
+                this.redirectUrisList = List.of(redirectUris);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public String[] getRedirectURIs() {
-        return (String[]) this.redirectUris.toArray();
+        return this.redirectUris;
     }
 
     @Override
@@ -84,7 +132,7 @@ public class Client implements org.restlet.ext.oauth.internal.Client {
     }
 
     private boolean isFlowSupported(Object flow) {
-        return Arrays.asList((Object[]) this.getProperties().get("supported_flows")).contains(flow);
+        return Arrays.asList(this.properties.get("supported_flows")).contains(flow.toString());
     }
 
 }

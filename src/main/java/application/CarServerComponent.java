@@ -18,12 +18,10 @@ public class CarServerComponent extends Component {
         Injector injector;
         injector = RestletGuice.createInjector(new InjectionModule());
 
-        //TODO: Get Client from database
-        Client client = injector.getInstance(ClientService.class).createClient(Client.ClientType.CONFIDENTIAL,
-                new String[] {"http://localhost:8080/authorize"}, null);
-        System.out.println("SampleClient: client_id=" + client.getClientId()
+        Client client = injector.getInstance(ClientService.class).findById("71d32dae-d32e-406d-a188-b255fae2f752");
+        System.out.println("CLIENT: client_id=" + client.getClientId()
                 + ", client_secret="
-                + String.copyValueOf(client.getClientSecret()));
+                + String.copyValueOf(client.getClientSecret()) + ", client_properties=" + client.getProperties().toString());
 
         CarServerComponent component = injector.getInstance(CarServerComponent.class);
 
@@ -31,7 +29,7 @@ public class CarServerComponent extends Component {
     }
 
     @Inject
-    public CarServerComponent(CarServerApplication app, OAuthServerApplication oauthApp) throws Exception {
+    public CarServerComponent(CarServerApplication app, OAuthServerApplication oauthApp) {
 
         getServers().add(new Server(new Context(), Protocol.HTTP, 8080));
         getClients().add(Protocol.HTTP);

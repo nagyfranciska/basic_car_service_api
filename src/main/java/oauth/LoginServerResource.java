@@ -30,7 +30,6 @@ public class LoginServerResource extends AuthorizationBaseServerResource {
         if (username != null && !username.isEmpty()) {
             String password = getQueryValue("password");
             System.out.println("USER: " + username + " | PWD: " + password);
-            System.out.println("USERSERVICE: " + userService);
             CDUser user = userService.getUserByUsername(username);
             if (user == null) {
                 data.put("error", "Authentication failed.");

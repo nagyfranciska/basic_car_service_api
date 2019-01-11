@@ -4,22 +4,16 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.matcher.Matchers;
-import dao.CarDAO;
-import dao.CustomerDAO;
-import dao.GarageDAO;
-import dao.ServiceDAO;
+import dao.*;
 import oauth.ClientService;
-import oauth.CDTokenManager;
+import oauth.TokenService;
 import oauth.OAuthServerApplication;
 import service.*;
 import log.SLF4JTypeListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import service.authentication.BearerAuthService;
-import service.model.CarService;
-import service.model.CustomerService;
-import service.model.GarageService;
-import service.model.ServiceService;
+import service.model.*;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -39,18 +33,22 @@ public class InjectionModule extends AbstractModule {
         bind(CarDAO.class).asEagerSingleton();
         bind(GarageDAO.class).asEagerSingleton();
         bind(ServiceDAO.class).asEagerSingleton();
+        bind(UserDAO.class).asEagerSingleton();
+        bind(ClientDAO.class).asEagerSingleton();
 
         bind(CustomerService.class).asEagerSingleton();
         bind(CarService.class).asEagerSingleton();
         bind(GarageService.class).asEagerSingleton();
         bind(ServiceService.class).asEagerSingleton();
+        bind(UserService.class).asEagerSingleton();
+        bind(ClientService.class).asEagerSingleton();
 
         bind(CarValidationService.class).asEagerSingleton();
         bind(BearerAuthService.class).asEagerSingleton();
 
         bind(OAuthServerApplication.class).asEagerSingleton();
         bind(ClientService.class).asEagerSingleton();
-        bind(CDTokenManager.class).asEagerSingleton();
+        bind(TokenService.class).asEagerSingleton();
 
     }
 
